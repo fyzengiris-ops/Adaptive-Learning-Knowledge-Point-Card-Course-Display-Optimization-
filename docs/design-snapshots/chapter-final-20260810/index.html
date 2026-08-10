@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自适应学习 · 课程中心原型</title>
+  <link rel="stylesheet" href="css/app.css?v=20260810ae" />
+  <link rel="stylesheet" href="css/prd.css?v=20260810h" />
+</head>
+<body>
+  <div class="device-stage">
+    <div class="device-frame" id="device-frame">
+      <div class="device-bezel">
+        <div class="device-meta">
+          <span>平板预览</span>
+          <span>1024 × 768</span>
+        </div>
+        <div class="shell">
+    <!-- ========== 首页 ========== -->
+    <div class="view active" id="view-home">
+      <div class="home">
+        <div class="home-top">
+          <div class="home-brand">自适应学习</div>
+          <div class="home-actions">
+            <button class="pill-btn" type="button">学情报告</button>
+            <button class="pill-btn" type="button">排行榜</button>
+          </div>
+        </div>
+
+        <div class="subjects">
+          <button class="subject active" type="button">英语</button>
+          <button class="subject" type="button">数学</button>
+          <button class="subject" type="button">物理</button>
+          <button class="subject" type="button">化学</button>
+          <button class="subject" type="button">生物</button>
+        </div>
+
+        <div class="home-body">
+          <aside class="side-nav">
+            <button class="side-item active" type="button">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5l8-2 8 2v14l-8 2-8-2z"/><path d="M12 3v18"/></svg>
+              </span>
+              同步学
+            </button>
+            <button class="side-item" type="button">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 11h16"/></svg>
+              </span>
+              期中考<br />期末考
+            </button>
+            <button class="side-item" type="button">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/></svg>
+              </span>
+              寒暑假
+            </button>
+            <button class="side-item" type="button">
+              <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 10h.01M15 10h.01"/></svg>
+              </span>
+              中考
+            </button>
+          </aside>
+
+          <section class="map-card">
+            <div class="map-head">
+              <span class="book">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5l8-2 8 2v14l-8 2-8-2z"/></svg>
+              </span>
+              <span class="map-subject">英语</span>
+              <div class="catalog-picker" id="scope-picker">
+                <button class="catalog-trigger" type="button" id="home-scope-title" aria-expanded="false" aria-haspopup="listbox">
+                  <span id="home-scope-name">UNIT 1 Teenage life Section A</span>
+                  <svg class="catalog-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="catalog-menu" id="scope-menu" hidden>
+                  <div class="catalog-group open" data-group="unit1">
+                    <div class="catalog-row catalog-chapter" data-home-scope="chapter" data-scope-label="UNIT 1 Teenage life">
+                      <button type="button" class="catalog-toggle" aria-label="展开或收起" data-toggle-group="unit1"></button>
+                      <button type="button" class="catalog-label">UNIT 1 Teenage life</button>
+                    </div>
+                    <div class="catalog-children">
+                      <button type="button" class="catalog-row catalog-section active" data-home-scope="section" data-scope-label="UNIT 1 Teenage life Section A">
+                        Section A
+                      </button>
+                      <button type="button" class="catalog-row catalog-section" data-home-scope="section" data-scope-label="UNIT 1 Teenage life Section B">
+                        Section B
+                      </button>
+                    </div>
+                  </div>
+                  <div class="catalog-group open" data-group="unit2">
+                    <div class="catalog-row catalog-chapter" data-home-scope="chapter" data-scope-label="UNIT 2 Travelling around">
+                      <button type="button" class="catalog-toggle" aria-label="展开或收起" data-toggle-group="unit2"></button>
+                      <button type="button" class="catalog-label">UNIT 2 Travelling around</button>
+                    </div>
+                    <div class="catalog-children">
+                      <button type="button" class="catalog-row catalog-section" data-home-scope="section" data-scope-label="UNIT 2 Travelling around Section A">
+                        Section A
+                      </button>
+                      <button type="button" class="catalog-row catalog-section" data-home-scope="section" data-scope-label="UNIT 2 Travelling around Section B">
+                        Section B
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-stage">
+              <svg class="map-svg" viewBox="0 0 800 420" preserveAspectRatio="none">
+                <line x1="400" y1="210" x2="220" y2="110" stroke="#c9ddd2" stroke-width="2" />
+                <line x1="400" y1="210" x2="560" y2="90" stroke="#c9ddd2" stroke-width="2" />
+                <line x1="400" y1="210" x2="180" y2="260" stroke="#c9ddd2" stroke-width="2" />
+                <line x1="400" y1="210" x2="620" y2="250" stroke="#c9ddd2" stroke-width="2" />
+                <line x1="400" y1="210" x2="300" y2="340" stroke="#c9ddd2" stroke-width="2" />
+                <line x1="400" y1="210" x2="520" y2="350" stroke="#c9ddd2" stroke-width="2" />
+                <line x1="220" y1="110" x2="120" y2="70" stroke="#d5e6dc" stroke-width="1.5" />
+                <line x1="560" y1="90" x2="680" y2="70" stroke="#d5e6dc" stroke-width="1.5" />
+                <line x1="180" y1="260" x2="90" y2="320" stroke="#d5e6dc" stroke-width="1.5" />
+                <line x1="620" y1="250" x2="720" y2="300" stroke="#d5e6dc" stroke-width="1.5" />
+              </svg>
+
+              <button class="node good" style="left:28%; top:26%;" type="button">顶点坐标</button>
+              <button class="node excellent" style="left:70%; top:21%;" type="button">对称轴公式</button>
+              <button class="node center average" style="left:50%; top:50%;" type="button">二次函数核心要素</button>
+              <button class="node weak" style="left:22%; top:62%;" type="button">判别式 Δ</button>
+              <button class="node good" style="left:78%; top:60%;" type="button">开口方向</button>
+              <button class="node none" style="left:38%; top:81%;" type="button">增减性</button>
+              <button class="node average" style="left:65%; top:83%;" type="button">最值问题</button>
+              <button class="node good" style="left:15%; top:17%;" type="button">图像平移</button>
+              <button class="node weak" style="left:85%; top:17%;" type="button">交点问题</button>
+              <button class="node none" style="left:11%; top:76%;" type="button">不等式应用</button>
+
+              <div class="node-popup">
+                <div class="name">判别式 Δ</div>
+                <div class="mastery">掌握度：65%</div>
+                <div class="actions">
+                  <button class="btn-ghost" type="button">追根溯源</button>
+                  <button class="btn-primary" type="button" data-nav="special">去学习</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-footer">
+              <div class="legend">
+                <span><i class="excellent"></i>优秀</span>
+                <span><i class="good"></i>良好</span>
+                <span><i class="average"></i>一般</span>
+                <span><i class="weak"></i>较弱</span>
+                <span><i class="none"></i>未练习</span>
+              </div>
+              <button class="recommend-study" type="button" data-nav="special">推荐学习</button>
+            </div>
+          </section>
+
+          <aside class="right-col">
+            <div class="stat-card">
+              <div class="card-title">知识点掌握统计</div>
+              <div class="stat-list">
+                <div class="stat-row"><span class="left"><i class="dot" style="background:#3db87a"></i>优秀</span><strong>1</strong></div>
+                <div class="stat-row"><span class="left"><i class="dot" style="background:#5b9bd5"></i>良好</span><strong>4</strong></div>
+                <div class="stat-row"><span class="left"><i class="dot" style="background:#e6a23c"></i>一般</span><strong>2</strong></div>
+                <div class="stat-row"><span class="left"><i class="dot" style="background:#e86a8a"></i>较弱</span><strong>3</strong></div>
+              </div>
+            </div>
+
+            <button class="practice-btn" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M13 7l4 4"/></svg>
+              练习记录
+            </button>
+
+            <div class="teacher-card">
+              <div class="card-title">小乐老师推荐</div>
+              <div class="teacher-entries">
+                <button class="entry" type="button" data-nav="course-center">
+                  <div class="entry-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5l8-2 8 2v14l-8 2-8-2z"/><path d="M12 3v18"/></svg>
+                  </div>
+                  <div class="label">课程中心 <em>›</em></div>
+                </button>
+                <button class="entry" type="button" data-nav="papers">
+                  <div class="entry-icon orange">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg>
+                  </div>
+                  <div class="label">精选卷 <em>›</em></div>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 课程中心 · 小节 ========== -->
+    <div class="view" id="view-section">
+      <div class="app">
+        <header class="header">
+          <button class="header-back" type="button" data-nav="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            返回
+          </button>
+          <div class="header-title">课程中心</div>
+          <div class="header-action">
+            <span class="req-anchor-inline" data-req-anchor="section.filter.entry">
+              <button type="button" aria-label="筛选" data-open-filter>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16l-6 7v5l-4 2v-7L4 5z"/></svg>
+              </button>
+            </span>
+          </div>
+        </header>
+
+        <nav class="tabs" data-scope="section">
+          <button class="tab active" data-panel="section-sync" type="button">同步课</button>
+          <button class="tab" data-panel="section-school" type="button">校本课</button>
+        </nav>
+
+        <main class="content content-section">
+          <div class="section-title-row">
+            <div class="section-title req-anchor-inline" data-req-anchor="section.scope.title">UNIT 1 Teenage life Section A</div>
+            <span class="req-anchor-inline req-marker-slot" data-req-anchor="section.source.tabs" aria-hidden="true"></span>
+          </div>
+
+          <div class="panel active" id="section-sync" data-panel-scope="section">
+            <div class="section-split">
+              <!-- 左：三类来源用 Tab 切换，避免纵向堆叠 -->
+              <div class="section-main">
+                <span class="req-anchor-inline req-list-scroll-slot" data-req-anchor="section.list.scroll" aria-hidden="true"></span>
+                <div class="source-tabs" role="tablist">
+                  <button class="source-tab active" type="button" data-source="research">
+                    <span class="source-dot"></span>
+                    平台精选课
+                    <em class="req-anchor-inline" data-req-anchor="section.source.count">2</em>
+                  </button>
+                  <button class="source-tab req-anchor-inline" type="button" data-source="teacher" data-req-anchor="section.source.teacher.type">
+                    <span class="source-dot blue"></span>
+                    任课教师备课资料
+                    <em>4</em>
+                  </button>
+                  <button class="source-tab" type="button" data-source="recording">
+                    <span class="source-dot orange"></span>
+                    课堂录像
+                    <em>1</em>
+                  </button>
+                </div>
+
+                <div class="source-panel active" data-source-panel="research">
+                  <p class="source-desc req-anchor-inline" data-req-anchor="section.source.desc">平台精选的同步学习课程，建议优先学习以掌握本小节核心知识点。</p>
+                  <div class="resource-grid cols-3">
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">高中英语</div><div class="main">重点词汇</div><div class="sub">平台精选</div></div></div>
+                      <div class="resource-name">Teenage life Section A 同步课</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>15:00</span>
+                        <span class="req-anchor-inline" data-req-anchor="section.filter.course">
+                          <span class="status todo req-anchor-inline" data-req-anchor="section.course.status">待学习</span>
+                        </span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">高中英语</div><div class="main">定语从句</div><div class="sub">平台精选</div></div></div>
+                      <div class="resource-name">Unit1 Section A 语法精讲</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>18:20</span>
+                        <span class="status doing">学习中</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="source-panel" data-source-panel="teacher">
+                  <p class="source-desc">本班任课教师为该小节准备的课件资料，可结合课堂进度查看，巩固当堂所学。</p>
+                  <div class="resource-grid cols-3">
+                    <article class="resource-card">
+                      <div class="resource-thumb type-video">
+                        <span class="type-badge">视频</span>
+                        <div class="thumb-label">
+                          <div class="main">听说精讲</div>
+                          <div class="sub">教师备课 · 视频</div>
+                        </div>
+                        <span class="play-btn" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                      </div>
+                      <div class="resource-name">Section A 听说课备课视频</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>12:40</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb type-video">
+                        <span class="type-badge">视频</span>
+                        <div class="thumb-label">
+                          <div class="main">词汇导学</div>
+                          <div class="sub">教师备课 · 视频</div>
+                        </div>
+                        <span class="play-btn" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                      </div>
+                      <div class="resource-name">Teenage life 重点词汇导学视频</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>08:25</span>
+                        <span class="status doing">学习中</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb type-ppt">
+                        <span class="type-badge ppt">PPT课件</span>
+                        <div class="ppt-slides" aria-hidden="true">
+                          <span></span><span></span><span></span>
+                        </div>
+                        <div class="thumb-label">
+                          <div class="main">第五课时</div>
+                          <div class="sub">教师备课 · PPT</div>
+                        </div>
+                      </div>
+                      <div class="resource-name">Unit1 English around the world 第五课时课件</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h4"/></svg>
+                          18 页
+                        </span>
+                        <span class="status done">已学习</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb type-ppt">
+                        <span class="type-badge ppt">PPT课件</span>
+                        <div class="ppt-slides" aria-hidden="true">
+                          <span></span><span></span><span></span>
+                        </div>
+                        <div class="thumb-label">
+                          <div class="main">语法梳理</div>
+                          <div class="sub">教师备课 · PPT</div>
+                        </div>
+                      </div>
+                      <div class="resource-name">Section A 语法要点课件</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h4"/></svg>
+                          12 页
+                        </span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="source-panel" data-source-panel="recording">
+                  <p class="source-desc">当前小节的课堂录像，建议课后复习学习；回看老师讲解，便于查漏补缺。</p>
+                  <div class="resource-grid cols-3">
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">课堂录像</div><div class="main">星期四课堂</div><div class="sub">2026-04-02</div></div></div>
+                      <div class="resource-name">星期四(2026-04-02)14:49-14:59 课堂录像</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>10:00</span>
+                        <span class="status doing">学习中</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 右：练习试卷常显，首屏可见 -->
+              <aside class="section-papers">
+                <div class="papers-card">
+                  <div class="papers-head">
+                    <div>
+                      <h3 class="papers-title req-anchor-inline" data-req-anchor="section.papers.title">练习试卷</h3>
+                      <p class="papers-desc req-anchor-inline" data-req-anchor="section.papers.desc">学完课程后建议练习试卷，以可巩固学习内容</p>
+                    </div>
+                    <span class="papers-count req-anchor-inline" data-req-anchor="section.papers.count">3 套</span>
+                  </div>
+                  <div class="paper-list">
+                    <div class="paper-item is-todo">
+                      <div class="paper-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">UNIT 1 Section A 同步练习卷</div>
+                          <span class="paper-status todo req-anchor-inline" data-req-anchor="section.filter.paper">未练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 20 题</span><span>预计 25 分钟</span></div>
+                      </div>
+                      <span class="paper-action todo req-anchor-inline" data-req-anchor="section.papers.action">去练习 ›</span>
+                    </div>
+                    <div class="paper-item is-done">
+                      <div class="paper-icon done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">Teenage life 词汇巩固卷</div>
+                          <span class="paper-status done">已练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 15 题</span><span>得分 86</span></div>
+                      </div>
+                      <span class="paper-action done">查看详情 ›</span>
+                    </div>
+                    <div class="paper-item is-todo">
+                      <div class="paper-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">Section A 语法专项检测</div>
+                          <span class="paper-status todo">未练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 12 题</span><span>预计 20 分钟</span></div>
+                      </div>
+                      <span class="paper-action todo">去练习 ›</span>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="panel" id="section-school" data-panel-scope="section">
+            <section class="category">
+              <div class="resource-grid">
+                <article class="resource-card">
+                  <div class="resource-thumb"><div class="thumb-label"><div class="badge">校本课</div><div class="main">校本拓展</div><div class="sub">本校特色</div></div></div>
+                  <div class="resource-name">本校 · Teenage life 口语拓展课</div>
+                  <div class="resource-footer">
+                    <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>16:00</span>
+                    <span class="status todo">待学习</span>
+                  </div>
+                </article>
+                <article class="resource-card">
+                  <div class="resource-thumb"><div class="thumb-label"><div class="badge">校本课</div><div class="main">校本精讲</div><div class="sub">本校特色</div></div></div>
+                  <div class="resource-name">本校 · Section A 阅读策略课</div>
+                  <div class="resource-footer">
+                    <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>20:00</span>
+                    <span class="status done">已学习</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ========== 课程中心 · 章节 ========== -->
+    <div class="view" id="view-chapter">
+      <div class="app">
+        <header class="header">
+          <button class="header-back" type="button" data-nav="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            返回
+          </button>
+          <div class="header-title header-title-chapter" id="chapter-header-title">
+            <span class="header-title-main">课程中心</span><span class="header-title-sep">-</span><span class="header-title-unit" id="chapter-header-unit">UNIT 1 Teenage life</span>
+          </div>
+          <div class="header-action">
+            <button type="button" aria-label="筛选" data-open-filter>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16l-6 7v5l-4 2v-7L4 5z"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="chapter-tabs-shell theme-sync" id="chapter-tabs-shell">
+          <div class="student-edge" aria-hidden="true">
+            <svg class="edge-wave" viewBox="0 0 600 28" preserveAspectRatio="none">
+              <path class="wave-fill" d="M0,18 C40,8 80,26 120,16 C160,6 200,24 240,14 C280,4 320,22 360,12 C400,2 440,20 480,12 C520,4 560,18 600,10 L600,0 L0,0 Z"></path>
+            </svg>
+            <div class="edge-stickers">
+              <span class="sticker sk-1"></span>
+              <span class="sticker sk-2"></span>
+              <span class="sticker sk-3"></span>
+            </div>
+            <span class="edge-chip"></span>
+          </div>
+          <nav class="tabs" data-scope="chapter">
+            <button class="tab active" data-panel="chapter-sync" data-chapter-type="sync" type="button">同步课</button>
+            <button class="tab" data-panel="chapter-sync" data-chapter-type="topic" type="button">专题课</button>
+            <button class="tab" data-panel="chapter-sync" data-chapter-type="extend" type="button">拓展课</button>
+            <button class="tab" data-panel="chapter-school" type="button">校本课</button>
+          </nav>
+        </div>
+
+        <main class="content content-section">
+          <div class="panel active" id="chapter-sync" data-panel-scope="chapter">
+            <div class="chapter-stage theme-sync" id="chapter-type-split">
+              <div class="chapter-stage-body section-split">
+              <div class="section-main" id="chapter-course-main">
+                <div class="lane-head">
+                  <span class="lane-label">课程</span>
+                  <span class="lane-hint" id="chapter-course-hint">教材同步 · 循序渐进</span>
+                  <span class="lane-count" id="chapter-course-count">4 门</span>
+                </div>
+                <div class="source-panel active" data-chapter-panel="sync">
+                  <div class="resource-grid cols-3">
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">Unit 概述</div><div class="sub">章节同步</div></div></div>
+                      <div class="resource-name">UNIT 1 Teenage life 单元导读</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>12:00</span>
+                        <span class="status done">已学习</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">Section A</div><div class="sub">章节同步</div></div></div>
+                      <div class="resource-name">Teenage life Section A 同步课</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>15:00</span>
+                        <span class="status doing">学习中</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">Section B</div><div class="sub">章节同步</div></div></div>
+                      <div class="resource-name">Teenage life Section B 同步课</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>16:30</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">单元总结</div><div class="sub">章节同步</div></div></div>
+                      <div class="resource-name">UNIT 1 单元知识梳理</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>20:00</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="source-panel" data-chapter-panel="topic">
+                  <div class="resource-grid cols-3">
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">专题课</div><div class="main">词汇专题</div><div class="sub">重难点突破</div></div></div>
+                      <div class="resource-name">Teenage life 核心词汇专题</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>25:00</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">专题课</div><div class="main">语法专题</div><div class="sub">重难点突破</div></div></div>
+                      <div class="resource-name">定语从句专题精讲</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>28:40</span>
+                        <span class="status doing">学习中</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">专题课</div><div class="main">阅读专题</div><div class="sub">重难点突破</div></div></div>
+                      <div class="resource-name">青少年话题阅读策略专题</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>22:15</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="source-panel" data-chapter-panel="extend">
+                  <div class="resource-grid cols-3">
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">拓展课</div><div class="main">文化拓展</div><div class="sub">拔高提升</div></div></div>
+                      <div class="resource-name">英美青少年校园文化拓展</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>18:00</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                    <article class="resource-card">
+                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">拓展课</div><div class="main">写作拓展</div><div class="sub">拔高提升</div></div></div>
+                      <div class="resource-name">Teenage life 话题写作拓展</div>
+                      <div class="resource-footer">
+                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>24:00</span>
+                        <span class="status todo">待学习</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="section-papers">
+                <div class="papers-card" id="chapter-papers-card">
+                  <div class="lane-head lane-head-papers">
+                    <span class="lane-label">试卷</span>
+                    <span class="lane-hint" id="chapter-papers-hint">及时巩固</span>
+                    <span class="lane-count" id="chapter-papers-count">2 套</span>
+                  </div>
+
+                  <div class="paper-list chapter-papers active" data-chapter-papers="sync">
+                    <div class="paper-item is-todo">
+                      <div class="paper-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">UNIT 1 同步课 · 单元综合练习</div>
+                          <span class="paper-status todo">未练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 30 题</span><span>预计 40 分钟</span></div>
+                      </div>
+                      <span class="paper-action todo">去练习 ›</span>
+                    </div>
+                    <div class="paper-item is-done">
+                      <div class="paper-icon done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">UNIT 1 同步课 · Section 过关检测</div>
+                          <span class="paper-status done">已练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 18 题</span><span>得分 92</span></div>
+                      </div>
+                      <span class="paper-action done">查看详情 ›</span>
+                    </div>
+                  </div>
+
+                  <div class="paper-list chapter-papers" data-chapter-papers="topic">
+                    <div class="paper-item is-done">
+                      <div class="paper-icon done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">专题课 · 词汇与语法综合卷</div>
+                          <span class="paper-status done">已练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 24 题</span><span>得分 78</span></div>
+                      </div>
+                      <span class="paper-action done">查看详情 ›</span>
+                    </div>
+                    <div class="paper-item is-todo">
+                      <div class="paper-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+                      <div class="paper-body">
+                        <div class="paper-name-row">
+                          <div class="paper-name">专题课 · 阅读策略训练卷</div>
+                          <span class="paper-status todo">未练习</span>
+                        </div>
+                        <div class="paper-meta"><span>共 10 题</span><span>预计 35 分钟</span></div>
+                      </div>
+                      <span class="paper-action todo">去练习 ›</span>
+                    </div>
+                  </div>
+
+                  <div class="chapter-papers papers-empty" data-chapter-papers="extend">
+                    <div class="empty-illust" aria-hidden="true">
+                      <svg viewBox="0 0 120 96" fill="none">
+                        <rect x="28" y="18" width="64" height="62" rx="8" fill="#E8F5EE" stroke="#B7E0C8" stroke-width="2"/>
+                        <path d="M40 36h40M40 48h28M40 60h34" stroke="#8FCBAA" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="86" cy="70" r="16" fill="#FFF7E8" stroke="#F0C27A" stroke-width="2"/>
+                        <path d="M86 62v10M86 76h.01" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <p class="empty-title">暂未配置拓展课练习试卷</p>
+                    <p class="empty-desc">可以先去练习同步课或专题课的配套试卷，巩固所学内容。</p>
+                    <div class="empty-actions">
+                      <button type="button" class="empty-link" data-jump-chapter-type="sync">去同步课试卷</button>
+                      <button type="button" class="empty-link" data-jump-chapter-type="topic">去专题课试卷</button>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="chapter-school" data-panel-scope="chapter">
+            <section class="category">
+              <div class="resource-grid">
+                <article class="resource-card">
+                  <div class="resource-thumb"><div class="thumb-label"><div class="badge">校本课</div><div class="main">校本单元</div><div class="sub">本校特色</div></div></div>
+                  <div class="resource-name">本校 · UNIT 1 校本综合课</div>
+                  <div class="resource-footer">
+                    <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>30:00</span>
+                    <span class="status todo">待学习</span>
+                  </div>
+                </article>
+                <article class="resource-card">
+                  <div class="resource-thumb"><div class="thumb-label"><div class="badge">校本课</div><div class="main">校本研讨</div><div class="sub">本校特色</div></div></div>
+                  <div class="resource-name">本校 · 单元探究学习课</div>
+                  <div class="resource-footer">
+                    <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>26:00</span>
+                    <span class="status doing">学习中</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ========== 专项学习中心 ========== -->
+    <div class="view" id="view-special">
+      <div class="app special-app">
+        <header class="header">
+          <button class="header-back" type="button" data-nav="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            返回
+          </button>
+          <div class="header-title">专项学习中心</div>
+          <div class="header-action"></div>
+        </header>
+
+        <main class="special-main">
+          <div class="special-ribbon-wrap">
+            <div class="special-ribbon">
+              <div class="special-ribbon-name">二次函数核心要素</div>
+              <div class="special-ribbon-mastery">掌握度30%</div>
+            </div>
+            <div class="special-notify" aria-hidden="true">
+              <svg viewBox="0 0 36 40" width="28" height="32"><path d="M18 2c-7 0-12 5-12 12v6l-3 5h30l-3-5v-6C30 7 25 2 18 2z" fill="#5b9bd5"/><circle cx="18" cy="34" r="3" fill="#5b9bd5"/></svg>
+              <span class="special-notify-badge">1</span>
+            </div>
+          </div>
+
+          <div class="special-cards">
+            <button class="special-card card-learn" type="button" data-nav="kp-lecture">
+              <div class="special-card-illust">
+                <svg viewBox="0 0 160 120" width="140" height="105" aria-hidden="true">
+                  <ellipse cx="80" cy="100" rx="52" ry="10" fill="#d9ecff" opacity=".7"/>
+                  <path d="M38 78c0-18 18-34 42-34s42 16 42 34v6H38v-6z" fill="#fff" stroke="#7eb6e8" stroke-width="2"/>
+                  <path d="M48 50c0-16 12-28 32-28s32 12 32 28" fill="none" stroke="#7eb6e8" stroke-width="2"/>
+                  <rect x="52" y="58" width="56" height="8" rx="2" fill="#b8d9f5"/>
+                  <rect x="58" y="70" width="44" height="6" rx="2" fill="#cfe6fa"/>
+                  <circle cx="118" cy="42" r="16" fill="#ffe08a" stroke="#f0c14a" stroke-width="2"/>
+                  <path d="M118 30v4M118 50v4M106 42h4M126 42h4M109 33l3 3M124 51l3 3M109 51l3-3M124 33l3-3" stroke="#f0c14a" stroke-width="1.5"/>
+                  <path d="M98 78l22-18 8 6-22 18-8-6z" fill="#f7c948" stroke="#e0a800" stroke-width="1.5"/>
+                  <path d="M98 78l8 6v10l-8-4V78z" fill="#e0a800"/>
+                </svg>
+              </div>
+              <div class="special-card-title">知识点学习</div>
+              <div class="special-card-desc">精品微课、知识点精讲</div>
+            </button>
+
+            <div class="special-card card-practice is-disabled" aria-disabled="true">
+              <div class="special-card-illust">
+                <svg viewBox="0 0 160 120" width="140" height="105" aria-hidden="true">
+                  <ellipse cx="80" cy="100" rx="52" ry="10" fill="#ebe4ff" opacity=".7"/>
+                  <rect x="48" y="28" width="64" height="62" rx="8" fill="#fff" stroke="#b39ddb" stroke-width="2"/>
+                  <path d="M56 42h48M56 54h40M56 66h44" stroke="#d1c4e9" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M100 70l18-22 8 6-18 22-10-2 2-4z" fill="#ce93d8" stroke="#ab47bc" stroke-width="1.5"/>
+                  <circle cx="72" cy="78" r="6" fill="#ede7f6"/>
+                </svg>
+              </div>
+              <div class="special-card-title">题目练习</div>
+              <div class="special-card-desc">高效练习，AI讲解</div>
+            </div>
+
+            <div class="special-card card-record is-disabled" aria-disabled="true">
+              <div class="special-card-illust">
+                <svg viewBox="0 0 160 120" width="140" height="105" aria-hidden="true">
+                  <ellipse cx="80" cy="100" rx="52" ry="10" fill="#ffe8d6" opacity=".7"/>
+                  <circle cx="80" cy="58" r="34" fill="#fff" stroke="#ffb74d" stroke-width="3"/>
+                  <circle cx="80" cy="58" r="22" fill="none" stroke="#ffcc80" stroke-width="3"/>
+                  <circle cx="80" cy="58" r="10" fill="#ff7043"/>
+                  <path d="M80 58l18-20" stroke="#ef5350" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="108" cy="86" r="12" fill="#ffd54f" stroke="#f9a825" stroke-width="2"/>
+                  <text x="108" y="91" text-anchor="middle" font-size="12" fill="#f57f17" font-weight="700">¥</text>
+                </svg>
+              </div>
+              <div class="special-card-title">练习记录</div>
+              <div class="special-card-desc">查看记录，厘清盲点</div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ========== 知识点精讲 ========== -->
+    <div class="view" id="view-kp-lecture">
+      <div class="app lecture-app">
+        <header class="lecture-header">
+          <button class="lecture-back" type="button" data-nav="special" aria-label="返回">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <nav class="lecture-tabs" data-scope="lecture">
+            <button class="lecture-tab active" data-panel="lecture-text" type="button">知识点精讲</button>
+            <span class="lecture-tab-divider" aria-hidden="true"></span>
+            <button class="lecture-tab" data-panel="lecture-video" type="button">知识点视频</button>
+          </nav>
+          <div class="demo-mode-switch" role="group" aria-label="考点形态演示">
+            <span class="demo-mode-label">演示</span>
+            <button type="button" class="demo-mode-btn" data-kp-mode="multi">多考点</button>
+            <button type="button" class="demo-mode-btn active" data-kp-mode="single">单考点</button>
+          </div>
+        </header>
+
+        <main class="lecture-content">
+          <div class="panel active" id="lecture-text" data-panel-scope="lecture">
+            <div id="kp-card-root" class="kp-card-root"></div>
+          </div>
+
+          <div class="panel" id="lecture-video" data-panel-scope="lecture">
+            <div class="lecture-empty">
+              <div class="lecture-empty-icon">▶</div>
+              <p>知识点视频暂未接入，敬请期待</p>
+            </div>
+          </div>
+        </main>
+
+        <footer class="lecture-footer">
+          <button type="button" class="lecture-btn ghost">查看笔记(1)</button>
+          <button type="button" class="lecture-btn primary">去测试</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ========== 精选卷 ========== -->
+    <div class="view" id="view-papers">
+      <div class="app">
+        <header class="header">
+          <button class="header-back" type="button" data-nav="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            返回
+          </button>
+          <div class="header-title">精选卷-英语</div>
+          <div class="header-action">
+            <button type="button" aria-label="筛选" data-open-filter>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16l-6 7v5l-4 2v-7L4 5z"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <main class="content papers-content">
+          <div class="section-title">UNIT 1 Teenage life Section A</div>
+
+          <div class="featured-grid">
+            <!-- 未测试 -->
+            <article class="exam-card" data-exam-status="todo">
+              <div class="exam-thumb">
+                <div class="exam-thumb-inner">
+                  <div class="exam-sheet">
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line short"></span>
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line mid"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-body">
+                <div class="exam-name">Teenage life Section A 同步练习卷</div>
+                <div class="exam-info">
+                  <span>答题数量: 25</span>
+                  <span>满分: 100</span>
+                </div>
+                <div class="exam-result">
+                  <span class="result-label">测试结果</span>
+                  <span class="result-score empty">--</span>
+                </div>
+                <div class="exam-actions">
+                  <button type="button" class="exam-btn ghost">查看试卷</button>
+                  <button type="button" class="exam-btn primary">去测试</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 已测试：仅查看解析，不支持重新测试 -->
+            <article class="exam-card is-done" data-exam-status="done">
+              <div class="exam-thumb">
+                <span class="exam-tag">已测试</span>
+                <div class="exam-thumb-inner">
+                  <div class="exam-sheet">
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line short"></span>
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line mid"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-body">
+                <div class="exam-name">Teenage life Section A 词汇巩固卷</div>
+                <div class="exam-info">
+                  <span>答题数量: 25</span>
+                  <span>满分: 100</span>
+                </div>
+                <div class="exam-result">
+                  <span class="result-label">测试结果</span>
+                  <span class="result-score">87分</span>
+                </div>
+                <div class="exam-actions">
+                  <button type="button" class="exam-btn primary wide">查看题目解析</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 未测试 -->
+            <article class="exam-card" data-exam-status="todo">
+              <div class="exam-thumb">
+                <div class="exam-thumb-inner">
+                  <div class="exam-sheet">
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line short"></span>
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line mid"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-body">
+                <div class="exam-name">Section A 语法专项检测</div>
+                <div class="exam-info">
+                  <span>答题数量: 20</span>
+                  <span>满分: 100</span>
+                </div>
+                <div class="exam-result">
+                  <span class="result-label">测试结果</span>
+                  <span class="result-score empty">--</span>
+                </div>
+                <div class="exam-actions">
+                  <button type="button" class="exam-btn ghost">查看试卷</button>
+                  <button type="button" class="exam-btn primary">去测试</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 已测试：仅查看解析 -->
+            <article class="exam-card is-done" data-exam-status="done">
+              <div class="exam-thumb">
+                <span class="exam-tag">已测试</span>
+                <div class="exam-thumb-inner">
+                  <div class="exam-sheet">
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line short"></span>
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line mid"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-body">
+                <div class="exam-name">Teenage life Section A 综合测评</div>
+                <div class="exam-info">
+                  <span>答题数量: 30</span>
+                  <span>满分: 100</span>
+                </div>
+                <div class="exam-result">
+                  <span class="result-label">测试结果</span>
+                  <span class="result-score">62分</span>
+                </div>
+                <div class="exam-actions">
+                  <button type="button" class="exam-btn primary wide">查看题目解析</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 测试中：继续测试 -->
+            <article class="exam-card" data-exam-status="doing">
+              <div class="exam-thumb">
+                <div class="exam-thumb-inner">
+                  <div class="exam-sheet">
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line short"></span>
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line mid"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-body">
+                <div class="exam-name">Section A 阅读理解精练</div>
+                <div class="exam-info">
+                  <span>答题数量: 15</span>
+                  <span>满分: 100</span>
+                </div>
+                <div class="exam-result">
+                  <span class="result-label">测试结果</span>
+                  <span class="result-score empty">--</span>
+                </div>
+                <div class="exam-actions">
+                  <button type="button" class="exam-btn ghost">查看试卷</button>
+                  <button type="button" class="exam-btn primary">继续测试</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 待自批 -->
+            <article class="exam-card" data-exam-status="selfcheck">
+              <div class="exam-thumb">
+                <div class="exam-thumb-inner">
+                  <div class="exam-sheet">
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line short"></span>
+                    <span class="sheet-line"></span>
+                    <span class="sheet-line mid"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="exam-body">
+                <div class="exam-name">Teenage life 写作专项练习</div>
+                <div class="exam-info">
+                  <span>答题数量: 8</span>
+                  <span>满分: 100</span>
+                </div>
+                <div class="exam-result">
+                  <span class="result-label">测试结果</span>
+                  <span class="result-score empty">--</span>
+                </div>
+                <div class="exam-actions">
+                  <button type="button" class="exam-btn ghost">查看试卷</button>
+                  <button type="button" class="exam-btn primary">去自批</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <p class="papers-footer-tip">更多试卷正在更新中，敬请期待~</p>
+        </main>
+      </div>
+    </div>
+
+        <!-- 课程中心入口选择（限制在平板画布内） -->
+        <div class="modal-mask" id="course-modal">
+          <div class="modal">
+            <h3>进入课程中心</h3>
+            <p>原型中可分别查看两种维度页面。正式产品里会根据当前选中的小节 / 章节自动进入对应视图。</p>
+            <div class="modal-actions">
+              <button class="primary" type="button" data-nav="section">小节维度（三种来源 + 练习试卷）</button>
+              <button class="secondary" type="button" data-nav="chapter">章节维度（同步/专题/拓展 + 配套试卷）</button>
+              <button class="cancel" type="button" data-close-modal>取消</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 筛选抽屉：放在 shell 内，保证盖住课程中心内容 -->
+        <div class="filter-mask" id="filter-drawer" hidden>
+          <div class="filter-panel" role="dialog" aria-label="筛选" aria-modal="true">
+            <div class="filter-head">
+              <h3>筛选</h3>
+              <button type="button" class="filter-close" data-close-filter aria-label="关闭">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div class="filter-body">
+              <div class="filter-field">
+                <label class="filter-label">学习状态</label>
+                <div class="filter-select" id="filter-select">
+                  <button type="button" class="filter-select-trigger" id="filter-trigger">
+                    <span id="filter-trigger-text">待学习</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <div class="filter-options" id="filter-options">
+                    <button type="button" class="filter-option active" data-value="todo">待学习</button>
+                    <button type="button" class="filter-option" data-value="learning">学习中</button>
+                    <button type="button" class="filter-option" data-value="learned">已学习</button>
+                    <button type="button" class="filter-option" data-value="practiced">已练习</button>
+                    <button type="button" class="filter-option" data-value="unpracticed">待练习</button>
+                  </div>
+                </div>
+                <p class="filter-hint">课程资源可选「待学习 / 学习中 / 已学习」；练习试卷可选「已练习 / 待练习」。</p>
+              </div>
+            </div>
+            <div class="filter-foot">
+              <button type="button" class="filter-btn cancel" data-close-filter>取消</button>
+              <button type="button" class="filter-btn confirm" id="filter-confirm">确定</button>
+            </div>
+          </div>
+        </div>
+        </div><!-- /.shell -->
+      </div><!-- /.device-bezel -->
+    </div><!-- /.device-frame -->
+  </div><!-- /.device-stage -->
+
+  <script src="js/requirements/section-course.registry.js?v=20260810g"></script>
+  <script src="js/requirements/index.js?v=20260810f"></script>
+  <script src="js/prd/requirement-utils.js?v=20260810f"></script>
+  <script src="js/prd/requirement-floating-card.js?v=20260810f"></script>
+  <script src="js/prd/requirement-marker.js?v=20260810i"></script>
+  <script src="js/app.js?v=20260810aa"></script>
+</body>
+</html>

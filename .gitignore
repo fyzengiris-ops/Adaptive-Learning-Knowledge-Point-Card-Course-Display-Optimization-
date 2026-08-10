@@ -1,0 +1,12 @@
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+
+# Local temp patch scripts
+scripts/_*.js
+
+# Optional local env
+.env
+.env.*

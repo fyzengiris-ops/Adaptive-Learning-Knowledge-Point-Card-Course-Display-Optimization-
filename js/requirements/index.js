@@ -11,6 +11,12 @@
   if (global.chapterCourseRegistry) {
     registries.push(global.chapterCourseRegistry);
   }
+  if (global.kpLectureConceptRegistry) {
+    registries.push(global.kpLectureConceptRegistry);
+  }
+  if (global.kpLectureExamRegistry) {
+    registries.push(global.kpLectureExamRegistry);
+  }
 
   global.requirementRegistries = registries;
 

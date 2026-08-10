@@ -320,9 +320,7 @@
       examPoints: [
         {
           name: "考点1：判断一般幂函数的单调性",
-          direction:
-            "直接给定幂函数解析式，判断单调区间，重点考察定义域与 α 符号的结合。",
-          stem: "判断函数 y = x<sup>2/3</sup> 的定义域与单调性。",
+          stem: "已知函数 y = x<sup>2/3</sup>。请先指出该函数的定义域，再判断它在定义域上的单调性，并说明判断依据；若存在单调区间，请写出相应的单调递增区间与单调递减区间。",
           steps: [
             {
               text: "1. 明确定义域与指数符号：",
@@ -337,90 +335,56 @@
               hl: "又因为 α = 2/3 的分子为偶数，函数为偶函数，图像关于 y 轴对称，所以左侧与右侧单调方向相反，故在 (-∞, 0] 上单调递减。",
             },
           ],
-          keyPoints: [
-            "第一步必求定义域，单调性不能脱离定义域单独讨论；",
-            "先由 α 符号确定 [0, +∞) 上的单调性；",
-            "结合奇偶性推导对称区间的单调性，无对称性则单独分析。",
-          ],
+          level: "综合",
+          difficulty: "中",
+          mistakes: ["忽略定义域直接谈单调性", "偶函数对称区间单调方向写反"],
         },
         {
           name: "考点2：判断与幂函数相关的复合函数的单调性",
-          direction:
-            "幂函数作为外层 / 内层函数构成复合函数，判断单调区间，核心法则为“同增异减”。",
           stem: "求函数 f(x) = √(x² − 2x − 3) 的单调递增区间。",
           steps: [
             { text: "1. 求定义域：", hl: "(-∞, −1] ∪ [3, +∞)" },
             { text: "2. 拆分内外层：", hl: "外层 √t 在 [0, +∞) 递增" },
             { text: "3. 同增异减得：", hl: "单调递增区间为 [3, +∞)" },
           ],
-          keyPoints: [
-            "定义域优先：所有单调区间必为定义域的子集；",
-            "拆分内外层函数，分别判断各自单调性；",
-            "依据“同增异减”确定复合单调性，注意内层值域需匹配外层定义域。",
-          ],
+          level: "运用",
+          difficulty: "中",
+          mistakes: ["复合函数未拆分内外层", "忽略定义域子集约束"],
         },
         {
           name: "考点3：由幂函数的单调性求参数",
-          direction:
-            "已知单调性求解解析式中参数，常结合幂函数定义（系数为 1）综合考察。",
           stem: "已知幂函数 f(x) = (m² − m − 1)x<sup>m² − 2m − 3</sup> 在 (0, +∞) 上单调递减，求实数 m 的值。",
           steps: [
             { text: "1. 由幂函数定义，系数必为 1：", hl: "m = 2 或 m = −1" },
             { text: "2. 代入指数并用递减条件筛选：", hl: "仅 m = 2 符合" },
             { text: "3. 结论：", hl: "m = 2" },
           ],
-          keyPoints: [
-            "先利用“系数为 1”求出参数的所有候选值；",
-            "代入指数，根据 α 的符号与单调性条件筛选；",
-            "验证定义域与特殊情况（如 α = 0 时常函数），排除矛盾解。",
-          ],
+          level: "综合",
+          difficulty: "中",
+          mistakes: ["只求系数条件未检验单调性", "漏掉 α = 0 的常函数情形"],
         },
         {
           name: "考点4：由幂函数的单调性解不等式",
-          direction:
-            "利用单调性将函数值不等式转化为自变量不等式，常结合奇偶性、定义域设置易错点。",
           stem: "已知幂函数 f(x) = x<sup>2/3</sup>，解不等式 f(2x − 1) < f(x + 2)。",
           steps: [
             { text: "1. 利用偶性与单调性转化：", hl: "|2x − 1| < |x + 2|" },
             { text: "2. 平方整理：", hl: "3x² − 8x − 3 < 0" },
             { text: "3. 解得：", hl: "−1/3 < x < 3" },
           ],
-          keyPoints: [
-            "先明确函数的奇偶性与核心单调区间；",
-            "偶函数利用 f(x) = f(|x|) 转化为非负区间的不等式，避免分类讨论；",
-            "转化后需验证自变量定义域，确保有意义。",
-          ],
+          level: "运用",
+          difficulty: "中",
+          mistakes: ["偶函数未先取绝对值", "转化后未检验定义域"],
         },
         {
           name: "考点5：由幂函数的单调性比较大小",
-          direction:
-            "给定多个幂式，利用幂函数单调性比较大小，为高考选择填空常见题型。",
-          stem: "比较下列两组数的大小：(1) 1.5<sup>1/3</sup> 与 1.7<sup>1/3</sup>；(2) 3.14<sup>−2/3</sup> 与 π<sup>−2/3</sup>。",
+          stem: "比较 1.5<sup>1/3</sup> 与 1.7<sup>1/3</sup>；以及 3.14<sup>−2/3</sup> 与 π<sup>−2/3</sup> 的大小。",
           steps: [
             { text: "1. 同指数正幂：构造 y = x<sup>1/3</sup>，", hl: "1.5<sup>1/3</sup> < 1.7<sup>1/3</sup>" },
             { text: "2. 同指数负幂：构造 y = x<sup>−2/3</sup>，", hl: "3.14<sup>−2/3</sup> > π<sup>−2/3</sup>" },
           ],
-          keyPoints: [
-            "指数相同、底数不同：构造对应幂函数，直接用单调性比较；",
-            "α > 0 时，底数越大函数值越大；α < 0 时，底数越大函数值越小；",
-            "底数不在同一单调区间时，借助 0、1 等中间量过渡比较。",
-          ],
-        },
-        {
-          name: "考点6：幂函数单调性的其他应用",
-          direction:
-            "综合定义、奇偶性、单调性，解决值域、恒成立、参数范围等综合问题。",
-          stem: "已知幂函数 f(x) = x<sup>m² − 2m − 3</sup>（m ∈ ℕ*）的图象关于 y 轴对称，且在 (0, +∞) 上单调递减，求满足 (a+1)<sup>−m/3</sup> < (3−2a)<sup>−m/3</sup> 的实数 a 的取值范围。",
-          steps: [
-            { text: "1. 由单调性与奇偶性求参数 m：", hl: "得 m = 1，指数为 −1/3" },
-            { text: "2. 按同正 / 同负 / 一负一正分类讨论：", hl: "注意 y = x<sup>−1/3</sup> 在正负区间均递减" },
-            { text: "3. 综合得：", hl: "a ∈ (−∞, −1) ∪ (2/3, 3/2)" },
-          ],
-          keyPoints: [
-            "先用奇偶性与单调性锁定未知参数；",
-            "解幂函数不等式时关注定义域与不同区间的符号变化，常需分类讨论；",
-            "综合题要把“求参”和“解不等式”拆成两段，逐步落地。",
-          ],
+          level: "掌握",
+          difficulty: "易",
+          mistakes: ["α 符号判断错误导致大小反向"],
         },
       ],
     },
@@ -446,33 +410,26 @@
       examPoints: [
         {
           name: "考点：根据方程的解求字母值",
-          direction:
-            "已知方程的一个解，反求字母参数，核心是“代回去”得到只含字母的方程。",
           stem: "已知 x = 1 是方程 2ax − 5 = a 的解，则 a =（ ）。",
           steps: [
             { text: "1. 将已知解代入原方程，", hl: "将 x = 1 代入方程 2ax − 5 = a" },
             { text: "2. 得到仅含待求字母的方程", hl: "2a − 5 = a" },
             { text: "3. 解此方程得到字母值", hl: "a = 5" },
           ],
-          keyPoints: [
-            "把已知解完整代入原方程，得到关于字母的方程；",
-            "整理并求解字母，注意移项变号；",
-            "必要时回代检验，确认字母值使原方程有意义。",
-          ],
+          level: "综合",
+          difficulty: "中",
+          mistakes: ["代入后符号处理错误", "未检验所得字母值是否使原方程有意义"],
         },
       ],
     },
   };
 
   const kpRoot = document.getElementById("kp-card-root");
-  let kpMode = "multi";
+  let kpMode = "single";
   let kpPage = 0; // 0 核心概念 | 1 考点
-  /** @type {Record<number, boolean>} 已展开的考点 */
-  let kpOpenExams = Object.create(null);
-  /** @type {Record<number, boolean>} 各考点解析是否展开 */
-  let kpAnalysisOpenMap = Object.create(null);
-  /** @type {Record<number, boolean>} 各考点好题本状态 */
-  let kpFavoritedMap = Object.create(null);
+  let kpSelectedIndex = 0; // 多考点：-1 未展开；单考点固定 0
+  let kpAnalysisOpen = false;
+  let kpFavorited = false;
   let kpSwipeBound = false;
   let kpToastTimer = null;
 
@@ -508,151 +465,90 @@
       .replace(/&lt;\/sup&gt;/g, "</sup>");
   }
 
-  function buildDirectionHtml(point, withAnchor) {
-    if (!point.direction) return "";
-    return (
-      '<div class="kp-direction' +
-      (withAnchor ? " req-anchor-inline" : "") +
-      '"' +
-      (withAnchor ? ' data-req-anchor="kp-lecture.exam.direction"' : "") +
-      ">" +
-      '<div class="kp-direction-label">考点说明：</div>' +
-      '<p class="kp-direction-text">' +
-      formatRich(point.direction) +
-      "</p>" +
-      "</div>"
-    );
-  }
+  function buildExampleHtml(point) {
+    const stepsHtml = (point.steps || [])
+      .map(function (step) {
+        return (
+          '<div class="kp-step">' +
+          '<div class="kp-step-label">' +
+          formatRich(step.text) +
+          "</div>" +
+          (step.hl
+            ? '<div class="kp-step-detail"><span class="kp-hl">' +
+              formatRich(step.hl) +
+              "</span></div>"
+            : "") +
+          "</div>"
+        );
+      })
+      .join("");
 
-  function buildExampleHtml(point, examIndex, withAnchors) {
-    const steps = point.steps || [];
-    const stepsHtml = steps.length
-      ? steps
-          .map(function (step) {
-            return (
-              '<div class="kp-step">' +
-              '<div class="kp-step-label">' +
-              formatRich(step.text) +
-              "</div>" +
-              (step.hl
-                ? '<div class="kp-step-detail"><span class="kp-hl">' +
-                  formatRich(step.hl) +
-                  "</span></div>"
-                : "") +
-              "</div>"
-            );
-          })
-          .join("")
-      : '<div class="kp-steps-empty">更新中~</div>';
-
-    const keyPoints = point.keyPoints || [];
-    const keyPointsHtml = keyPoints.length
-      ? '<div class="kp-keypoints">' +
-        '<div class="kp-keypoints-title"' +
-        (withAnchors ? ' data-req-anchor="kp-lecture.exam.keypoints"' : "") +
-        "><span>解题要点</span></div>" +
-        '<ol class="kp-keypoints-list">' +
-        keyPoints
-          .map(function (item) {
-            return "<li>" + formatRich(item) + "</li>";
-          })
-          .join("") +
-        "</ol></div>"
-      : "";
-
-    const favorited = !!kpFavoritedMap[examIndex];
-    const analysisOpen = !!kpAnalysisOpenMap[examIndex];
-    const favLabel = favorited ? "移出好题本" : "加入好题本";
-
-    const badgeBlock =
-      '<div class="kp-example-badge' +
-      (favorited ? " is-added" : "") +
-      (withAnchors ? " req-anchor-inline" : "") +
-      '"' +
-      (withAnchors ? ' data-req-anchor="kp-lecture.exam.example-badge"' : "") +
-      ">" +
-      "<span>典型例题</span>" +
-      '<button type="button" class="kp-star-btn' +
-      (favorited ? " is-added" : "") +
-      (withAnchors ? " req-anchor-inline" : "") +
-      '"' +
-      (withAnchors ? ' data-req-anchor="kp-lecture.exam.favorite"' : "") +
-      ' data-kp-action="favorite" data-exam-index="' +
-      examIndex +
-      '" aria-label="' +
-      favLabel +
-      '">' +
-      STAR_ICON +
-      "</button></div>";
-
-    const footBlock =
-      '<div class="kp-foot">' +
-      '<button type="button" class="kp-fav-btn' +
-      (favorited ? " is-added" : "") +
-      '" data-kp-action="favorite" data-exam-index="' +
-      examIndex +
-      '" aria-label="' +
-      favLabel +
-      '">' +
-      "<span>" +
-      favLabel +
-      "</span>" +
-      STAR_ICON +
-      "</button>" +
-      (withAnchors
-        ? '<span class="req-anchor-inline req-marker-slot" data-req-anchor="kp-lecture.exam.favorite-toast" aria-hidden="true"></span>'
-        : "") +
-      "</div>";
+    const mistakesHtml = (point.mistakes || [])
+      .map(function (m, i) {
+        return i + 1 + ". " + formatRich(m);
+      })
+      .join("；");
 
     return (
       '<div class="kp-example">' +
-      badgeBlock +
-      (withAnchors
-        ? '<span class="req-anchor-inline req-marker-slot kp-exam-analysis-slot" data-req-anchor="kp-lecture.exam.analysis" aria-hidden="true"></span>'
-        : "") +
+      '<div class="kp-example-badge' +
+      (kpFavorited ? " is-added" : "") +
+      '">' +
+      "<span>典型例题</span>" +
+      '<button type="button" class="kp-star-btn' +
+      (kpFavorited ? " is-added" : "") +
+      '" data-kp-action="favorite" aria-label="' +
+      (kpFavorited ? "移出好题本" : "加入好题本") +
+      '">' +
+      STAR_ICON +
+      "</button></div>" +
       '<button type="button" class="kp-analysis-btn' +
-      (analysisOpen ? " is-open" : "") +
-      '" data-kp-action="analysis" data-exam-index="' +
-      examIndex +
-      '" aria-label="' +
-      (analysisOpen ? "收起解析" : "查看解析") +
+      (kpAnalysisOpen ? " is-open" : "") +
+      '" data-kp-action="analysis" aria-label="' +
+      (kpAnalysisOpen ? "收起解析" : "查看解析") +
       '">' +
       ANALYSIS_EYE_ICON +
       "<span>解析</span></button>" +
-      '<div class="kp-example-stem"' +
-      (withAnchors ? ' data-req-anchor="kp-lecture.exam.stem"' : "") +
-      ">" +
+      '<div class="kp-example-stem">' +
       formatRich(point.stem) +
       "</div>" +
       '<div class="kp-analysis' +
-      (analysisOpen ? " is-open" : "") +
-      '" data-kp-analysis data-exam-index="' +
-      examIndex +
-      '">' +
-      '<div class="kp-analysis-title' +
-      (withAnchors ? " req-anchor-inline" : "") +
-      '"' +
-      (withAnchors ? ' data-req-anchor="kp-lecture.exam.steps"' : "") +
-      "><span>✦</span><span>解题步骤</span></div>" +
+      (kpAnalysisOpen ? " is-open" : "") +
+      '" data-kp-analysis>' +
+      '<div class="kp-analysis-title"><span>✦</span><span>解题步骤</span></div>' +
       '<div class="kp-steps">' +
       stepsHtml +
       "</div>" +
-      keyPointsHtml +
-      footBlock +
-      "</div>" +
-      '<div class="kp-toast" data-kp-toast data-exam-index="' +
-      examIndex +
-      '" hidden></div>' +
+      '<div class="kp-analysis-meta">' +
+      '<div class="kp-meta-row"><i>能力</i><span>' +
+      formatRich(point.level || "—") +
+      "</span></div>" +
+      '<div class="kp-meta-row"><i>难度</i><span>' +
+      formatRich(point.difficulty || "—") +
+      "</span></div>" +
+      '<div class="kp-meta-row wide"><i>易错点</i><span>' +
+      mistakesHtml +
+      "</span></div></div>" +
+      '<div class="kp-foot">' +
+      '<button type="button" class="kp-fav-btn' +
+      (kpFavorited ? " is-added" : "") +
+      '" data-kp-action="favorite" aria-label="' +
+      (kpFavorited ? "移出好题本" : "加入好题本") +
+      '">' +
+      "<span>" +
+      (kpFavorited ? "移出好题本" : "加入好题本") +
+      "</span>" +
+      STAR_ICON +
+      "</button>" +
+      "</div></div>" +
+      '<div class="kp-toast" data-kp-toast hidden></div>' +
       "</div>"
     );
   }
 
-  function showKpToast(message, examIndex) {
+  function showKpToast(message) {
     if (!kpRoot) return;
-    const toast =
-      (typeof examIndex === "number"
-        ? kpRoot.querySelector('[data-kp-toast][data-exam-index="' + examIndex + '"]')
-        : null) || kpRoot.querySelector("[data-kp-toast]");
+    const toast = kpRoot.querySelector("[data-kp-toast]");
     if (!toast) return;
     toast.textContent = message;
     toast.hidden = false;
@@ -664,36 +560,20 @@
     }, 1600);
   }
 
-  function syncFavoriteUI(examIndex) {
+  function syncFavoriteUI() {
     if (!kpRoot) return;
-    const favorited = !!kpFavoritedMap[examIndex];
-    const scope = kpRoot.querySelector('.kp-exam-card[data-exam-card="' + examIndex + '"]') || kpRoot;
-    const badge = scope.querySelector(".kp-example-badge");
-    if (badge) badge.classList.toggle("is-added", favorited);
-    scope.querySelectorAll('[data-kp-action="favorite"][data-exam-index="' + examIndex + '"]').forEach(function (el) {
-      el.classList.toggle("is-added", favorited);
-      el.setAttribute("aria-label", favorited ? "移出好题本" : "加入好题本");
+    const badge = kpRoot.querySelector(".kp-example-badge");
+    if (badge) badge.classList.toggle("is-added", kpFavorited);
+    kpRoot.querySelectorAll('[data-kp-action="favorite"]').forEach(function (el) {
+      el.classList.toggle("is-added", kpFavorited);
+      el.setAttribute("aria-label", kpFavorited ? "移出好题本" : "加入好题本");
       const btnText = el.querySelector("span");
-      if (btnText) btnText.textContent = favorited ? "移出好题本" : "加入好题本";
+      if (btnText) btnText.textContent = kpFavorited ? "移出好题本" : "加入好题本";
     });
   }
 
-  function resetKpExamPageState() {
-    kpOpenExams = Object.create(null);
-    kpAnalysisOpenMap = Object.create(null);
-  }
-
-  function resetKpInteraction() {
-    // 保留各考点解析/好题本独立状态；仅在需要时由调用方清理解析
-  }
-
   function setKpPage(page) {
-    const next = page === 1 ? 1 : 0;
-    const enteringExam = next === 1 && kpPage !== 1;
-    if (enteringExam) {
-      kpAnalysisOpenMap = Object.create(null);
-    }
-    kpPage = next;
+    kpPage = page === 1 ? 1 : 0;
     if (!kpRoot) return;
     const slider = kpRoot.querySelector(".kp-slider");
     if (slider) slider.setAttribute("data-page", String(kpPage));
@@ -707,31 +587,31 @@
     const nextBtn = kpRoot.querySelector('[data-kp-nav="next"]');
     if (prevBtn) prevBtn.disabled = kpPage === 0;
     if (nextBtn) nextBtn.disabled = kpPage === 1;
-    if (enteringExam) {
-      kpRoot.querySelectorAll("[data-kp-analysis]").forEach(function (el) {
-        el.classList.remove("is-open");
-      });
-      kpRoot.querySelectorAll('[data-kp-action="analysis"]').forEach(function (btn) {
-        btn.classList.remove("is-open");
-        btn.setAttribute("aria-label", "查看解析");
-      });
-    }
-    remountKpRequirementMarkers();
   }
 
   function renderKpCard() {
     if (!kpRoot) return;
     const data = KP_DATASETS[kpMode] || KP_DATASETS.multi;
-    const points = Array.isArray(data.examPoints) ? data.examPoints : [];
+    const points = data.examPoints || [];
+    if (!points.length) {
+      kpRoot.innerHTML = '<div class="kp-deck"><p>暂无知识点内容</p></div>';
+      return;
+    }
 
-    // 公式定理：多考点保留多条编号示例；单考点只展示 1 条简版
+    const isMulti = points.length > 1;
+    if (!isMulti) {
+      kpSelectedIndex = 0;
+    } else if (kpSelectedIndex >= points.length) {
+      kpSelectedIndex = -1;
+    }
+
+    // 单考点只展示 1 条公式；多考点按数据全量展示
     const formulasToShow = Array.isArray(data.formulas)
-      ? kpMode === "multi"
+      ? isMulti
         ? data.formulas
         : data.formulas.slice(0, 1)
       : [];
     const showFormula = formulasToShow.length > 0;
-    const formulaIsMultiStyle = kpMode === "multi" && formulasToShow.length > 1;
 
     function normalizeCoreItem(item) {
       if (item && typeof item === "object") {
@@ -744,73 +624,85 @@
       return { text: String(item || ""), image: "", imageAlt: "" };
     }
 
-    function buildCoreImageHtml(item, withImageAnchor) {
+    function buildCoreImageHtml(item) {
       if (!item.image) return "";
       return (
-        '<figure class="kp-concept-figure"' +
-        (withImageAnchor ? ' data-req-anchor="kp-lecture.concept.images"' : "") +
-        ">" +
-        '<button type="button" class="kp-concept-figure-btn" data-kp-action="preview-image" data-preview-src="' +
+        '<button type="button" class="kp-concept-thumb" data-kp-action="preview-image" data-preview-src="' +
         escapeHtml(item.image) +
         '" data-preview-alt="' +
         escapeHtml(item.imageAlt) +
-        '" aria-label="放大查看配图">' +
+        '" aria-label="查看大图">' +
         '<img src="' +
         escapeHtml(item.image) +
         '" alt="' +
         escapeHtml(item.imageAlt) +
         '" loading="lazy" />' +
-        "</button>" +
-        "</figure>"
+        '<span class="kp-concept-thumb-tip">点击查看</span>' +
+        "</button>"
       );
     }
 
-    // 核心概念：多/单考点统一为「要点」单容器呈现
-    let imageAnchorUsed = false;
-    const coreBlockHtml =
-      !data.core || !data.core.length
-        ? ""
-        : '<div class="kp-concept-panel">' +
-          '<div class="kp-concept-ribbon req-anchor-inline" data-req-anchor="kp-lecture.concept.points">要点</div>' +
-          '<div class="kp-concept-panel-body">' +
-          data.core
-            .map(function (p, i) {
-              const item = normalizeCoreItem(p);
-              const withImageAnchor = !!item.image && !imageAnchorUsed;
-              if (withImageAnchor) imageAnchorUsed = true;
-              return (
-                '<div class="kp-concept-point">' +
-                '<span class="kp-concept-point-num">' +
-                (i + 1) +
-                "</span>" +
-                '<div class="kp-concept-point-main">' +
-                '<p class="kp-concept-point-text' +
-                (i === 0 ? " req-anchor-inline" : "") +
-                '"' +
-                (i === 0 ? ' data-req-anchor="kp-lecture.concept.point-text"' : "") +
-                ">" +
-                formatRich(item.text) +
-                "</p>" +
-                buildCoreImageHtml(item, withImageAnchor) +
-                "</div></div>"
-              );
-            })
-            .join("") +
-          "</div></div>";
+    // 多考点：多卡片；单考点：单容器简版（便于评审对比）
+    const coreBlockHtml = isMulti
+      ? '<ul class="kp-concept-list">' +
+        data.core
+          .map(function (p, i) {
+            const item = normalizeCoreItem(p);
+            return (
+              '<li data-index="' +
+              (i + 1) +
+              '">' +
+              '<div class="kp-concept-item-body">' +
+              '<p class="kp-concept-point-text">' +
+              formatRich(item.text) +
+              "</p>" +
+              buildCoreImageHtml(item) +
+              "</div></li>"
+            );
+          })
+          .join("") +
+        "</ul>"
+      : '<div class="kp-concept-panel">' +
+        '<div class="kp-concept-ribbon">要点</div>' +
+        '<div class="kp-concept-panel-body">' +
+        data.core
+          .map(function (p, i) {
+            const item = normalizeCoreItem(p);
+            return (
+              '<div class="kp-concept-point">' +
+              '<span class="kp-concept-point-num">' +
+              (i + 1) +
+              "</span>" +
+              '<div class="kp-concept-point-main">' +
+              '<p class="kp-concept-point-text">' +
+              formatRich(item.text) +
+              "</p>" +
+              buildCoreImageHtml(item) +
+              "</div></div>"
+            );
+          })
+          .join("") +
+        "</div></div>";
+
+    function cleanExamName(name) {
+      return String(name || "").replace(/^考点\s*\d+\s*[：:]\s*/, "").replace(/^考点\s*[：:]\s*/, "");
+    }
 
     function buildExamCardHtml(ep, i, options) {
       const open = !!options.open;
-      const withShellAnchors = !!options.withShellAnchors;
-      const withContentAnchors = !!options.withContentAnchors;
-      const badgeText = "考点" + (i + 1);
+      const clickable = !!options.clickable;
+      const badgeText = options.badgeText || "考点";
       const tone = typeof options.tone === "number" ? options.tone % 3 : 0;
-      const title = formatRich(ep.name || "");
+      const title = formatRich(cleanExamName(ep.name) || ep.name);
+      const headTag = clickable ? "button" : "div";
+      const headAttrs = clickable
+        ? ' type="button" class="kp-exam-head" data-exam-index="' + i + '"'
+        : ' class="kp-exam-head"';
       return (
         '<div class="kp-exam-card tone-' +
         tone +
         (open ? " is-open" : "") +
-        ' is-clickable" data-exam-card="' +
-        i +
+        (clickable ? " is-clickable" : "") +
         '">' +
         '<div class="kp-exam-edge" aria-hidden="true">' +
         '<svg class="kp-exam-wave" viewBox="0 0 320 28" preserveAspectRatio="none">' +
@@ -819,80 +711,56 @@
         '<div class="kp-exam-stickers">' +
         '<span class="eks ek-1"></span><span class="eks ek-2"></span><span class="eks ek-3"></span>' +
         "</div>" +
-        '<span class="kp-exam-badge' +
-        (withShellAnchors ? " req-anchor-inline" : "") +
-        '"' +
-        (withShellAnchors ? ' data-req-anchor="kp-lecture.exam.badge"' : "") +
-        ">" +
+        '<span class="kp-exam-badge">' +
         formatRich(badgeText) +
         "</span>" +
         "</div>" +
-        '<button type="button" class="kp-exam-head' +
-        (withShellAnchors ? " req-anchor-inline" : "") +
-        '"' +
-        (withShellAnchors ? ' data-req-anchor="kp-lecture.exam.expand"' : "") +
-        ' data-exam-index="' +
-        i +
-        '">' +
-        '<div class="kp-exam-title' +
-        (withShellAnchors ? " req-anchor-inline" : "") +
-        '"' +
-        (withShellAnchors ? ' data-req-anchor="kp-lecture.exam.name"' : "") +
+        "<" +
+        headTag +
+        headAttrs +
         ">" +
+        '<div class="kp-exam-title">' +
         title +
         "</div>" +
-        '<svg class="kp-exam-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>' +
-        "</button>" +
-        (open
-          ? buildDirectionHtml(ep, withContentAnchors) +
-            '<div class="kp-exam-body">' +
-            buildExampleHtml(ep, i, withContentAnchors) +
-            "</div>"
+        (clickable
+          ? '<svg class="kp-exam-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>'
+          : "") +
+        "</" +
+        headTag +
+        ">" +
+        (open || !clickable
+          ? '<div class="kp-exam-body">' + buildExampleHtml(ep) + "</div>"
           : "") +
         "</div>"
       );
     }
 
-    const examPageTitle = points.length === 1 ? "考点" : "考点清单";
-    const examPageHint =
-      points.length === 1
-        ? "右滑查看核心概念"
-        : "点击考点查看例题 · 右滑查看概念";
-
-    let examPageHtml =
-      '<div class="kp-page-title">' +
-      '<h2 class="req-anchor-inline" data-req-anchor="kp-lecture.exam.page-title">' +
-      examPageTitle +
-      "</h2>" +
-      '<span class="kp-page-hint"><span class="req-anchor-inline" data-req-anchor="kp-lecture.exam.hint">' +
-      examPageHint +
-      "</span></span>" +
-      "</div>";
-
-    if (!points.length) {
-      examPageHtml +=
-        '<div class="kp-exam-empty req-anchor-inline" data-req-anchor="kp-lecture.exam.list">暂无考点，先去学习其他内容吧~</div>';
-    } else {
-      let shellAnchorsUsed = false;
-      let contentAnchorsUsed = false;
-      examPageHtml +=
-        '<div class="kp-exam-list" data-req-anchor="kp-lecture.exam.list">' +
+    let examPageHtml = "";
+    if (isMulti) {
+      examPageHtml =
+        '<div class="kp-page-title"><h2>考点清单</h2><span class="kp-page-hint">点击考点查看例题 · 右滑查看概念</span></div>' +
+        '<div class="kp-exam-list">' +
         points
           .map(function (ep, i) {
-            const open = !!kpOpenExams[i];
-            const withShellAnchors = !shellAnchorsUsed;
-            if (withShellAnchors) shellAnchorsUsed = true;
-            const withContentAnchors = open && !contentAnchorsUsed;
-            if (withContentAnchors) contentAnchorsUsed = true;
             return buildExamCardHtml(ep, i, {
-              open: open,
-              withShellAnchors: withShellAnchors,
-              withContentAnchors: withContentAnchors,
+              open: i === kpSelectedIndex,
+              clickable: true,
+              badgeText: "考点" + (i + 1),
               tone: i,
             });
           })
           .join("") +
         "</div>";
+    } else {
+      const point = points[0];
+      examPageHtml =
+        '<div class="kp-page-title"><h2>考点</h2><span class="kp-page-hint">右滑查看核心概念</span></div>' +
+        buildExamCardHtml(point, 0, {
+          open: true,
+          clickable: false,
+          badgeText: "考点",
+          tone: 0,
+        });
     }
 
     const formulaItemsHtml = formulasToShow
@@ -902,7 +770,7 @@
         const line = name ? name + "：" + expr : expr;
         return (
           '<li class="kp-formula-item">' +
-          (formulaIsMultiStyle
+          (formulasToShow.length > 1
             ? '<span class="kp-formula-no">' + (i + 1) + "</span>"
             : "") +
           '<p class="kp-formula-line">' +
@@ -914,66 +782,49 @@
 
     const formulaBlock = showFormula
       ? '<div class="kp-formula' +
-        (formulaIsMultiStyle ? "" : " is-single") +
-        '"><div class="kp-formula-ribbon req-anchor-inline" data-req-anchor="kp-lecture.concept.formulas">公式定理' +
-        (formulaIsMultiStyle ? " · " + formulasToShow.length + " 条" : "") +
+        (formulasToShow.length === 1 ? " is-single" : "") +
+        '"><div class="kp-formula-ribbon">公式定理' +
+        (formulasToShow.length > 1 ? " · " + formulasToShow.length + " 条" : "") +
         '</div><ul class="kp-formula-list">' +
         formulaItemsHtml +
         "</ul></div>"
       : "";
-
-    const abilityText = String(data.ability || "").trim();
-    const frequencyText = String(data.frequency || "").trim();
-    const abilitySealHtml = abilityText
-      ? '<span class="kp-seal ability req-anchor-inline" data-req-anchor="kp-lecture.concept.ability" title="学业要求：' +
-        formatRich(abilityText) +
-        '">' +
-        '<span class="kp-seal-ornament" aria-hidden="true"></span>' +
-        '<span class="kp-seal-text">' +
-        formatRich(abilityText) +
-        "</span>" +
-        '<span class="kp-seal-spark" aria-hidden="true"></span>' +
-        "</span>"
-      : "";
-    const frequencySealHtml = frequencyText
-      ? '<span class="kp-seal freq req-anchor-inline" data-req-anchor="kp-lecture.concept.frequency" title="考察频率：' +
-        formatRich(frequencyText) +
-        '">' +
-        '<span class="kp-seal-ornament" aria-hidden="true"></span>' +
-        '<span class="kp-seal-text">' +
-        formatRich(frequencyText) +
-        "</span>" +
-        '<span class="kp-seal-spark" aria-hidden="true"></span>' +
-        "</span>"
-      : "";
-    const stampsHtml =
-      abilitySealHtml || frequencySealHtml
-        ? '<div class="kp-stamps" aria-label="知识点属性">' +
-          abilitySealHtml +
-          frequencySealHtml +
-          "</div>"
-        : "";
 
     kpRoot.innerHTML =
       '<article class="kp-deck">' +
       '<div class="kp-deck-deco" aria-hidden="true"></div>' +
       '<header class="kp-head">' +
       '<div class="kp-head-main">' +
-      '<h1 class="kp-title req-anchor-inline" data-req-anchor="kp-lecture.concept.name">' +
+      '<h1 class="kp-title">' +
       formatRich(data.name) +
       "</h1>" +
-      stampsHtml +
-      "</div></header>" +
+      '<div class="kp-stamps" aria-label="知识点属性">' +
+      '<span class="kp-seal ability" title="学业要求：' +
+      formatRich(data.ability) +
+      '">' +
+      '<span class="kp-seal-ornament" aria-hidden="true"></span>' +
+      '<span class="kp-seal-text">' +
+      formatRich(data.ability) +
+      "</span>" +
+      '<span class="kp-seal-spark" aria-hidden="true"></span>' +
+      "</span>" +
+      '<span class="kp-seal freq" title="考察频率：' +
+      formatRich(data.frequency) +
+      '">' +
+      '<span class="kp-seal-ornament" aria-hidden="true"></span>' +
+      '<span class="kp-seal-text">' +
+      formatRich(data.frequency) +
+      "</span>" +
+      '<span class="kp-seal-spark" aria-hidden="true"></span>' +
+      "</span>" +
+      "</div></div></header>" +
       '<div class="kp-slider-shell">' +
       '<div class="kp-slider" data-page="' +
       kpPage +
       '">' +
       '<section class="kp-page">' +
       '<div class="kp-page-inner">' +
-      '<div class="kp-page-title">' +
-      '<h2 class="req-anchor-inline" data-req-anchor="kp-lecture.concept.page-title">核心概念</h2>' +
-      '<span class="kp-page-hint"><span class="req-anchor-inline" data-req-anchor="kp-lecture.concept.hint">点击下方圆点或箭头查看考点</span></span>' +
-      "</div>" +
+      '<div class="kp-page-title"><h2>核心概念</h2><span class="kp-page-hint">左滑查看考点 →</span></div>' +
       coreBlockHtml +
       formulaBlock +
       "</div></section>" +
@@ -982,7 +833,7 @@
       examPageHtml +
       "</div></section>" +
       "</div></div>" +
-      '<div class="kp-pager req-anchor-inline" data-req-anchor="kp-lecture.concept.pager">' +
+      '<div class="kp-pager">' +
       '<button type="button" class="kp-pager-btn" data-kp-nav="prev" aria-label="上一页">' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>' +
       "</button>" +
@@ -1001,16 +852,11 @@
 
     setKpPage(kpPage);
     bindKpSwipe();
-    remountKpRequirementMarkers();
   }
 
-  function remountKpRequirementMarkers() {
-    if (
-      window.RequirementMarker &&
-      typeof window.RequirementMarker.remount === "function"
-    ) {
-      window.RequirementMarker.remount();
-    }
+  function resetKpInteraction() {
+    kpAnalysisOpen = false;
+    kpFavorited = false;
   }
 
   function ensureKpImagePreview() {
@@ -1060,36 +906,60 @@
   function setKpMode(mode) {
     kpMode = mode === "single" ? "single" : "multi";
     kpPage = 0;
-    resetKpExamPageState();
-    kpFavoritedMap = Object.create(null);
+    kpSelectedIndex = kpMode === "single" ? 0 : -1;
+    resetKpInteraction();
     document.querySelectorAll("[data-kp-mode]").forEach(function (btn) {
       btn.classList.toggle("active", btn.getAttribute("data-kp-mode") === kpMode);
     });
     renderKpCard();
   }
 
-  function toggleKpAnalysis(examIndex) {
-    const idx = typeof examIndex === "number" ? examIndex : 0;
-    kpAnalysisOpenMap[idx] = !kpAnalysisOpenMap[idx];
-    const open = !!kpAnalysisOpenMap[idx];
-    const card = kpRoot && kpRoot.querySelector('.kp-exam-card[data-exam-card="' + idx + '"]');
-    const scope = card || kpRoot;
-    if (!scope) return;
-    const analysis = scope.querySelector("[data-kp-analysis]");
-    const btn = scope.querySelector('[data-kp-action="analysis"]');
-    if (analysis) analysis.classList.toggle("is-open", open);
+  function toggleKpAnalysis() {
+    kpAnalysisOpen = !kpAnalysisOpen;
+    const analysis = kpRoot && kpRoot.querySelector("[data-kp-analysis]");
+    const btn = kpRoot && kpRoot.querySelector('[data-kp-action="analysis"]');
+    if (analysis) analysis.classList.toggle("is-open", kpAnalysisOpen);
     if (btn) {
-      btn.classList.toggle("is-open", open);
-      btn.setAttribute("aria-label", open ? "收起解析" : "查看解析");
+      btn.classList.toggle("is-open", kpAnalysisOpen);
+      btn.setAttribute("aria-label", kpAnalysisOpen ? "收起解析" : "查看解析");
     }
-    if (open && analysis) {
+    if (kpAnalysisOpen && analysis) {
       analysis.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }
 
   function bindKpSwipe() {
-    // Skill1 口径：不提供手势左右滑；仅底部分页圆点/箭头切换
-    return;
+    if (!kpRoot || kpSwipeBound) return;
+    kpSwipeBound = true;
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    kpRoot.addEventListener(
+      "touchstart",
+      function (e) {
+        if (!e.touches || !e.touches[0]) return;
+        if (e.target.closest("button, a, input, textarea")) return;
+        tracking = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      },
+      { passive: true }
+    );
+
+    kpRoot.addEventListener(
+      "touchend",
+      function (e) {
+        if (!tracking || !e.changedTouches || !e.changedTouches[0]) return;
+        tracking = false;
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+        if (dx < 0 && kpPage === 0) setKpPage(1);
+        else if (dx > 0 && kpPage === 1) setKpPage(0);
+      },
+      { passive: true }
+    );
   }
 
   document.querySelectorAll("[data-kp-mode]").forEach(function (btn) {
@@ -1102,9 +972,6 @@
 
   if (kpRoot) {
     kpRoot.addEventListener("click", function (e) {
-      // 需求角标点击不触发考点展开/解析等业务交互
-      if (e.target.closest(".req-marker, .req-marker-input")) return;
-
       const navBtn = e.target.closest("[data-kp-nav]");
       if (navBtn && kpRoot.contains(navBtn) && !navBtn.disabled) {
         e.preventDefault();
@@ -1122,20 +989,18 @@
       }
 
       const examBtn = e.target.closest("[data-exam-index]");
-      if (
-        examBtn &&
-        kpRoot.contains(examBtn) &&
-        examBtn.classList.contains("kp-exam-head")
-      ) {
+      if (examBtn && kpRoot.contains(examBtn)) {
         e.preventDefault();
         e.stopPropagation();
         const next = Number(examBtn.getAttribute("data-exam-index"));
         if (Number.isNaN(next)) return;
-        if (kpOpenExams[next]) {
-          delete kpOpenExams[next];
+        // 多考点：再次点击同一项则收起
+        if (next === kpSelectedIndex) {
+          kpSelectedIndex = -1;
         } else {
-          kpOpenExams[next] = true;
+          kpSelectedIndex = next;
         }
+        resetKpInteraction();
         const keepPage = kpPage;
         renderKpCard();
         setKpPage(keepPage);
@@ -1148,16 +1013,14 @@
       e.stopPropagation();
 
       const action = actionEl.getAttribute("data-kp-action");
-      const actionExamIndex = Number(actionEl.getAttribute("data-exam-index"));
       if (action === "analysis") {
-        toggleKpAnalysis(Number.isNaN(actionExamIndex) ? 0 : actionExamIndex);
+        toggleKpAnalysis();
         return;
       }
       if (action === "favorite") {
-        const idx = Number.isNaN(actionExamIndex) ? 0 : actionExamIndex;
-        kpFavoritedMap[idx] = !kpFavoritedMap[idx];
-        syncFavoriteUI(idx);
-        showKpToast(kpFavoritedMap[idx] ? "已加入好题本" : "已移除好题本", idx);
+        kpFavorited = !kpFavorited;
+        syncFavoriteUI();
+        showKpToast(kpFavorited ? "已加入好题本" : "已移除好题本");
         return;
       }
       if (action === "preview-image") {

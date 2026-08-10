@@ -16,6 +16,7 @@
   var ROUTE_REGISTRY = {
     section: "section-course",
     chapter: "chapter-course",
+    "kp-lecture": "kp-lecture-concept",
   };
 
   function storageKey(registryId) {
@@ -33,10 +34,18 @@
     }
     if (registryId === "section-course") return global.sectionCourseRegistry || null;
     if (registryId === "chapter-course") return global.chapterCourseRegistry || null;
+    if (registryId === "kp-lecture-concept") return global.kpLectureConceptRegistry || null;
+    if (registryId === "kp-lecture-exam") return global.kpLectureExamRegistry || null;
     return null;
   }
 
   function getRegistryForHash(hash) {
+    if (hash === "kp-lecture") {
+      var slider = document.querySelector("#kp-card-root .kp-slider");
+      var page = slider ? String(slider.getAttribute("data-page") || "0") : "0";
+      if (page === "1") return getRegistryById("kp-lecture-exam");
+      return getRegistryById("kp-lecture-concept");
+    }
     return getRegistryById(ROUTE_REGISTRY[hash] || "");
   }
 

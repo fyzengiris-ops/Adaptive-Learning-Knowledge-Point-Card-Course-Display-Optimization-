@@ -48,6 +48,57 @@
   margin-left: 2px;
 }
 
+/* 精讲页：角标不破坏绝对定位的操作提示 / 要点标签 */
+.kp-page-hint .req-anchor-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.kp-concept-ribbon.req-anchor-inline,
+.kp-formula-ribbon.req-anchor-inline {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 考点序号徽章默认 pointer-events:none，挂角标后需可点且盖过展开热区 */
+.kp-exam-badge.req-anchor-inline {
+  pointer-events: auto;
+  z-index: 46;
+}
+
+.kp-exam-badge.req-anchor-inline > .req-marker {
+  pointer-events: auto;
+  transform: rotate(6deg);
+}
+
+.kp-foot {
+  position: relative;
+}
+
+.kp-foot > .req-marker-slot {
+  position: absolute;
+  right: -4px;
+  top: -8px;
+}
+
+/* 解析角标旁挂，不改解析按钮自身布局 */
+.kp-exam-analysis-slot {
+  position: absolute;
+  top: -4px;
+  right: 56px;
+  z-index: 3;
+}
+
+/* 题干 / 解题要点：角标绝对贴靠，不改为 inline-flex */
+.kp-example-stem[data-req-anchor] > .req-marker,
+.kp-keypoints-title[data-req-anchor] > .req-marker {
+  top: -10px;
+  right: -6px;
+}
+
 .req-marker:hover,
 .req-marker.is-active {
   background: #1a5fe0;

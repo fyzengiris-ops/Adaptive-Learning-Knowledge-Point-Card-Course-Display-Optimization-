@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>自适应学习 · 课程中心原型</title>
-  <link rel="stylesheet" href="css/app.css?v=20260810ah" />
-  <link rel="stylesheet" href="css/prd.css?v=20260810l" />
+  <link rel="stylesheet" href="css/app.css?v=20260810ai" />
+  <link rel="stylesheet" href="css/prd.css?v=20260810q" />
 </head>
 <body>
   <div class="device-stage">
@@ -777,12 +777,24 @@
           <nav class="lecture-tabs" data-scope="lecture">
             <button class="lecture-tab active" data-panel="lecture-text" type="button">知识点精讲</button>
             <span class="lecture-tab-divider" aria-hidden="true"></span>
-            <button class="lecture-tab" data-panel="lecture-video" type="button">知识点视频</button>
+            <button
+              class="lecture-tab req-anchor-inline"
+              data-panel="lecture-video"
+              type="button"
+              data-req-anchor="kp-lecture.tab.video"
+            >
+              知识点视频
+            </button>
           </nav>
-          <div class="demo-mode-switch" role="group" aria-label="考点形态演示">
+          <div
+            class="demo-mode-switch req-anchor-inline"
+            role="group"
+            aria-label="考点形态演示"
+            data-req-anchor="kp-lecture.demo.mode"
+          >
             <span class="demo-mode-label">演示</span>
-            <button type="button" class="demo-mode-btn" data-kp-mode="multi">多考点</button>
-            <button type="button" class="demo-mode-btn active" data-kp-mode="single">单考点</button>
+            <button type="button" class="demo-mode-btn active" data-kp-mode="multi">多考点</button>
+            <button type="button" class="demo-mode-btn" data-kp-mode="single">单考点</button>
           </div>
         </header>
 
@@ -1060,10 +1072,12 @@
 
   <script src="js/requirements/section-course.registry.js?v=20260810g"></script>
   <script src="js/requirements/chapter-course.registry.js?v=20260810e"></script>
-  <script src="js/requirements/index.js?v=20260810h"></script>
+  <script src="js/requirements/kp-lecture-concept.registry.js?v=20260810h"></script>
+  <script src="js/requirements/kp-lecture-exam.registry.js?v=20260810c"></script>
+  <script src="js/requirements/index.js?v=20260810j"></script>
   <script src="js/prd/requirement-utils.js?v=20260810f"></script>
   <script src="js/prd/requirement-floating-card.js?v=20260810f"></script>
-  <script src="js/prd/requirement-marker.js?v=20260810j"></script>
-  <script src="js/app.js?v=20260810ae"></script>
+  <script src="js/prd/requirement-marker.js?v=20260810k"></script>
+  <script src="js/app.js?v=20260810al"></script>
 </body>
 </html>

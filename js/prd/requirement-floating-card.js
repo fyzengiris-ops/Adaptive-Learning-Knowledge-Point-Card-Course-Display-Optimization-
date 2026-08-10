@@ -159,6 +159,13 @@
     document.querySelectorAll(".req-marker").forEach(function (btn) {
       btn.classList.toggle("is-active", btn.getAttribute("data-req-id") === requirement.id);
     });
+    if (
+      global.RequirementPanel &&
+      typeof global.RequirementPanel.setSelected === "function" &&
+      global.RequirementPanel.getSelectedId() !== requirement.id
+    ) {
+      global.RequirementPanel.setSelected(requirement.id, { source: "floating" });
+    }
   }
 
   function hide() {

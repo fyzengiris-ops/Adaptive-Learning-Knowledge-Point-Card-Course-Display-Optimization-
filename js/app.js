@@ -1349,4 +1349,27 @@
       closeFilter();
     });
   }
+
+  // Skill4：供右侧 PRD 面板 activate 调用的显式控制器
+  window.PrdPrototypeBridge = {
+    openFilter: openFilter,
+    closeFilter: closeFilter,
+    switchChapterType: function (key) {
+      if (typeof switchChapterType === "function") switchChapterType(key);
+    },
+    setKpPage: function (page) {
+      if (typeof setKpPage === "function") setKpPage(page);
+    },
+    setLectureTab: function (panelId) {
+      var tab = document.querySelector('.lecture-tab[data-panel="' + panelId + '"]');
+      if (tab) tab.click();
+    },
+    setTab: function (tab) {
+      if (tab === "lecture-text" || tab === "lecture-video") {
+        window.PrdPrototypeBridge.setLectureTab(tab);
+        return;
+      }
+      if (typeof switchChapterType === "function") switchChapterType(tab);
+    },
+  };
 })();

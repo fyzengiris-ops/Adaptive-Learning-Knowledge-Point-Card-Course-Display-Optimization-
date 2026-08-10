@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>自适应学习 · 课程中心原型</title>
   <link rel="stylesheet" href="css/app.css?v=20260810ai" />
-  <link rel="stylesheet" href="css/prd.css?v=20260810q" />
+  <link rel="stylesheet" href="css/prd.css?v=20260810r" />
+  <link rel="stylesheet" href="css/prd-panel.css?v=20260810b" />
 </head>
 <body>
+  <div id="prd-reader-shell" class="prd-reader-shell">
+    <div class="prd-prototype-area">
   <div class="device-stage">
     <div class="device-frame" id="device-frame">
       <div class="device-bezel">
@@ -1069,6 +1072,35 @@
       </div><!-- /.device-bezel -->
     </div><!-- /.device-frame -->
   </div><!-- /.device-stage -->
+    </div><!-- /.prd-prototype-area -->
+
+    <aside id="prd-side-panel" class="prd-side-panel" hidden>
+      <div id="prd-panel-resizer" class="prd-panel-resizer" aria-hidden="true"></div>
+      <header class="prd-panel-header">
+        <div>
+          <h2>PRD 阅读面板</h2>
+          <div class="prd-panel-sub" data-prd-page-title>选择页面需求</div>
+        </div>
+        <button type="button" class="prd-panel-close" data-prd-close aria-label="关闭">×</button>
+      </header>
+      <div class="prd-panel-toolbar">
+        <label for="prd-page-select">当前页面注册表</label>
+        <select id="prd-page-select" data-prd-page-select></select>
+      </div>
+      <div class="prd-panel-body">
+        <div class="prd-req-list" data-prd-list></div>
+        <div class="prd-detail" data-prd-detail>
+          <div class="prd-detail-placeholder">选择左侧需求卡片，查看业务逻辑并定位页面对象。</div>
+        </div>
+      </div>
+    </aside>
+
+  </div><!-- /.prd-reader-shell -->
+
+  <!-- 必须放在 shell 外：避免落入 grid 第二行后被 body overflow:hidden 裁掉 -->
+  <button type="button" id="prd-panel-toggle" class="prd-panel-toggle" aria-pressed="false" title="打开/关闭 PRD 面板">
+    PRD
+  </button>
 
   <script src="js/requirements/section-course.registry.js?v=20260810g"></script>
   <script src="js/requirements/chapter-course.registry.js?v=20260810e"></script>
@@ -1076,8 +1108,11 @@
   <script src="js/requirements/kp-lecture-exam.registry.js?v=20260810c"></script>
   <script src="js/requirements/index.js?v=20260810j"></script>
   <script src="js/prd/requirement-utils.js?v=20260810f"></script>
-  <script src="js/prd/requirement-floating-card.js?v=20260810f"></script>
+  <script src="js/prd/requirement-highlight.js?v=20260810a"></script>
+  <script src="js/prd/requirement-floating-card.js?v=20260810g"></script>
   <script src="js/prd/requirement-marker.js?v=20260810k"></script>
-  <script src="js/app.js?v=20260810al"></script>
+  <script src="js/prd/requirement-panel.js?v=20260810b"></script>
+  <script src="js/prd/requirement-reader-shell.js?v=20260810b"></script>
+  <script src="js/app.js?v=20260810am"></script>
 </body>
 </html>

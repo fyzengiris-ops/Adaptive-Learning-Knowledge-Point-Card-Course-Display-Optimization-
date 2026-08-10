@@ -6,6 +6,7 @@
     papers: document.getElementById("view-papers"),
     special: document.getElementById("view-special"),
     "kp-lecture": document.getElementById("view-kp-lecture"),
+    report: document.getElementById("view-report"),
   };
 
   const modal = document.getElementById("course-modal");
@@ -18,7 +19,8 @@
       value === "chapter" ||
       value === "papers" ||
       value === "special" ||
-      value === "kp-lecture"
+      value === "kp-lecture" ||
+      value === "report"
     ) {
       return value;
     }
@@ -154,7 +156,7 @@
   }
 
   // Course center tabs (section + chapter)
-  // chapter：顶部课型 Tab 由下方 switchChapterType 统一处理
+  // chapter 课型切换由下方 switchChapterType 统一处理（含主题/试卷联动）
   let switchChapterType = null;
   document.querySelectorAll(".tabs").forEach((tabBar) => {
     tabBar.querySelectorAll(".tab").forEach((tab) => {
@@ -217,31 +219,25 @@
     });
   }
 
-  // Chapter：顶部课型 Tab 联动左侧课程列表 + 右侧试卷
+  // Chapter course types — 顶部 Tab 切换课型主页 + 右侧配套试卷联动
   const chapterSplit = document.getElementById("chapter-type-split");
   const chapterTabBar = document.querySelector('.tabs[data-scope="chapter"]');
   const CHAPTER_TYPE_META = {
     sync: {
-      courseHint: "教材同步 · 循序渐进",
-      courseCount: "4 门",
-      papersHint: "及时巩固",
-      count: "2 套",
+      courseDesc: "与教材进度对齐的章节同步学习资源，建议按单元顺序完成学习。",
+      desc: "同步课配套练习，学完后建议及时巩固检测。",
       empty: false,
       theme: "theme-sync",
     },
     topic: {
-      courseHint: "重难点 · 专项突破",
-      courseCount: "3 门",
-      papersHint: "强化突破",
-      count: "2 套",
+      courseDesc: "围绕本章重点难点展开的专题突破课程，适合针对性补强。",
+      desc: "专题课配套练习，针对重难点进行强化训练。",
       empty: false,
       theme: "theme-topic",
     },
     extend: {
-      courseHint: "学有余力 · 拔高拓展",
-      courseCount: "2 门",
-      papersHint: "挑战进阶",
-      count: "",
+      courseDesc: "超出教材进度、面向拔高与拓展的课程，学有余力时可继续挑战。",
+      desc: "拓展课配套练习暂未开放，可先完成其他类型试卷。",
       empty: true,
       theme: "theme-extend",
     },
@@ -249,19 +245,22 @@
   if (chapterSplit) {
     const typePanels = chapterSplit.querySelectorAll("[data-chapter-panel]");
     const paperLists = chapterSplit.querySelectorAll("[data-chapter-papers]");
-    const courseHint = document.getElementById("chapter-course-hint");
-    const courseCount = document.getElementById("chapter-course-count");
-    const papersHint = document.getElementById("chapter-papers-hint");
-    const papersCount = document.getElementById("chapter-papers-count");
+    const coursesPanel = document.getElementById("chapter-courses");
+    const schoolPanel = document.getElementById("chapter-school");
+    const papersDesc = document.getElementById("chapter-papers-desc");
+    const typeDesc = document.getElementById("chapter-type-desc");
 
     switchChapterType = function (key) {
       if (!CHAPTER_TYPE_META[key]) return;
 
       if (chapterTabBar) {
         chapterTabBar.querySelectorAll(".tab").forEach((t) => {
-          t.classList.toggle("active", t.getAttribute("data-chapter-type") === key);
+          const isActive = t.getAttribute("data-chapter-type") === key;
+          t.classList.toggle("active", isActive);
         });
       }
+      if (coursesPanel) coursesPanel.classList.add("active");
+      if (schoolPanel) schoolPanel.classList.remove("active");
 
       typePanels.forEach((panel) => {
         panel.classList.toggle("active", panel.getAttribute("data-chapter-panel") === key);
@@ -271,23 +270,10 @@
       });
 
       const meta = CHAPTER_TYPE_META[key];
-      if (courseHint) courseHint.textContent = meta.courseHint;
-      if (courseCount) {
-        courseCount.textContent = meta.courseCount || "";
-        courseCount.style.display = meta.courseCount ? "" : "none";
-      }
-      if (papersHint) papersHint.textContent = meta.papersHint;
-      if (papersCount) {
-        papersCount.textContent = meta.count;
-        papersCount.style.display = meta.empty || !meta.count ? "none" : "";
-      }
-      // Tab 壳承载设计感；内容区仍挂主题 class，供点缀色/缩略图用
-      const tabsShell = document.getElementById("chapter-tabs-shell");
-      [tabsShell, chapterSplit].forEach((host) => {
-        if (!host) return;
-        host.classList.remove("theme-sync", "theme-topic", "theme-extend");
-        host.classList.add(meta.theme);
-      });
+      if (typeDesc) typeDesc.textContent = meta.courseDesc;
+      if (papersDesc) papersDesc.textContent = meta.desc;
+      chapterSplit.classList.remove("theme-sync", "theme-topic", "theme-extend");
+      chapterSplit.classList.add(meta.theme);
     };
 
     chapterSplit.querySelectorAll("[data-jump-chapter-type]").forEach((btn) => {
@@ -548,21 +534,38 @@
         "</ol></div>"
       : "";
 
+    const isMulti = kpMode === "multi";
     const favLabel = kpFavorited ? "移出好题本" : "加入好题本";
 
-    // 多/单考点统一：典型例题标签内星星 + 解析底部「加入好题本」
-    const badgeBlock =
-      '<div class="kp-example-badge' +
-      (kpFavorited ? " is-added" : "") +
-      '">' +
-      "<span>典型例题</span>" +
-      '<button type="button" class="kp-star-btn' +
-      (kpFavorited ? " is-added" : "") +
-      '" data-kp-action="favorite" aria-label="' +
-      favLabel +
-      '">' +
-      STAR_ICON +
-      "</button></div>";
+    // 多考点：典型例题标签右侧放「加入好题本」，标签内不放星星
+    // 单考点：保持原交互（标签内星星 + 解析区底部好题本）
+    const badgeBlock = isMulti
+      ? '<div class="kp-example-head">' +
+        '<div class="kp-example-badge">' +
+        "<span>典型例题</span>" +
+        "</div>" +
+        '<button type="button" class="kp-fav-btn kp-fav-beside' +
+        (kpFavorited ? " is-added" : "") +
+        '" data-kp-action="favorite" aria-label="' +
+        favLabel +
+        '">' +
+        "<span>" +
+        favLabel +
+        "</span>" +
+        STAR_ICON +
+        "</button>" +
+        "</div>"
+      : '<div class="kp-example-badge' +
+        (kpFavorited ? " is-added" : "") +
+        '">' +
+        "<span>典型例题</span>" +
+        '<button type="button" class="kp-star-btn' +
+        (kpFavorited ? " is-added" : "") +
+        '" data-kp-action="favorite" aria-label="' +
+        favLabel +
+        '">' +
+        STAR_ICON +
+        "</button></div>";
 
     const footBlock =
       '<div class="kp-foot">' +
@@ -623,7 +626,8 @@
   function syncFavoriteUI() {
     if (!kpRoot) return;
     const badge = kpRoot.querySelector(".kp-example-badge");
-    if (badge) {
+    // 单考点标签内星星依赖 badge.is-added；多考点标签无星，不依赖该状态
+    if (badge && !badge.closest(".kp-example-head")) {
       badge.classList.toggle("is-added", kpFavorited);
     }
     kpRoot.querySelectorAll('[data-kp-action="favorite"]').forEach(function (el) {
@@ -1097,6 +1101,41 @@
       });
     });
   });
+
+  // 学情报告：日报/周报切换、提示关闭、倒计时文案
+  document.querySelectorAll("[data-report-type]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("[data-report-type]").forEach(function (el) {
+        const active = el === btn;
+        el.classList.toggle("active", active);
+        el.setAttribute("aria-selected", active ? "true" : "false");
+      });
+    });
+  });
+
+  const reportTip = document.querySelector(".report-tip");
+  const reportTipClose = document.querySelector(".report-tip-close");
+  if (reportTipClose && reportTip) {
+    reportTipClose.addEventListener("click", function () {
+      reportTip.classList.add("is-hidden");
+    });
+  }
+
+  const reportTipTime = document.getElementById("report-tip-time");
+  function updateReportTipCountdown() {
+    if (!reportTipTime) return;
+    const now = new Date();
+    const end = new Date(now);
+    end.setHours(23, 59, 59, 0);
+    let diff = Math.floor((end - now) / 1000);
+    if (diff < 0) diff = 0;
+    const h = String(Math.floor(diff / 3600)).padStart(2, "0");
+    const m = String(Math.floor((diff % 3600) / 60)).padStart(2, "0");
+    const s = String(diff % 60).padStart(2, "0");
+    reportTipTime.textContent = h + ":" + m + ":" + s;
+  }
+  updateReportTipCountdown();
+  setInterval(updateReportTipCountdown, 1000);
 
   renderKpCard();
   showView(location.hash || "home");

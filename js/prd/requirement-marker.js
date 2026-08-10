@@ -13,6 +13,11 @@
   /** @type {Record<string, number>} */
   var numberMap = {};
 
+  var ROUTE_REGISTRY = {
+    section: "section-course",
+    chapter: "chapter-course",
+  };
+
   function storageKey(registryId) {
     return "req-marker-numbers:" + (registryId || "default");
   }
@@ -21,11 +26,18 @@
     return "req-marker-order:" + (registryId || "default");
   }
 
-  function getSectionRegistry() {
+  function getRegistryById(registryId) {
+    if (!registryId) return null;
     if (typeof global.getRequirementRegistry === "function") {
-      return global.getRequirementRegistry("section-course");
+      return global.getRequirementRegistry(registryId);
     }
-    return global.sectionCourseRegistry || null;
+    if (registryId === "section-course") return global.sectionCourseRegistry || null;
+    if (registryId === "chapter-course") return global.chapterCourseRegistry || null;
+    return null;
+  }
+
+  function getRegistryForHash(hash) {
+    return getRegistryById(ROUTE_REGISTRY[hash] || "");
   }
 
   function loadNumberMap(registryId) {
@@ -271,8 +283,7 @@
     return btn;
   }
 
-  function mountSectionCourseMarkers() {
-    var registry = getSectionRegistry();
+  function mountRegistryMarkers(registry) {
     if (!registry || !Array.isArray(registry.requirements)) return;
 
     clearMarkers();
@@ -306,13 +317,21 @@
 
   function syncByRoute() {
     var hash = (location.hash || "").replace(/^#/, "");
-    if (hash === "section") {
-      mountSectionCourseMarkers();
+    var registry = getRegistryForHash(hash);
+    if (registry) {
+      mountRegistryMarkers(registry);
     } else if (mounted) {
       clearMarkers();
       if (global.RequirementFloatingCard) global.RequirementFloatingCard.hide();
       mounted = false;
+      currentRegistryId = null;
     }
+  }
+
+  function remountCurrent() {
+    var hash = (location.hash || "").replace(/^#/, "");
+    var registry = getRegistryForHash(hash);
+    if (registry) mountRegistryMarkers(registry);
   }
 
   function init() {
@@ -327,10 +346,11 @@
   }
 
   global.RequirementMarker = {
-    remount: mountSectionCourseMarkers,
+    remount: remountCurrent,
     clear: clearMarkers,
     resetOrder: function () {
-      var registry = getSectionRegistry();
+      var hash = (location.hash || "").replace(/^#/, "");
+      var registry = getRegistryForHash(hash);
       if (!registry) return;
       try {
         localStorage.removeItem(storageKey(registry.registryId));
@@ -338,7 +358,7 @@
       } catch (e) {
         /* ignore */
       }
-      mountSectionCourseMarkers();
+      mountRegistryMarkers(registry);
     },
   };
 })(typeof window !== "undefined" ? window : globalThis);

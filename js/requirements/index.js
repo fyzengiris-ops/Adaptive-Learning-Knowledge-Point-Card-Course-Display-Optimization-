@@ -8,6 +8,9 @@
   if (global.sectionCourseRegistry) {
     registries.push(global.sectionCourseRegistry);
   }
+  if (global.chapterCourseRegistry) {
+    registries.push(global.chapterCourseRegistry);
+  }
 
   global.requirementRegistries = registries;
 

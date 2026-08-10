@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>自适应学习 · 课程中心原型</title>
-  <link rel="stylesheet" href="css/app.css?v=20260810ah" />
+  <link rel="stylesheet" href="css/app.css?v=20260810ae" />
   <link rel="stylesheet" href="css/prd.css?v=20260810l" />
 </head>
 <body>
@@ -22,7 +22,7 @@
         <div class="home-top">
           <div class="home-brand">自适应学习</div>
           <div class="home-actions">
-            <button class="pill-btn" type="button">学情报告</button>
+            <button class="pill-btn" type="button" data-nav="report">学情报告</button>
             <button class="pill-btn" type="button">排行榜</button>
           </div>
         </div>
@@ -200,7 +200,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
             返回
           </button>
-          <div class="header-title">课程中心</div>
+          <div class="header-title header-title-chapter" id="chapter-header-title">
+            <span class="header-title-main">课程中心</span><span class="header-title-sep">-</span><span class="header-title-unit" id="chapter-header-unit">UNIT 1 Teenage life</span>
+          </div>
           <div class="header-action">
             <span class="req-anchor-inline" data-req-anchor="section.filter.entry">
               <button type="button" aria-label="筛选" data-open-filter>
@@ -665,6 +667,7 @@
           </div>
 
           <div class="panel" id="chapter-school" data-panel-scope="chapter">
+            <div class="section-title">UNIT 1 Teenage life</div>
             <section class="category">
               <div class="resource-grid">
                 <article class="resource-card">
@@ -803,6 +806,170 @@
           <button type="button" class="lecture-btn ghost">查看笔记(1)</button>
           <button type="button" class="lecture-btn primary">去测试</button>
         </footer>
+      </div>
+    </div>
+
+    <!-- ========== 学情报告 ========== -->
+    <div class="view" id="view-report">
+      <div class="report">
+        <header class="report-header">
+          <button class="report-back" type="button" data-nav="home" aria-label="返回">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+            返回
+          </button>
+          <h1 class="report-title">学情报告</h1>
+          <span class="report-header-spacer" aria-hidden="true"></span>
+        </header>
+
+        <div class="report-scroll">
+          <div class="report-toolbar">
+            <div class="report-segment" role="tablist" aria-label="报告类型">
+              <button type="button" class="report-seg active" data-report-type="daily" role="tab" aria-selected="true">日报</button>
+              <button type="button" class="report-seg" data-report-type="weekly" role="tab" aria-selected="false">周报</button>
+            </div>
+
+            <div class="report-date-block">
+              <div class="report-date-row">
+                <button type="button" class="report-date-nav" aria-label="上一天">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button type="button" class="report-date-pill" aria-label="选择日期">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                    <path d="M8 3v4M16 3v4M3 10h18"/>
+                  </svg>
+                  <span>11月30日</span>
+                </button>
+                <button type="button" class="report-date-nav" aria-label="下一天">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+              </div>
+
+              <div class="report-tip" role="status">
+                <span class="report-tip-glow" aria-hidden="true"></span>
+                <span class="report-tip-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <p class="report-tip-text">
+                  今日报告将在<span class="report-tip-time" id="report-tip-time">23:59:29</span>后生成，先去学习吧~
+                </p>
+                <button type="button" class="report-tip-close" aria-label="关闭提示">×</button>
+              </div>
+            </div>
+          </div>
+
+          <section class="report-hero">
+            <div class="report-hero-rays" aria-hidden="true"></div>
+            <div class="report-confetti" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <h2 class="report-hero-title">你超棒的！</h2>
+            <div class="report-mascot-wrap">
+              <div class="report-excellent" aria-hidden="true">EXCELLENT</div>
+              <div class="report-mascot" aria-hidden="true">
+                <svg class="report-mascot-svg" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="100" cy="168" rx="48" ry="8" fill="rgba(47,160,102,0.18)"/>
+                  <rect x="58" y="38" width="84" height="78" rx="18" fill="#5fd48a"/>
+                  <rect x="58" y="38" width="84" height="78" rx="18" fill="url(#botShine)" opacity="0.35"/>
+                  <rect x="68" y="50" width="64" height="42" rx="10" fill="#1f3d2e"/>
+                  <path d="M78 68c4-6 10-6 14 0" stroke="#7dffb0" stroke-width="4" stroke-linecap="round" fill="none"/>
+                  <path d="M108 68c4-6 10-6 14 0" stroke="#7dffb0" stroke-width="4" stroke-linecap="round" fill="none"/>
+                  <path d="M90 84h20" stroke="#7dffb0" stroke-width="3" stroke-linecap="round"/>
+                  <rect x="48" y="62" width="14" height="28" rx="7" fill="#4fc978"/>
+                  <rect x="138" y="62" width="14" height="28" rx="7" fill="#4fc978"/>
+                  <rect x="34" y="48" width="10" height="42" rx="5" fill="#ffb347"/>
+                  <circle cx="39" cy="44" r="7" fill="#ffd56a"/>
+                  <circle cx="39" cy="44" r="3.5" fill="#fff6c8"/>
+                  <rect x="156" y="48" width="10" height="42" rx="5" fill="#4ec7ff"/>
+                  <circle cx="161" cy="44" r="7" fill="#8be0ff"/>
+                  <circle cx="161" cy="44" r="3.5" fill="#e8f9ff"/>
+                  <rect x="72" y="112" width="22" height="28" rx="8" fill="#4fc978"/>
+                  <rect x="106" y="112" width="22" height="28" rx="8" fill="#4fc978"/>
+                  <rect x="68" y="134" width="30" height="14" rx="7" fill="#ef5b5b"/>
+                  <rect x="102" y="134" width="30" height="14" rx="7" fill="#ef5b5b"/>
+                  <circle cx="78" y="28" r="5" fill="#6fe09a"/>
+                  <circle cx="122" y="28" r="5" fill="#6fe09a"/>
+                  <path d="M78 28v10M122 28v10" stroke="#6fe09a" stroke-width="3"/>
+                  <defs>
+                    <linearGradient id="botShine" x1="58" y1="38" x2="142" y2="116">
+                      <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <p class="report-streak">
+              你已经连续学习 <em class="num-orange">3</em> 天了！位于学习天数榜的 第 <em class="num-teal">1</em> 名！
+            </p>
+            <div class="report-flower">
+              <span class="report-flower-icon" aria-hidden="true">❀</span>
+              <span>x10 今日红花</span>
+            </div>
+          </section>
+
+          <section class="report-card">
+            <div class="report-card-badge">
+              <span class="leaf" aria-hidden="true">🌿</span>
+              成就明细
+              <span class="leaf" aria-hidden="true">🌿</span>
+            </div>
+
+            <div class="report-stats">
+              <div class="report-stat">
+                <span class="report-stat-label">答题数量</span>
+                <span class="report-stat-value">45<span>题</span></span>
+                <span class="report-stat-delta">5题 ↑</span>
+              </div>
+              <div class="report-stat">
+                <span class="report-stat-label">新掌握</span>
+                <span class="report-stat-value">5<span>个</span></span>
+                <span class="report-stat-delta">1个 ↑</span>
+              </div>
+              <div class="report-stat">
+                <span class="report-stat-label">答对数量</span>
+                <span class="report-stat-value">38<span>题</span></span>
+                <span class="report-stat-delta">5题 ↑</span>
+              </div>
+              <div class="report-stat">
+                <span class="report-stat-label">超越班级</span>
+                <span class="report-stat-value">5<span>个</span></span>
+                <span class="report-stat-delta">1个 ↑</span>
+              </div>
+              <div class="report-stat">
+                <span class="report-stat-label">正确率</span>
+                <span class="report-stat-value">84<span>%</span></span>
+                <span class="report-stat-delta">14% ↑</span>
+              </div>
+              <div class="report-stat">
+                <span class="report-stat-label">等级突破</span>
+                <span class="report-stat-value">5<span>次</span></span>
+                <span class="report-stat-delta">1次 ↑</span>
+              </div>
+            </div>
+
+            <div class="report-summary">
+              <h3>进步总结</h3>
+              <p>
+                相比昨天，你的答题数量增加了5题，掌握了1个新知识点，正确率提升了14%。学习天数榜从昨天的未上榜一跃成为第1名，班级正确率榜和班级积分榜也都上升了1名，继续保持哦！
+              </p>
+            </div>
+          </section>
+
+          <section class="report-quote">
+            <div class="report-card-badge quote">
+              <span class="leaf" aria-hidden="true">🌿</span>
+              每日名言
+              <span class="leaf" aria-hidden="true">🌿</span>
+            </div>
+            <p class="report-quote-text">学而时习之，不亦说乎。今天的每一步努力，都在为更好的自己铺路。</p>
+            <p class="report-quote-from">—— 孔子</p>
+          </section>
+        </div>
       </div>
     </div>
 
@@ -1064,6 +1231,6 @@
   <script src="js/prd/requirement-utils.js?v=20260810f"></script>
   <script src="js/prd/requirement-floating-card.js?v=20260810f"></script>
   <script src="js/prd/requirement-marker.js?v=20260810j"></script>
-  <script src="js/app.js?v=20260810ae"></script>
+  <script src="js/app.js?v=20260810aa"></script>
 </body>
 </html>

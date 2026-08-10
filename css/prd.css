@@ -122,6 +122,31 @@
   margin-left: 0;
 }
 
+/* 章节页：已学习 → 角标5 → 角标6 成组，避免被 footer space-between 拆开 */
+.resource-footer-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.chapter-req-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 20px;
+  flex-shrink: 0;
+}
+
+.chapter-req-pair .req-marker-slot {
+  position: relative;
+}
+
+.chapter-req-pair .req-marker-slot > .req-marker {
+  margin-left: 0;
+}
+
 /* 列表区域滚动角标：独立锚点内收，避免贴边被 overflow 裁切 */
 .req-list-scroll-slot {
   position: absolute;

@@ -252,6 +252,7 @@
             items: [
               "课程状态为「待学习 / 学习中 / 已学习」三态。",
               "筛选抽屉中的课程状态选项与上述三态一一映射。",
+              "【8.11需求评审后补充】所有视频待学习：指从未打开过这个视频；学习中：指打开过这个视频，但是这个视频还未看到最后；已学习：指打开过这个视频，且已看到视频最后（无论是自然看到最后，还是手动拖动到最后，都算是已学习）。",
             ],
           },
           {
@@ -510,7 +511,7 @@
             title: "操作说明",
             items: [
               "未练习：进入该卷练习作答页。",
-              "已练习：进入该卷详情/报告页。",
+              "已练习：进入该卷详情页。",
               "练习中：进入该卷作答页，并定位到需作答的第一题。",
               "从上述页面返回后，仍停留在章节页当前课型与已生效筛选条件。",
             ],
@@ -524,6 +525,40 @@
         source: {
           decisionFile: "docs/prd-workflow/decisions/chapter-course.decision.md",
           decisionObject: "试卷操作",
+          relatedFiles: ["index.html"],
+        },
+      },
+      {
+        id: "CHAPTER_COURSE-015",
+        title: "练习试卷流转说明",
+        sourceType: "decision",
+        objectType: "data",
+        objectName: "练习试卷流转",
+        module: "课程中心·章节",
+        pageName: "课程中心·章节页",
+        route: "#chapter",
+        anchorId: "chapter.papers.flow",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入章节课程中心", to: "#chapter" },
+          { type: "scrollTo", label: "定位练习试卷流转", anchorId: "chapter.papers.flow" },
+          { type: "highlight", label: "高亮练习试卷流转", anchorId: "chapter.papers.flow" },
+        ],
+        logicSections: [
+          {
+            title: "结果与流转",
+            items: [
+              "【8.11需求评审后补充】只要这份练习试卷完成练习了（用户已提交整份试卷-系统已全部自动批改/或待学生自批），这份试卷就会流转到首页的「练习记录」模块的试卷 tab 栏目下，同时练习试卷里练习过的题目，也都会流转到首页的「练习记录」模块的题目 tab 栏目下。",
+            ],
+          },
+        ],
+        acceptance: [
+          "整卷提交且完成自动批改或进入待学生自批后，该卷出现在首页「练习记录」-试卷 tab。",
+          "该卷中已练习过的题目同步出现在首页「练习记录」-题目 tab。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/chapter-course.decision.md",
+          decisionObject: "练习试卷流转说明",
           relatedFiles: ["index.html"],
         },
       },

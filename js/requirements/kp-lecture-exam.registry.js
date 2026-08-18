@@ -9,7 +9,7 @@
     route: "#kp-lecture",
     module: "专项学习·知识点精讲",
     description:
-      "知识点精讲卡片第 2 页（考点清单）：页签与引导、考点列表与展开、考点说明、典型例题、解析与解题步骤/要点、好题本及反馈。正式产品以多考点为主；演示开关与壳层入口不在本期。",
+      "知识点精讲卡片第 2 页（考点清单）：页签与引导、考点列表与展开、考点类型、考点说明、典型例题、解析与解题步骤/要点、好题本及反馈。正式产品以多考点为主；演示开关与壳层入口不在本期。",
     sourceDecisionFile: "docs/prd-workflow/decisions/kp-lecture-exam.decision.md",
     relatedFiles: [
       "index.html",
@@ -43,12 +43,14 @@
               "本页居中展示页签文案，随当前知识点下发的考点条数切换。",
               "考点条数 ≥ 2 时展示「考点清单」；仅 1 条时展示「考点」。",
               "该文案为产品规则文案，后台不可配、学生端不可改。",
+              "【8.11需求评审后补充】考点为 0 的时候，标题的文案为「考点」，下方的内容模块显示缺省图和提示文案——暂无考点，先去学习其他内容吧~。",
             ],
           },
         ],
         acceptance: [
           "有 2 条及以上考点时，页签为「考点清单」。",
           "仅 1 条考点时，页签为「考点」。",
+          "考点为 0 时，页签为「考点」，内容区展示缺省图与提示文案「暂无考点，先去学习其他内容吧~」。",
         ],
         source: {
           decisionFile: "docs/prd-workflow/decisions/kp-lecture-exam.decision.md",
@@ -603,6 +605,58 @@
           decisionFile: "docs/prd-workflow/decisions/kp-lecture-exam.decision.md",
           decisionObject: "好题本操作反馈",
           relatedFiles: ["js/app.js"],
+        },
+      },
+      {
+        id: "KP_LECTURE_EXAM-015",
+        title: "考点类型",
+        sourceType: "code+decision",
+        objectType: "copy",
+        objectName: "考点类型",
+        module: "专项学习·知识点精讲",
+        pageName: "知识点精讲·考点清单页",
+        route: "#kp-lecture",
+        anchorId: "kp-lecture.exam.type",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入知识点精讲", to: "#kp-lecture" },
+          { type: "setStep", label: "定位到考点清单页", step: "1" },
+          { type: "scrollTo", label: "定位考点类型", anchorId: "kp-lecture.exam.type" },
+          { type: "highlight", label: "高亮考点类型", anchorId: "kp-lecture.exam.type" },
+        ],
+        logicSections: [
+          {
+            title: "显示说明",
+            items: [
+              "有考点且已下发类型时，在该考点名称后展示 1 个类型标签；收起与展开态均可见。",
+              "一考点仅展示 1 个类型标签；文案与后台下发的类型文案一致，学生端不可改。",
+              "未下发类型时不展示类型标签，也不做占位；考点名称仍正常展示。",
+            ],
+          },
+          {
+            title: "数据来源",
+            items: [
+              "考点类型由教研在配置后台配置后随当前知识点下发，后台为必配字段。",
+              "原型中的「概念理解 / 方法应用 / 综合运用 / 易错辨析」仅作展示，正式产品不以该四类为封闭枚举。",
+            ],
+          },
+          {
+            title: "操作说明",
+            items: [
+              "类型标签仅展示，学生端不按类型筛选或排序。",
+              "点击标题行（含类型标签）仍只展开/收起该考点，标签无独立点击结果。",
+            ],
+          },
+        ],
+        acceptance: [
+          "已下发类型时，考点名称后可见与后台文案一致的 1 个类型标签。",
+          "未下发类型时不显示类型标签，考点名称仍正常展示。",
+          "点击类型标签所在标题行，仅展开/收起该考点；列表不按类型筛选或重排。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/kp-lecture-exam.decision.md",
+          decisionObject: "考点类型",
+          relatedFiles: ["js/app.js", "css/app.css"],
         },
       },
     ],

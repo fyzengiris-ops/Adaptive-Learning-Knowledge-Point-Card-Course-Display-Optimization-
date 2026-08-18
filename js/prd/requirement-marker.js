@@ -346,6 +346,66 @@
   function init() {
     syncByRoute();
     window.addEventListener("hashchange", syncByRoute);
+    initMarkersVisibilityToggle();
+  }
+
+  var MARKERS_VISIBLE_KEY = "req-markers-visible";
+  var markersVisible = true;
+  var markersToggleEl = null;
+
+  function loadMarkersVisible() {
+    try {
+      var raw = localStorage.getItem(MARKERS_VISIBLE_KEY);
+      if (raw === "0" || raw === "false") return false;
+      if (raw === "1" || raw === "true") return true;
+    } catch (e) {
+      /* ignore */
+    }
+    return true;
+  }
+
+  function saveMarkersVisible(visible) {
+    try {
+      localStorage.setItem(MARKERS_VISIBLE_KEY, visible ? "1" : "0");
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function applyMarkersVisibility() {
+    document.body.classList.toggle("req-markers-hidden", !markersVisible);
+    if (markersToggleEl) {
+      markersToggleEl.setAttribute("aria-pressed", markersVisible ? "false" : "true");
+      markersToggleEl.textContent = markersVisible ? "隐藏角标" : "显示角标";
+      markersToggleEl.title = markersVisible ? "隐藏页面蓝色需求角标" : "显示页面蓝色需求角标";
+    }
+    if (!markersVisible && global.RequirementFloatingCard) {
+      global.RequirementFloatingCard.hide();
+    }
+  }
+
+  function setMarkersVisible(next) {
+    markersVisible = !!next;
+    saveMarkersVisible(markersVisible);
+    applyMarkersVisibility();
+  }
+
+  function toggleMarkersVisible() {
+    setMarkersVisible(!markersVisible);
+  }
+
+  function initMarkersVisibilityToggle() {
+    markersToggleEl = document.getElementById("prd-markers-toggle");
+    if (!markersToggleEl) return;
+    if (markersToggleEl.parentElement !== document.body) {
+      document.body.appendChild(markersToggleEl);
+    }
+    markersVisible = loadMarkersVisible();
+    applyMarkersVisibility();
+    markersToggleEl.addEventListener("click", function (e) {
+      e.preventDefault();
+      toggleMarkersVisible();
+    });
   }
 
   if (document.readyState === "loading") {
@@ -357,6 +417,11 @@
   global.RequirementMarker = {
     remount: remountCurrent,
     clear: clearMarkers,
+    setMarkersVisible: setMarkersVisible,
+    toggleMarkersVisible: toggleMarkersVisible,
+    isMarkersVisible: function () {
+      return markersVisible;
+    },
     resetOrder: function () {
       var hash = (location.hash || "").replace(/^#/, "");
       var registry = getRegistryForHash(hash);

@@ -174,9 +174,16 @@
               "视频展示视频类型标识；PPT 展示 PPT 类型标识及页数。",
             ],
           },
+          {
+            title: "状态规则",
+            items: [
+              "【8.11需求评审后补充】PPT 达到已学习的行为为看到最后一页，即状态变更为已学习。",
+            ],
+          },
         ],
         acceptance: [
           "备课资料列表可区分视频与 PPT 类型。",
+          "PPT 浏览至最后一页后，学习状态变更为已学习。",
         ],
         source: {
           decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
@@ -242,6 +249,8 @@
             items: [
               "课程状态保留三态：待学习、学习中、已学习。",
               "三态在课程卡片上展示，并作为课程筛选项的一一映射。",
+              "【8.11需求评审后补充】已学完的逻辑和目前已经实现的逻辑保持不变。",
+              "【8.11需求评审后补充】每个视频资源，在学习的时候，都需要记录用户单次浏览视频的累计时长，是否达到视频总时长的50%，如果满足，则将该视频进行计数，以便后续学习报告统计数据使用，同时一个视频，单日最多只计数1次。",
             ],
           },
           {
@@ -470,6 +479,40 @@
           relatedFiles: ["index.html"],
         },
       },
+      {
+        id: "SECTION_COURSE-015",
+        title: "练习试卷流转说明",
+        sourceType: "decision",
+        objectType: "data",
+        objectName: "练习试卷流转",
+        module: "课程中心·小节",
+        pageName: "课程中心·小节页",
+        route: "#section",
+        anchorId: "section.papers.flow",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入小节课程中心", to: "#section" },
+          { type: "scrollTo", label: "定位练习试卷流转", anchorId: "section.papers.flow" },
+          { type: "highlight", label: "高亮练习试卷流转", anchorId: "section.papers.flow" },
+        ],
+        logicSections: [
+          {
+            title: "结果与流转",
+            items: [
+              "【8.11需求评审后补充】只要这份练习试卷完成练习了（用户已提交整份试卷-系统已全部自动批改/或待学生自批），这份试卷就会流转到首页的「练习记录」模块的试卷 tab 栏目下，同时练习试卷里练习过的题目，也都会流转到首页的「练习记录」模块的题目 tab 栏目下。",
+            ],
+          },
+        ],
+        acceptance: [
+          "整卷提交且完成自动批改或进入待学生自批后，该卷出现在首页「练习记录」-试卷 tab。",
+          "该卷中已练习过的题目同步出现在首页「练习记录」-题目 tab。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
+          decisionObject: "练习试卷流转说明",
+          relatedFiles: ["index.html"],
+        },
+      },
 
       {
         id: "SECTION_COURSE-009",
@@ -582,7 +625,7 @@
           {
             title: "显示说明",
             items: [
-              "试卷筛选维度选项为：已练习、待练习（二选一）。",
+              "试卷筛选维度选项为：待练习、练习中、已练习（三选一）。",
             ],
           },
           {
@@ -600,7 +643,7 @@
           },
         ],
         acceptance: [
-          "试卷二态可筛选且只作用于试卷。",
+          "试卷三态可筛选且只作用于试卷。",
           "无匹配时试卷区显示「当前筛选状态暂无练习试卷，可调整筛选项」。",
         ],
         source: {

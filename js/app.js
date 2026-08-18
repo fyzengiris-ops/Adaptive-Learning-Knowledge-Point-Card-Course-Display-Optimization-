@@ -464,6 +464,22 @@
     },
   };
 
+  /** 设计预览：考点类型。确认后再改为后台字段，不在此写入业务规则。 */
+  const KP_EXAM_TYPE_CLASS = {
+    概念理解: "is-concept",
+    方法应用: "is-method",
+    综合运用: "is-integrate",
+    易错辨析: "is-pitfall",
+  };
+  const KP_EXAM_TYPE_PREVIEW = [
+    "概念理解",
+    "方法应用",
+    "综合运用",
+    "易错辨析",
+    "方法应用",
+    "综合运用",
+  ];
+
   const kpRoot = document.getElementById("kp-card-root");
   let kpMode = "multi";
   let kpPage = 0; // 0 核心概念 | 1 考点
@@ -805,6 +821,8 @@
       const badgeText = "考点" + (i + 1);
       const tone = typeof options.tone === "number" ? options.tone % 3 : 0;
       const title = formatRich(ep.name || "");
+      const examType = KP_EXAM_TYPE_PREVIEW[i] || "概念理解";
+      const examTypeClass = KP_EXAM_TYPE_CLASS[examType] || "is-concept";
       return (
         '<div class="kp-exam-card tone-' +
         tone +
@@ -834,12 +852,23 @@
         ' data-exam-index="' +
         i +
         '">' +
-        '<div class="kp-exam-title' +
+        '<div class="kp-exam-title">' +
+        '<span class="kp-exam-name' +
         (withShellAnchors ? " req-anchor-inline" : "") +
         '"' +
         (withShellAnchors ? ' data-req-anchor="kp-lecture.exam.name"' : "") +
         ">" +
         title +
+        "</span>" +
+        (withShellAnchors
+          ? '<span class="kp-exam-type-host req-anchor-inline" data-req-anchor="kp-lecture.exam.type">'
+          : "") +
+        '<span class="kp-exam-type ' +
+        examTypeClass +
+        '"><span class="kp-exam-type-text">' +
+        examType +
+        "</span></span>" +
+        (withShellAnchors ? "</span>" : "") +
         "</div>" +
         '<svg class="kp-exam-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>' +
         "</button>" +

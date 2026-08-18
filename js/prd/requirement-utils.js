@@ -49,6 +49,29 @@
     return !!EMPTY_FALLBACKS[value];
   }
 
+  function escapeHtml(text) {
+    return String(text == null ? "" : text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /**
+   * 将「【x.x需求评审后补充】」前缀渲染为橙色标签，其余正文转义后原样输出
+   */
+  function formatLogicItemHtml(text) {
+    var raw = String(text == null ? "" : text);
+    var match = raw.match(/^(【\d{1,2}\.\d{1,2}需求评审后补充】)\s*/);
+    if (!match) return escapeHtml(raw);
+    return (
+      '<span class="req-review-tag">' +
+      escapeHtml(match[1]) +
+      "</span>" +
+      escapeHtml(raw.slice(match[0].length))
+    );
+  }
+
   /**
    * 过滤后供展示的 logicSections（不改写原数据）
    */
@@ -74,6 +97,8 @@
     getRequirementById: getRequirementById,
     getRequirementByAnchor: getRequirementByAnchor,
     isEmptyFallback: isEmptyFallback,
+    escapeHtml: escapeHtml,
+    formatLogicItemHtml: formatLogicItemHtml,
     getVisibleLogicSections: getVisibleLogicSections,
   };
 })(typeof window !== "undefined" ? window : globalThis);

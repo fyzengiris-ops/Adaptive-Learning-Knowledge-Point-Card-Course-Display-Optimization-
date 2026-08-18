@@ -74,6 +74,19 @@
   transform: rotate(6deg);
 }
 
+/* 考点类型角标跟在标签右侧；卡片不再裁切，长标题时标签换到下一行 */
+.kp-exam-type-host.req-anchor-inline {
+  pointer-events: auto;
+  z-index: 46;
+  overflow: visible;
+}
+
+.kp-exam-type-host.req-anchor-inline > .req-marker {
+  position: static;
+  pointer-events: auto;
+  margin-left: 2px;
+}
+
 .kp-foot {
   position: relative;
 }
@@ -169,11 +182,17 @@
   flex-shrink: 0;
 }
 
+.papers-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .req-marker-slot > .req-marker {
   margin-left: 0;
 }
 
-/* 章节页：已学习 → 角标5 → 角标6 成组，避免被 footer space-between 拆开 */
+/* 章节页：已学习 → 状态角标 → 列表角标 成组，避免被 footer space-between 拆开 */
 .resource-footer-meta {
   display: inline-flex;
   align-items: center;
@@ -325,6 +344,11 @@
   color: #6f9b84;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+.req-review-tag {
+  color: #e67e22;
+  font-weight: 700;
 }
 
 .req-float-empty {

@@ -85,11 +85,21 @@
   }
 
   function escapeHtml(text) {
+    if (global.RequirementUtils && global.RequirementUtils.escapeHtml) {
+      return global.RequirementUtils.escapeHtml(text);
+    }
     return String(text)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function formatItemHtml(text) {
+    if (global.RequirementUtils && global.RequirementUtils.formatLogicItemHtml) {
+      return global.RequirementUtils.formatLogicItemHtml(text);
+    }
+    return escapeHtml(text);
   }
 
   function buildBodyHtml(requirement) {
@@ -109,7 +119,7 @@
               no +
               "</span>" +
               '<span class="req-float-item-text">' +
-              escapeHtml(item) +
+              formatItemHtml(item) +
               "</span>" +
               "</li>"
             );

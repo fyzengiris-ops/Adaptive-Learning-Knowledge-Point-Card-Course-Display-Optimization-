@@ -2261,15 +2261,21 @@ a {
 
 .paper-name-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 2px;
+  overflow: visible;
 }
 
 .paper-name-row .paper-name {
   flex: 1;
   min-width: 0;
+}
+
+.paper-name-row .req-marker-slot {
+  flex: 0 0 auto;
+  align-self: center;
 }
 
 .paper-status {
@@ -3674,7 +3680,7 @@ a {
   background: linear-gradient(180deg, #f3fbf6 0%, #ffffff 72px);
   box-shadow: 0 2px 10px rgba(61, 184, 122, 0.08);
   padding: 0 0 4px;
-  overflow: hidden;
+  overflow: visible;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -3883,24 +3889,134 @@ a {
   padding: 30px 14px 6px;
   border: none;
   min-height: 52px;
+  overflow: visible;
 }
 
 button.kp-exam-head {
   cursor: pointer;
 }
 
-button.kp-exam-head:hover .kp-exam-title {
+button.kp-exam-head:hover .kp-exam-name {
   color: #1f7a6d;
 }
 
 .kp-exam-title {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
   font-size: 16px;
   font-weight: 800;
   color: #16362f;
   line-height: 1.45;
   letter-spacing: 0.01em;
+  overflow: visible;
+}
+
+.kp-exam-name {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.kp-exam-type-host {
+  position: relative;
+  flex: 0 0 auto;
+  margin-left: 0;
+  vertical-align: middle;
+}
+
+.kp-exam-type-host .kp-exam-type {
+  margin-left: 0;
+  vertical-align: 0;
+}
+
+/* 考点类型：斜切小印章，贴在名称后；与顶栏掌握/高频同族 */
+.kp-exam-type {
+  --type-skew: -14deg;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 11px 0 10px;
+  margin-left: 10px;
+  vertical-align: 0.18em;
+  color: #fff;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 2px 2px rgba(40, 60, 50, 0.14));
+}
+
+.kp-exam-type::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  transform: skewX(var(--type-skew));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.kp-exam-type::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(255, 255, 255, 0.72);
+  border-radius: 2px;
+  transform: skewX(var(--type-skew));
+  pointer-events: none;
+}
+
+.kp-exam-type-text {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-indent: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
+}
+
+.kp-exam-type-text::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  margin-left: 1px;
+  background: currentColor;
+  transform: rotate(45deg);
+  opacity: 0.85;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.kp-exam-type.is-concept::before {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.42), transparent 46%),
+    linear-gradient(145deg, #5fd0c0 0%, #2aa090 48%, #1f7a6d 100%);
+}
+
+.kp-exam-type.is-method::before {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.42), transparent 46%),
+    linear-gradient(145deg, #7eb3ee 0%, #4a8ad4 48%, #2f6fbf 100%);
+}
+
+.kp-exam-type.is-integrate::before {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.42), transparent 46%),
+    linear-gradient(145deg, #f3c56a 0%, #e09a32 48%, #c47a1a 100%);
+}
+
+.kp-exam-type.is-pitfall::before {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.42), transparent 46%),
+    linear-gradient(145deg, #f08b86 0%, #e0726c 48%, #c45c5c 100%);
 }
 
 .kp-exam-chevron {

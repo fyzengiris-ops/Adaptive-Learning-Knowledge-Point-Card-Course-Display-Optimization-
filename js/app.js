@@ -222,20 +222,12 @@
   const chapterTabBar = document.querySelector('.tabs[data-scope="chapter"]');
   const CHAPTER_TYPE_META = {
     sync: {
-      courseHint: "教材同步 · 循序渐进",
-      courseCount: "4 门",
-      papersHint: "及时巩固",
-      count: "2 套",
-      empty: false,
-      theme: "theme-sync",
-    },
-    topic: {
       courseHint: "重难点 · 专项突破",
       courseCount: "3 门",
       papersHint: "强化突破",
       count: "2 套",
       empty: false,
-      theme: "theme-topic",
+      theme: "theme-sync",
     },
     extend: {
       courseHint: "学有余力 · 拔高拓展",
@@ -255,6 +247,7 @@
     const papersCount = document.getElementById("chapter-papers-count");
 
     switchChapterType = function (key) {
+      if (key === "topic") key = "sync";
       if (!CHAPTER_TYPE_META[key]) return;
 
       if (chapterTabBar) {

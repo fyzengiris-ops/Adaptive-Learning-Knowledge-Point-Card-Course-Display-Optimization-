@@ -476,8 +476,7 @@
             <span class="edge-chip"></span>
           </div>
           <nav class="tabs req-anchor-inline" data-scope="chapter" data-req-anchor="chapter.type.tabs">
-            <button class="tab active" data-panel="chapter-sync" data-chapter-type="sync" type="button">同步课</button>
-            <button class="tab" data-panel="chapter-sync" data-chapter-type="topic" type="button">专题课</button>
+            <button class="tab active" data-panel="chapter-sync" data-chapter-type="sync" type="button">专题课</button>
             <button class="tab" data-panel="chapter-sync" data-chapter-type="extend" type="button">拓展课</button>
             <button class="tab" data-panel="chapter-school" type="button">校本课</button>
           </nav>
@@ -491,60 +490,23 @@
                 <span class="req-anchor-inline req-list-scroll-slot" data-req-anchor="chapter.list.scroll" aria-hidden="true"></span>
                 <div class="lane-head">
                   <span class="lane-label">课程</span>
-                  <span class="lane-hint req-anchor-inline" id="chapter-course-hint" data-req-anchor="chapter.course.hint">教材同步 · 循序渐进</span>
-                  <span class="lane-count req-anchor-inline" id="chapter-course-count" data-req-anchor="chapter.course.count">4 门</span>
+                  <span class="lane-hint req-anchor-inline" id="chapter-course-hint" data-req-anchor="chapter.course.hint">重难点 · 专项突破</span>
+                  <span class="lane-count req-anchor-inline" id="chapter-course-count" data-req-anchor="chapter.course.count">3 门</span>
                 </div>
                 <div class="source-panel active" data-chapter-panel="sync">
-                  <div class="resource-grid cols-3">
-                    <article class="resource-card">
-                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">Unit 概述</div><div class="sub">章节同步</div></div></div>
-                      <div class="resource-name">UNIT 1 Teenage life 单元导读</div>
-                      <div class="resource-footer">
-                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>12:00</span>
-                        <span class="resource-footer-meta">
-                          <span class="status done">已学习</span>
-                          <span class="chapter-req-pair" aria-hidden="true">
-                            <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.course.status"></span>
-                            <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.course.list"></span>
-                          </span>
-                        </span>
-                      </div>
-                    </article>
-                    <article class="resource-card">
-                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">Section A</div><div class="sub">章节同步</div></div></div>
-                      <div class="resource-name">Teenage life Section A 同步课</div>
-                      <div class="resource-footer">
-                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>15:00</span>
-                        <span class="status doing">学习中</span>
-                      </div>
-                    </article>
-                    <article class="resource-card">
-                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">Section B</div><div class="sub">章节同步</div></div></div>
-                      <div class="resource-name">Teenage life Section B 同步课</div>
-                      <div class="resource-footer">
-                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>16:30</span>
-                        <span class="status todo">待学习</span>
-                      </div>
-                    </article>
-                    <article class="resource-card">
-                      <div class="resource-thumb"><div class="thumb-label"><div class="badge">同步课</div><div class="main">单元总结</div><div class="sub">章节同步</div></div></div>
-                      <div class="resource-name">UNIT 1 单元知识梳理</div>
-                      <div class="resource-footer">
-                        <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>20:00</span>
-                        <span class="status todo">待学习</span>
-                      </div>
-                    </article>
-                  </div>
-                </div>
-
-                <div class="source-panel" data-chapter-panel="topic">
                   <div class="resource-grid cols-3">
                     <article class="resource-card">
                       <div class="resource-thumb"><div class="thumb-label"><div class="badge">专题课</div><div class="main">词汇专题</div><div class="sub">重难点突破</div></div></div>
                       <div class="resource-name">Teenage life 核心词汇专题</div>
                       <div class="resource-footer">
                         <span class="resource-duration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>25:00</span>
-                        <span class="status todo">待学习</span>
+                        <span class="resource-footer-meta">
+                          <span class="status todo">待学习</span>
+                          <span class="chapter-req-pair" aria-hidden="true">
+                            <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.course.status"></span>
+                            <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.course.list"></span>
+                          </span>
+                        </span>
                       </div>
                     </article>
                     <article class="resource-card">
@@ -592,47 +554,22 @@
                 <div class="papers-card" id="chapter-papers-card">
                   <div class="lane-head lane-head-papers">
                     <span class="lane-label">试卷</span>
-                    <span class="lane-hint req-anchor-inline" id="chapter-papers-hint" data-req-anchor="chapter.papers.hint">及时巩固</span>
+                    <span class="lane-hint req-anchor-inline" id="chapter-papers-hint" data-req-anchor="chapter.papers.hint">强化突破</span>
                     <span class="lane-count req-anchor-inline" id="chapter-papers-count" data-req-anchor="chapter.papers.count">2 套</span>
                   </div>
 
                   <div class="paper-list chapter-papers active req-anchor-inline" data-chapter-papers="sync" data-req-anchor="chapter.papers.list">
-                    <div class="paper-item is-todo">
-                      <div class="paper-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
-                      <div class="paper-body">
-                        <div class="paper-name-row">
-                          <div class="paper-name">UNIT 1 同步课 · 单元综合练习</div>
-                          <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.papers.flow" aria-hidden="true"></span>
-                          <span class="paper-status todo req-anchor-inline" data-req-anchor="chapter.papers.status">未练习</span>
-                        </div>
-                        <div class="paper-meta req-anchor-inline" data-req-anchor="chapter.papers.meta"><span>共 30 题</span><span>预计 40 分钟</span></div>
-                      </div>
-                      <span class="paper-action todo req-anchor-inline" data-req-anchor="chapter.papers.action">去练习 ›</span>
-                    </div>
-                    <div class="paper-item is-done">
-                      <div class="paper-icon done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
-                      <div class="paper-body">
-                        <div class="paper-name-row">
-                          <div class="paper-name">UNIT 1 同步课 · Section 过关检测</div>
-                          <span class="paper-status done">已练习</span>
-                        </div>
-                        <div class="paper-meta"><span>共 18 题</span><span>得分 92</span></div>
-                      </div>
-                      <span class="paper-action done">查看详情 ›</span>
-                    </div>
-                  </div>
-
-                  <div class="paper-list chapter-papers" data-chapter-papers="topic">
                     <div class="paper-item is-done">
                       <div class="paper-icon done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
                       <div class="paper-body">
                         <div class="paper-name-row">
                           <div class="paper-name">专题课 · 词汇与语法综合卷</div>
-                          <span class="paper-status done">已练习</span>
+                          <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.papers.flow" aria-hidden="true"></span>
+                          <span class="paper-status done req-anchor-inline" data-req-anchor="chapter.papers.status">已练习</span>
                         </div>
-                        <div class="paper-meta"><span>共 24 题</span><span>得分 78</span></div>
+                        <div class="paper-meta req-anchor-inline" data-req-anchor="chapter.papers.meta"><span>共 24 题</span><span>得分 78</span></div>
                       </div>
-                      <span class="paper-action done">查看详情 ›</span>
+                      <span class="paper-action done req-anchor-inline" data-req-anchor="chapter.papers.action">查看详情 ›</span>
                     </div>
                     <div class="paper-item is-todo">
                       <div class="paper-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
@@ -657,10 +594,9 @@
                       </svg>
                     </div>
                     <p class="empty-title">暂未配置拓展课练习试卷</p>
-                    <p class="empty-desc">可以先去练习同步课或专题课的配套试卷，巩固所学内容。</p>
+                    <p class="empty-desc">可以先去练习专题课的配套试卷，巩固所学内容。</p>
                     <div class="empty-actions">
-                      <button type="button" class="empty-link" data-jump-chapter-type="sync">去同步课试卷</button>
-                      <button type="button" class="empty-link" data-jump-chapter-type="topic">去专题课试卷</button>
+                      <button type="button" class="empty-link" data-jump-chapter-type="sync">去专题课试卷</button>
                     </div>
                   </div>
                 </div>
@@ -1108,7 +1044,7 @@
   </button>
 
   <script src="js/requirements/section-course.registry.js?v=20260811h"></script>
-  <script src="js/requirements/chapter-course.registry.js?v=20260811c"></script>
+  <script src="js/requirements/chapter-course.registry.js?v=20260819a"></script>
   <script src="js/requirements/kp-lecture-concept.registry.js?v=20260811b"></script>
   <script src="js/requirements/kp-lecture-exam.registry.js?v=20260818c"></script>
   <script src="js/requirements/index.js?v=20260810j"></script>
@@ -1118,6 +1054,6 @@
   <script src="js/prd/requirement-marker.js?v=20260814a"></script>
   <script src="js/prd/requirement-panel.js?v=20260811a"></script>
   <script src="js/prd/requirement-reader-shell.js?v=20260810b"></script>
-  <script src="js/app.js?v=20260818c"></script>
+  <script src="js/app.js?v=20260819a"></script>
 </body>
 </html>

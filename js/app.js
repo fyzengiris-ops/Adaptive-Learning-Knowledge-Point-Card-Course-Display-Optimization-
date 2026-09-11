@@ -416,6 +416,12 @@
           ],
         },
       ],
+      tips: [
+        "一象限：α > 0 递增，α < 0 递减；",
+        "负区间：奇同偶反，无负根不看负半轴；",
+        "解不等式：正负分开，不跨区间比大小；",
+        "求参数：先定系数，再判指数正负。",
+      ],
     },
     single: {
       name: "解一元一次方程",
@@ -476,6 +482,8 @@
   const kpRoot = document.getElementById("kp-card-root");
   let kpMode = "multi";
   let kpPage = 0; // 0 核心概念 | 1 考点
+  /** Tips 展示方案：inline 内嵌模块 | drawer 悬浮按钮 + 侧栏 */
+  let kpTipsScheme = "inline";
   /** @type {Record<number, boolean>} 已展开的考点 */
   let kpOpenExams = Object.create(null);
   /** @type {Record<number, boolean>} 各考点解析是否展开 */
@@ -488,6 +496,19 @@
   const STAR_ICON =
     '<svg viewBox="0 0 24 24" aria-hidden="true">' +
     '<path d="M12 3.6l2.35 4.76 5.25.76-3.8 3.7.9 5.23L12 15.58 7.3 18.05l.9-5.23-3.8-3.7 5.25-.76L12 3.6z"/>' +
+    "</svg>";
+
+  const TIPS_BULB_ICON =
+    '<svg class="kp-tips-bulb" viewBox="0 0 48 48" aria-hidden="true">' +
+    '<g class="kp-tips-bulb-rays" fill="none" stroke="#ffc53d" stroke-width="2.5" stroke-linecap="round">' +
+    '<path d="M24 4.5v5.2"/><path d="M9.2 12l3.8 3.8"/><path d="M38.8 12l-3.8 3.8"/>' +
+    '<path d="M5.5 26h5.2"/><path d="M37.3 26h5.2"/>' +
+    "</g>" +
+    '<path class="kp-tips-bulb-glass" fill="#ffd24d" d="M24 11c-6.2 0-11 4.7-11 10.5 0 3.6 1.8 6.7 4.6 8.6.7.5 1.2 1.3 1.2 2.2v1.2h10.4v-1.2c0-.9.5-1.7 1.2-2.2 2.8-1.9 4.6-5 4.6-8.6C35 15.7 30.2 11 24 11z"/>' +
+    '<path fill="rgba(255,255,255,0.55)" d="M18.8 17.4c1.8-2 4.4-3.1 7.1-2.8-3 .7-5.2 2.7-6.1 5.2-.3.8-1.5.4-1-2.4z"/>' +
+    '<rect x="18.4" y="33.2" width="11.2" height="2.2" rx="1.1" fill="#c5d0dc"/>' +
+    '<rect x="19.2" y="36" width="9.6" height="2" rx="1" fill="#aebccd"/>' +
+    '<rect x="20.2" y="38.4" width="7.6" height="2.4" rx="1.2" fill="#8fa3b8"/>' +
     "</svg>";
 
   const ANALYSIS_EYE_ICON =
@@ -725,6 +746,7 @@
         btn.setAttribute("aria-label", "查看解析");
       });
     }
+    syncKpTipsFab();
     remountKpRequirementMarkers();
   }
 
@@ -917,6 +939,19 @@
         "</div>";
     }
 
+    const tips = Array.isArray(data.tips)
+      ? data.tips.filter(function (item) {
+          return item != null && String(item).trim() !== "";
+        })
+      : [];
+    const tipsInlineHtml =
+      kpTipsScheme === "inline" ? buildKpTipsInlineHtml(tips) : "";
+    const tipsDrawerHtml =
+      kpTipsScheme === "drawer" ? buildKpTipsDrawerHtml(tips) : "";
+    if (tipsInlineHtml) {
+      examPageHtml += tipsInlineHtml;
+    }
+
     const formulaItemsHtml = formulasToShow
       .map(function (item, i) {
         const name = typeof item === "string" ? "" : item.name || "";
@@ -1019,11 +1054,141 @@
       '<button type="button" class="kp-pager-btn" data-kp-nav="next" aria-label="下一页">' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>' +
       "</button>" +
-      "</div></article>";
+      "</div>" +
+      tipsDrawerHtml +
+      "</article>";
 
     setKpPage(kpPage);
     bindKpSwipe();
     remountKpRequirementMarkers();
+    syncKpTipsFab();
+  }
+
+  function buildKpTipsListHtml(tips) {
+    if (!tips.length) {
+      return (
+        '<div class="kp-tips-empty req-anchor-inline" data-req-anchor="kp-lecture.exam.tips">' +
+        "正在更新中，敬请期待~" +
+        "</div>"
+      );
+    }
+    return (
+      '<ol class="kp-tips-list req-anchor-inline" data-req-anchor="kp-lecture.exam.tips">' +
+      tips
+        .map(function (item, tipIndex) {
+          return (
+            '<li class="kp-tips-item">' +
+            '<span class="kp-tips-no" aria-hidden="true">' +
+            (tipIndex + 1) +
+            "</span>" +
+            '<p class="kp-tips-text">' +
+            formatRich(item) +
+            "</p></li>"
+          );
+        })
+        .join("") +
+      "</ol>"
+    );
+  }
+
+  function buildKpTipsInlineHtml(tips) {
+    const hasTips = tips.length > 0;
+    return (
+      '<section class="kp-tips' +
+      (hasTips ? "" : " is-empty") +
+      '" aria-label="小乐 Tips">' +
+      '<div class="kp-tips-ribbon">' +
+      '<span class="kp-tips-ribbon-bulb" aria-hidden="true">' +
+      TIPS_BULB_ICON +
+      "</span>小乐 Tips</div>" +
+      '<div class="kp-tips-head">' +
+      '<div class="kp-tips-head-main">' +
+      (hasTips
+        ? '<p class="kp-tips-sub">记牢这几条，做题更快更稳~</p>'
+        : "") +
+      "</div>" +
+      '<div class="kp-tips-deco" aria-hidden="true">' +
+      TIPS_BULB_ICON +
+      "</div>" +
+      "</div>" +
+      buildKpTipsListHtml(tips) +
+      "</section>"
+    );
+  }
+
+  function buildKpTipsDrawerHtml(tips) {
+    const hasTips = tips.length > 0;
+    return (
+      '<button type="button" class="kp-tips-fab" data-kp-action="open-tips-drawer" aria-label="打开小乐 Tips" title="小乐 Tips">' +
+      '<span class="kp-tips-fab-bulb" aria-hidden="true">' +
+      TIPS_BULB_ICON +
+      "</span>" +
+      "</button>" +
+      '<div class="kp-tips-drawer-root" data-kp-tips-drawer hidden>' +
+      '<div class="kp-tips-drawer-mask" data-kp-action="close-tips-drawer" aria-hidden="true"></div>' +
+      '<aside class="kp-tips-drawer" role="dialog" aria-modal="true" aria-label="小乐 Tips">' +
+      '<div class="kp-tips-drawer-head">' +
+      '<div class="kp-tips-drawer-title-wrap">' +
+      '<div class="kp-tips-drawer-brand">' +
+      '<div class="kp-tips-drawer-badge" aria-hidden="true">' +
+      TIPS_BULB_ICON +
+      "</div>" +
+      '<span class="kp-tips-drawer-title">小乐 Tips</span>' +
+      "</div>" +
+      (hasTips
+        ? '<p class="kp-tips-sub">记牢这几条，做题更快更稳~</p>'
+        : "") +
+      "</div>" +
+      '<button type="button" class="kp-tips-drawer-close" data-kp-action="close-tips-drawer" aria-label="关闭">×</button>' +
+      "</div>" +
+      '<div class="kp-tips-drawer-body">' +
+      buildKpTipsListHtml(tips) +
+      "</div>" +
+      "</aside>" +
+      "</div>"
+    );
+  }
+
+  function syncKpTipsFab() {
+    if (!kpRoot) return;
+    const fab = kpRoot.querySelector(".kp-tips-fab");
+    if (!fab) return;
+    // 侧栏方案：考点清单页显示悬浮按钮；核心概念页隐藏
+    fab.hidden = kpPage !== 1;
+    if (kpPage !== 1) closeKpTipsDrawer();
+  }
+
+  function openKpTipsDrawer() {
+    if (!kpRoot) return;
+    const root = kpRoot.querySelector("[data-kp-tips-drawer]");
+    if (!root) return;
+    root.hidden = false;
+    requestAnimationFrame(function () {
+      root.classList.add("is-open");
+    });
+  }
+
+  function closeKpTipsDrawer() {
+    if (!kpRoot) return;
+    const root = kpRoot.querySelector("[data-kp-tips-drawer]");
+    if (!root || root.hidden) return;
+    root.classList.remove("is-open");
+    window.setTimeout(function () {
+      if (!root.classList.contains("is-open")) root.hidden = true;
+    }, 220);
+  }
+
+  function setKpTipsScheme(scheme) {
+    kpTipsScheme = scheme === "drawer" ? "drawer" : "inline";
+    document.querySelectorAll("[data-kp-tips-scheme]").forEach(function (btn) {
+      btn.classList.toggle(
+        "active",
+        btn.getAttribute("data-kp-tips-scheme") === kpTipsScheme
+      );
+    });
+    const keepPage = kpPage;
+    renderKpCard();
+    setKpPage(keepPage);
   }
 
   function remountKpRequirementMarkers() {
@@ -1122,6 +1287,14 @@
     });
   });
 
+  document.querySelectorAll("[data-kp-tips-scheme]").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setKpTipsScheme(btn.getAttribute("data-kp-tips-scheme"));
+    });
+  });
+
   if (kpRoot) {
     kpRoot.addEventListener("click", function (e) {
       // 需求角标点击不触发考点展开/解析等业务交互
@@ -1187,6 +1360,14 @@
           actionEl.getAttribute("data-preview-src"),
           actionEl.getAttribute("data-preview-alt")
         );
+        return;
+      }
+      if (action === "open-tips-drawer") {
+        openKpTipsDrawer();
+        return;
+      }
+      if (action === "close-tips-drawer") {
+        closeKpTipsDrawer();
       }
     });
   }

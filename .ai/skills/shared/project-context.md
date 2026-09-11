@@ -7,14 +7,19 @@
 业务逻辑相关 Skill 默认按以下顺序执行：
 
 ```txt
-Skill0 页面对象清单 → Skill1 页面逻辑审核 → Skill2 需求注册表 → Skill3 角标评审 → …
+Skill0 对象清单 → Skill1 逻辑审核 → Skill2 需求注册表 → Skill7 注释运行时（若尚未接入）→ Skill3 角标评审 → …
 ```
 
 | Skill | 目录 | 作用 |
 | --- | --- | --- |
 | 0 | `00-page-object-inventory` | 先锁「审什么」：对象清单，用户核对遗漏并确认必审/可跳过 |
 | 1 | `01-page-logic-auditor` | 再定「怎么定」：只对已确认「必审」对象出决策题 |
-| 2+ | `02-…` 及之后 | 注册表、角标、PRD 等，输入以 Skill1 决策为准 |
+| 2 | `02-requirement-registry-writer` | 把已确认口径写成需求注册表 |
+| 7 | `07-prd-annotation-kit` | 把角标 / 悬浮面板 / 双击改号与正文反写作为可复制运行时接入当前项目 |
+| 3 | `03-requirement-marker-reviewer` | 在页面对象旁挂数字角标，点击打开悬浮业务逻辑 |
+| 4 | `04-prd-prototype-integrator` | 右侧 PRD 面板与原型联动 |
+| 5 | `05-registry-to-prd-generator` | 从注册表生成 Markdown PRD |
+| 6 | `06-requirement-annotation-refiner` | 清洗已有注释表达 |
 
 清单落盘路径：
 
@@ -75,20 +80,25 @@ js/requirements/index.js
 通用实现放在：
 
 ```txt
+js/prd/prd-annotation-config.js
 js/prd/requirement-utils.js
 js/prd/requirement-marker.js
 js/prd/requirement-floating-card.js
+js/prd/requirement-writeback.js
 js/prd/requirement-reader-shell.js
 js/prd/requirement-panel.js
 js/prd/requirement-highlight.js
 css/prd.css
+css/prd-panel.css
+scripts/prd-dev-server.js
 ```
 
 接入方式：
 
-- 在 `index.html` 中按需引入 `css/prd.css` 与上述脚本。
-- 在 `js/app.js` 或独立初始化脚本中挂载角标、悬浮面板、右侧面板。
-- 页面锚点使用 `data-req-anchor="<anchorId>"`，写在 `index.html` 对应 DOM 上。
+- 若目标项目还没有这套运行时，先执行 `.ai/skills/07-prd-annotation-kit/SKILL.md`，从 kit 复制文件，不要从零手写。
+- 在 `index.html` 中引入 `css/prd.css`、`css/prd-panel.css` 与上述脚本。
+- 页面锚点使用 `data-req-anchor="<anchorId>"`。
+- 预览若需要「双击改正文并写回注册表」，用 `node scripts/prd-dev-server.js`，不要只用 `python -m http.server`。
 
 ## 路由与激活动作约定
 

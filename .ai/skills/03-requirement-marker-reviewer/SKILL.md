@@ -32,12 +32,13 @@ js/requirements/schema.js
 js/requirements/<页面或流程>.registry.js
 ```
 
-若 `js/requirements` 不存在，停止并提示先运行 `requirement-registry-writer`。
+若 `js/prd/requirement-marker.js` 不存在，先执行 `.ai/skills/07-prd-annotation-kit/SKILL.md` 复制运行时，再继续本 Skill。不要从零重写角标/悬浮面板脚本。
 
 ## 执行边界
 
 可以：
 
+- 复用 `.ai/skills/07-prd-annotation-kit/kit` 已复制到项目中的角标运行时
 - 新增/复用 `js/prd/requirement-marker.js`、`requirement-floating-card.js`、`requirement-utils.js`、`css/prd.css`
 - 在目标页面加 `data-req-anchor` 与角标
 - 做不影响视觉主交互的最小包裹

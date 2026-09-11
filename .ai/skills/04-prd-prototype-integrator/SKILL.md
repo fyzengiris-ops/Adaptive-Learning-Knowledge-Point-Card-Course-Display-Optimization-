@@ -30,7 +30,7 @@ js/requirements/schema.js
 若指定页面，还要读对应 `*.registry.js`。
 
 若注册表不存在，提示先跑 Skill2。  
-若无稳定锚点且用户未明确要求本次补锚点，提示先跑 Skill3。
+若 `js/prd/requirement-panel.js` 不存在，先执行 `.ai/skills/07-prd-annotation-kit/SKILL.md` 复制运行时，再接入右侧面板。不要从零重写。
 
 ## 执行边界
 

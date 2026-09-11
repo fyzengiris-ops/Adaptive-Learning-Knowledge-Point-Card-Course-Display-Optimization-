@@ -9,7 +9,7 @@
     route: "#kp-lecture",
     module: "专项学习·知识点精讲",
     description:
-      "知识点精讲卡片第 2 页（考点清单）：页签与引导、考点列表与展开、考点类型、考点说明、典型例题、解析与解题步骤/要点、好题本及反馈。正式产品以多考点为主；演示开关与壳层入口不在本期。",
+      "知识点精讲卡片第 2 页（考点清单）：页签与引导、考点列表与展开、考点类型、考点说明、典型例题、解析与解题步骤/要点、好题本及反馈、小乐 Tips。正式产品以多考点为主；演示开关与壳层入口不在本期。",
     sourceDecisionFile: "docs/prd-workflow/decisions/kp-lecture-exam.decision.md",
     relatedFiles: [
       "index.html",
@@ -659,6 +659,45 @@
           relatedFiles: ["js/app.js", "css/app.css"],
         },
       },
+      {
+        id: "KP_LECTURE_EXAM-016",
+        title: "小乐 Tips",
+        sourceType: "code+decision",
+        objectType: "region",
+        objectName: "小乐 Tips",
+        module: "专项学习·知识点精讲",
+        pageName: "知识点精讲·考点清单页",
+        route: "#kp-lecture",
+        anchorId: "kp-lecture.exam.tips",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入知识点精讲", to: "#kp-lecture" },
+          { type: "setStep", label: "定位到考点清单页", step: "1" },
+          { type: "scrollTo", label: "定位小乐 Tips", anchorId: "kp-lecture.exam.tips" },
+          { type: "highlight", label: "高亮小乐 Tips", anchorId: "kp-lecture.exam.tips" },
+        ],
+        logicSections: [
+          {
+            title: "显示说明",
+            items: [
+              "考点清单页固定展示「小乐 Tips」模块（模块壳层始终可见，不因未配置而整块隐藏）。",
+              "已配置 Tips 条目时，按配置后台下发的顺序与文案展示列表；条目支持富文本能力集渲染（本页不可编辑）。",
+              "已配置 Tips 条目时，同步展示固定副文案「记牢这几条，做题更快更稳~」；该文案为产品固定文案，后台不可配、学生端不可改。",
+              "配置后台未配置 Tips（无条目 / 空列表）时，模块仍展示，内容区显示固定提示文案：「正在更新中，敬请期待~」；此时不展示副文案「记牢这几条，做题更快更稳~」。",
+              "模块标题「小乐 Tips」为产品固定文案，后台不可配、学生端不可改。",
+            ],
+          },
+        ],
+        acceptance: [
+          "已配置 Tips 时，按后台顺序展示对应条目内容，并可见固定副文案「记牢这几条，做题更快更稳~」。",
+          "未配置 Tips 时，仍可见「小乐 Tips」模块，内容区为「正在更新中，敬请期待~」，且不展示「记牢这几条，做题更快更稳~」。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/kp-lecture-exam.decision.md",
+          decisionObject: "小乐 Tips",
+          relatedFiles: ["js/app.js", "css/app.css"],
+        },
+      },
     ],
     excludedDecisions: [
       {
@@ -679,6 +718,11 @@
       {
         objectName: "顶栏演示多/单考点开关",
         reason: "仅评审演示，非正式学生能力。",
+        sourceDecision: "docs/prd-workflow/inventories/kp-lecture-exam.inventory.md",
+      },
+      {
+        objectName: "顶栏 Tips 内嵌/侧栏演示开关",
+        reason: "仅评审演示双方案，正式产品择一落地，不单独立项业务规则。",
         sourceDecision: "docs/prd-workflow/inventories/kp-lecture-exam.inventory.md",
       },
       {

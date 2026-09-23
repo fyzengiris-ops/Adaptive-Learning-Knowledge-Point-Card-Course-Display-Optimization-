@@ -11,6 +11,9 @@
   if (global.chapterCourseRegistry) {
     registries.push(global.chapterCourseRegistry);
   }
+  if (global.featuredPapersRegistry) {
+    registries.push(global.featuredPapersRegistry);
+  }
   if (global.kpLectureConceptRegistry) {
     registries.push(global.kpLectureConceptRegistry);
   }

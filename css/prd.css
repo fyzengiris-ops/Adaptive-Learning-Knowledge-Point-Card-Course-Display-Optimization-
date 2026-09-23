@@ -343,12 +343,38 @@
 
 .req-float-item {
   display: grid;
-  grid-template-columns: 28px 1fr;
+  grid-template-columns: 28px 1fr auto;
   gap: 6px;
   align-items: start;
   font-size: 13px;
   line-height: 1.55;
   color: #33483d;
+}
+
+.req-edit-delete {
+  display: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #9aaea3;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+[data-edit-field="item"].is-editing + .req-edit-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.req-edit-delete:hover {
+  background: #fdecea;
+  color: #c0392b;
 }
 
 .req-float-item-no {
@@ -367,6 +393,11 @@
   font-size: 13px;
 }
 
+.req-float-item-text,
+.prd-logic-section li [data-edit-field="item"] {
+  white-space: pre-wrap;
+}
+
 .req-float-item-text.is-editing,
 .req-float-title.is-editing,
 .req-float-section h4.is-editing,
@@ -376,6 +407,7 @@
   background: #f4f8ff;
   border-radius: 4px;
   cursor: text;
+  white-space: pre-wrap;
 }
 
 .prd-writeback-toast {

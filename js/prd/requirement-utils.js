@@ -31,12 +31,106 @@
     return null;
   }
 
+  var ANNOTATION_VERSIONS = ["V0.8.2", "V0.8.4"];
+  var DEFAULT_ANNOTATION_VERSION = "V0.8.2";
+  var VERSION_STORAGE_KEY = "req-annotation-version";
+  var VISIBLE_STORAGE_KEY = "req-markers-visible";
+  var selectedVersion = DEFAULT_ANNOTATION_VERSION;
+  var markersVisible = true;
+  var layerListeners = [];
+
+  function normalizeVersion(version) {
+    return ANNOTATION_VERSIONS.indexOf(version) >= 0 ? version : DEFAULT_ANNOTATION_VERSION;
+  }
+
+  function loadAnnotationLayer() {
+    try {
+      var rawVersion = localStorage.getItem(VERSION_STORAGE_KEY);
+      if (rawVersion) selectedVersion = normalizeVersion(rawVersion);
+      var rawVisible = localStorage.getItem(VISIBLE_STORAGE_KEY);
+      if (rawVisible === "0" || rawVisible === "false") markersVisible = false;
+      else if (rawVisible === "1" || rawVisible === "true") markersVisible = true;
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function persistAnnotationLayer() {
+    try {
+      localStorage.setItem(VERSION_STORAGE_KEY, selectedVersion);
+      localStorage.setItem(VISIBLE_STORAGE_KEY, markersVisible ? "1" : "0");
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function getItemVersion(req, registry) {
+    if (req && req.version) return normalizeVersion(req.version);
+    if (registry && registry.version) return normalizeVersion(registry.version);
+    return DEFAULT_ANNOTATION_VERSION;
+  }
+
+  function filterRequirementsByVersion(reqs, registry, version) {
+    var target = normalizeVersion(version || selectedVersion);
+    return (reqs || []).filter(function (req) {
+      return getItemVersion(req, registry) === target;
+    });
+  }
+
+  function getSelectedVersion() {
+    return selectedVersion;
+  }
+
+  function isMarkersVisible() {
+    return markersVisible;
+  }
+
+  function getAnnotationVersions() {
+    return ANNOTATION_VERSIONS.slice();
+  }
+
+  function notifyAnnotationLayerChange() {
+    var payload = {
+      version: selectedVersion,
+      visible: markersVisible,
+    };
+    layerListeners.forEach(function (fn) {
+      try {
+        fn(payload);
+      } catch (e) {
+        /* ignore listener errors */
+      }
+    });
+  }
+
+  function onAnnotationLayerChange(fn) {
+    if (typeof fn === "function") layerListeners.push(fn);
+  }
+
+  /**
+   * 设置当前注释层。
+   * version: 选中的版本；visible: 该版本角标是否显示。
+   * 显示某一版本时，另一版本自动隐藏。
+   */
+  function setAnnotationLayer(version, visible) {
+    selectedVersion = normalizeVersion(version);
+    markersVisible = !!visible;
+    persistAnnotationLayer();
+    notifyAnnotationLayerChange();
+    return {
+      version: selectedVersion,
+      visible: markersVisible,
+    };
+  }
+
   function getRequirementByAnchor(anchorId) {
     var registries = getRequirementRegistries();
     for (var i = 0; i < registries.length; i += 1) {
-      var list = registries[i].requirements || [];
+      var registry = registries[i];
+      var list = registry.requirements || [];
       for (var j = 0; j < list.length; j += 1) {
-        if (list[j].anchorId === anchorId) return list[j];
+        if (list[j].anchorId !== anchorId) continue;
+        if (getItemVersion(list[j], registry) === selectedVersion) return list[j];
       }
     }
     return null;
@@ -90,12 +184,14 @@
   function formatLogicItemHtml(text) {
     var raw = String(text == null ? "" : text);
     var match = raw.match(/^(【\d{1,2}\.\d{1,2}需求评审后补充】)\s*/);
-    if (!match) return escapeHtml(raw);
+    var body = match ? raw.slice(match[0].length) : raw;
+    var html = escapeHtml(body).replace(/\n/g, "<br>");
+    if (!match) return html;
     return (
       '<span class="req-review-tag">' +
       escapeHtml(match[1]) +
       "</span>" +
-      escapeHtml(raw.slice(match[0].length))
+      html
     );
   }
 
@@ -119,6 +215,8 @@
       });
   }
 
+  loadAnnotationLayer();
+
   global.RequirementUtils = {
     getRequirementRegistries: getRequirementRegistries,
     getRequirementById: getRequirementById,
@@ -129,5 +227,13 @@
     escapeHtml: escapeHtml,
     formatLogicItemHtml: formatLogicItemHtml,
     getVisibleLogicSections: getVisibleLogicSections,
+    DEFAULT_ANNOTATION_VERSION: DEFAULT_ANNOTATION_VERSION,
+    getAnnotationVersions: getAnnotationVersions,
+    getItemVersion: getItemVersion,
+    filterRequirementsByVersion: filterRequirementsByVersion,
+    getSelectedVersion: getSelectedVersion,
+    isMarkersVisible: isMarkersVisible,
+    setAnnotationLayer: setAnnotationLayer,
+    onAnnotationLayerChange: onAnnotationLayerChange,
   };
 })(typeof window !== "undefined" ? window : globalThis);

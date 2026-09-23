@@ -7,6 +7,7 @@
     pageName: "课程中心·小节页",
     route: "#section",
     module: "课程中心",
+    version: "V0.8.2",
     description:
       "按决策单元拆分的小节同步课需求：来源 Tab、数量角标、备课类型、课程状态、试卷归属与套数、筛选维度/课程筛选/试卷筛选等。校本课与返回不在本期。",
     sourceDecisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
@@ -649,6 +650,175 @@
         source: {
           decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
           decisionObject: "试卷筛选相关决策",
+          relatedFiles: ["index.html", "js/app.js"],
+        },
+      },
+      {
+        id: "SECTION_COURSE-016",
+        title: "试卷状态标识",
+        sourceType: "decision",
+        objectType: "state",
+        objectName: "试卷状态",
+        module: "课程中心·小节",
+        pageName: "课程中心·小节页",
+        route: "#section",
+        version: "V0.8.4",
+        anchorId: "section.papers.status",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入小节课程中心", to: "#section" },
+          { type: "scrollTo", label: "定位试卷状态", anchorId: "section.papers.status" },
+          { type: "highlight", label: "高亮试卷状态", anchorId: "section.papers.status" },
+        ],
+        logicSections: [
+          {
+            title: "状态规则",
+            items: [
+              "当学生已完成当前试卷测试时，卡片右上角显示「已测试」。",
+              "当学生对该份试卷已有作答记录但未提交时，显示「测试中」。",
+              "当学生对该份试卷已提交，且该份试卷有主观题待自批时，显示「待自批」。",
+              "若学生从未完成过当前试卷测试，显示「待测试」。",
+            ],
+          },
+        ],
+        acceptance: [
+          "已完成测试的试卷显示「已测试」。",
+          "有作答未提交的试卷显示「测试中」。",
+          "已提交且有主观题待自批的试卷显示「待自批」。",
+          "从未完成测试的试卷显示「待测试」。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
+          decisionObject: "右侧练习试卷状态标识（V0.8.4）",
+          relatedFiles: ["index.html"],
+        },
+      },
+      {
+        id: "SECTION_COURSE-017",
+        title: "试卷操作按钮",
+        sourceType: "decision",
+        objectType: "button",
+        objectName: "试卷操作入口",
+        module: "课程中心·小节",
+        pageName: "课程中心·小节页",
+        route: "#section",
+        version: "V0.8.4",
+        anchorId: "section.papers.action",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入小节课程中心", to: "#section" },
+          { type: "scrollTo", label: "定位试卷操作", anchorId: "section.papers.action" },
+          { type: "highlight", label: "高亮试卷操作", anchorId: "section.papers.action" },
+        ],
+        logicSections: [
+          {
+            title: "显示说明",
+            items: [
+              "学生从未完成过该份试卷测试时，按钮显示「去测试」。",
+              "学生已有作答痕迹但未提交时，按钮显示「继续作答」。",
+              "试卷已提交作答但未完成批改时，按钮显示「去自批」。",
+              "学生已完成当前试卷测试，且所有题目均已完成批改后，按钮显示「测试报告」。",
+            ],
+          },
+          {
+            title: "操作说明",
+            items: [
+              "点击「去测试」弹出确认窗：主文案「开始答题」；辅助文案「本次测试共 Y 题，建议用时 Z 分钟。进入后将记录作答用时，退出自动暂停计时，可随时继续。」；\n\n按钮为「取消」「开始答题」。\n\n点击「取消」仅隐藏弹窗；点击「开始答题」直接进入答题状态。",
+              "点击「继续作答」弹出确认窗：主文案「继续答题」；辅助文案「已作答 X/Y 题，剩余 H 题，已累计用时 Z 分钟，进入后继续计时。」；\n\n按钮为「取消」「继续答题」。点击「取消」仅隐藏弹窗；\n\n点击「继续答题」直接进入答题状态，并定位到需要继续作答的大题下的小题位置。",
+              "点击「去自批」进入当前试卷需要自批的第一道题目。",
+              "点击「测试报告」进入该试卷对应的报告页，进入时带入当前试卷名称。",
+            ],
+          },
+          {
+            title: "计算规则",
+            items: [
+              "「去测试」弹窗中的 Y 为该份试卷的大题总数，Z 为该份试卷的预计用时时长；均从配置后台获取，预计用时不存在无时长，后台有默认值。",
+              "「继续作答」弹窗中的 X 为已有作答痕迹的大题数：若某大题含子题，且部分子题无作答痕迹，则该大题不计入 X。\n\nY 为该份试卷的大题总数，H = Y - X。\n\nZ 为该份试卷用户已答题时长：不足 1 分钟时单位为秒，满 1 分钟后单位为分钟。",
+            ],
+          },
+        ],
+        acceptance: [
+          "四态按钮文案按作答与批改进度切换：去测试 / 继续作答 / 去自批 / 测试报告。",
+          "去测试、继续作答先弹窗，取消只关窗，确认后进入答题。",
+          "去自批进入第一道待自批题；测试报告进入报告页并带入试卷名称。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
+          decisionObject: "右侧练习试卷操作入口（V0.8.4）",
+          relatedFiles: ["index.html"],
+        },
+      },
+      {
+        id: "SECTION_COURSE-018",
+        title: "预计用时与得分",
+        sourceType: "decision",
+        objectType: "field",
+        objectName: "预计用时",
+        module: "课程中心·小节",
+        pageName: "课程中心·小节页",
+        route: "#section",
+        version: "V0.8.4",
+        anchorId: "section.papers.duration",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入小节课程中心", to: "#section" },
+          { type: "scrollTo", label: "定位预计用时", anchorId: "section.papers.duration" },
+          { type: "highlight", label: "高亮预计用时", anchorId: "section.papers.duration" },
+        ],
+        logicSections: [
+          {
+            title: "显示说明",
+            items: [
+              "该份试卷尚未提交时，始终显示预计用时。",
+              "该份试卷已提交但未完成自批时，隐藏预计用时，显示「得分：--」。",
+              "该份试卷已提交且已完成自批时，隐藏预计用时，显示「得分：X分」，X 为学生该份试卷的真实得分。",
+            ],
+          },
+        ],
+        acceptance: [
+          "未提交的试卷可见预计用时。",
+          "已提交未完成自批时可见「得分：--」，不可见预计用时。",
+          "已提交且已完成自批时可见「得分：X分」，不可见预计用时。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
+          decisionObject: "预计用时 / 得分（V0.8.4）",
+          relatedFiles: ["index.html"],
+        },
+      },
+      {
+        id: "SECTION_COURSE-019",
+        title: "试卷筛选",
+        sourceType: "decision",
+        objectType: "field",
+        objectName: "试卷状态筛选",
+        module: "课程中心·小节",
+        pageName: "课程中心·小节页",
+        route: "#section",
+        version: "V0.8.4",
+        anchorId: "section.filter.entry",
+        anchorStatus: "implemented",
+        activate: [
+          { type: "navigate", label: "进入小节课程中心", to: "#section" },
+          { type: "openPanel", label: "打开筛选抽屉", panel: "filter-drawer" },
+          { type: "scrollTo", label: "定位筛选入口", anchorId: "section.filter.entry" },
+          { type: "highlight", label: "高亮筛选入口", anchorId: "section.filter.entry" },
+        ],
+        logicSections: [
+          {
+            title: "显示说明",
+            items: [
+              "练习试卷的筛选项调整为：待测试、测试中、待自批、已测试。",
+              "筛选项与试卷卡片状态标识口径一致。",
+            ],
+          },
+        ],
+        acceptance: [
+          "试卷筛选可见「待测试 / 测试中 / 待自批 / 已测试」四项。",
+        ],
+        source: {
+          decisionFile: "docs/prd-workflow/decisions/section-course.decision.md",
+          decisionObject: "练习试卷筛选项（V0.8.4）",
           relatedFiles: ["index.html", "js/app.js"],
         },
       },

@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>自适应学习 · 课程中心原型</title>
-  <link rel="stylesheet" href="css/app.css?v=20260901n" />
-  <link rel="stylesheet" href="css/prd.css?v=20260911a" />
-  <link rel="stylesheet" href="css/prd-panel.css?v=20260814a" />
+  <link rel="stylesheet" href="css/app.css?v=20260923c" />
+  <link rel="stylesheet" href="css/prd.css?v=20260923d" />
+  <link rel="stylesheet" href="css/prd-panel.css?v=20260923b" />
 </head>
 <body>
   <div id="prd-reader-shell" class="prd-reader-shell">
@@ -110,7 +110,27 @@
               </div>
             </div>
 
-            <div class="map-stage">
+            <div class="map-stage" id="home-map-stage">
+              <div class="map-stage-tools">
+                <button class="map-trace-toggle" id="home-trace-toggle" type="button" aria-pressed="false" title="开启后只高亮可追根溯源的知识点">
+                  可溯源
+                </button>
+                <div class="map-mastery-filter" id="home-mastery-filter">
+                  <button class="map-mastery-trigger" id="home-mastery-trigger" type="button" aria-expanded="false" aria-haspopup="listbox">
+                    掌握程度：<span id="home-mastery-label">全部类别</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <div class="map-mastery-menu" id="home-mastery-menu" hidden>
+                    <button type="button" class="active" data-mastery="all">全部类别</button>
+                    <button type="button" data-mastery="excellent">优秀</button>
+                    <button type="button" data-mastery="good">良好</button>
+                    <button type="button" data-mastery="average">一般</button>
+                    <button type="button" data-mastery="weak">较弱</button>
+                    <button type="button" data-mastery="none">未练习</button>
+                  </div>
+                </div>
+              </div>
+
               <svg class="map-svg" viewBox="0 0 800 420" preserveAspectRatio="none">
                 <line x1="400" y1="210" x2="220" y2="110" stroke="#c9ddd2" stroke-width="2" />
                 <line x1="400" y1="210" x2="560" y2="90" stroke="#c9ddd2" stroke-width="2" />
@@ -124,22 +144,22 @@
                 <line x1="620" y1="250" x2="720" y2="300" stroke="#d5e6dc" stroke-width="1.5" />
               </svg>
 
-              <button class="node good" style="left:28%; top:26%;" type="button">顶点坐标</button>
-              <button class="node excellent" style="left:70%; top:21%;" type="button">对称轴公式</button>
-              <button class="node center average" style="left:50%; top:50%;" type="button">二次函数核心要素</button>
-              <button class="node weak" style="left:22%; top:62%;" type="button">判别式 Δ</button>
-              <button class="node good" style="left:78%; top:60%;" type="button">开口方向</button>
-              <button class="node none" style="left:38%; top:81%;" type="button">增减性</button>
-              <button class="node average" style="left:65%; top:83%;" type="button">最值问题</button>
-              <button class="node good" style="left:15%; top:17%;" type="button">图像平移</button>
-              <button class="node weak" style="left:85%; top:17%;" type="button">交点问题</button>
-              <button class="node none" style="left:11%; top:76%;" type="button">不等式应用</button>
+              <button class="node good" data-mastery="good" data-mastery-text="78%" data-has-trace="0" style="left:28%; top:26%;" type="button">顶点坐标</button>
+              <button class="node excellent has-trace" data-mastery="excellent" data-mastery-text="92%" data-has-trace="1" style="left:70%; top:21%;" type="button">对称轴公式</button>
+              <button class="node center average has-trace" data-mastery="average" data-mastery-text="65%" data-has-trace="1" style="left:50%; top:50%;" type="button">二次函数核心要素</button>
+              <button class="node weak has-trace is-selected" data-mastery="weak" data-mastery-text="65%" data-has-trace="1" style="left:22%; top:62%;" type="button">判别式 Δ</button>
+              <button class="node good" data-mastery="good" data-mastery-text="76%" data-has-trace="0" style="left:78%; top:60%;" type="button">开口方向</button>
+              <button class="node none" data-mastery="none" data-mastery-text="未练习" data-has-trace="0" style="left:38%; top:81%;" type="button">增减性</button>
+              <button class="node average has-trace" data-mastery="average" data-mastery-text="61%" data-has-trace="1" style="left:65%; top:83%;" type="button">最值问题</button>
+              <button class="node good" data-mastery="good" data-mastery-text="80%" data-has-trace="0" style="left:15%; top:17%;" type="button">图像平移</button>
+              <button class="node weak has-trace" data-mastery="weak" data-mastery-text="38%" data-has-trace="1" style="left:85%; top:17%;" type="button">交点问题</button>
+              <button class="node none" data-mastery="none" data-mastery-text="未练习" data-has-trace="0" style="left:11%; top:76%;" type="button">不等式应用</button>
 
-              <div class="node-popup">
+              <div class="node-popup" id="home-node-popup">
                 <div class="name">判别式 Δ</div>
                 <div class="mastery">掌握度：65%</div>
                 <div class="actions">
-                  <button class="btn-ghost" type="button">追根溯源</button>
+                  <button class="btn-ghost" type="button" data-home-trace>追根溯源</button>
                   <button class="btn-primary" type="button" data-nav="special">去学习</button>
                 </div>
               </div>
@@ -153,7 +173,6 @@
                 <span><i class="weak"></i>较弱</span>
                 <span><i class="none"></i>未练习</span>
               </div>
-              <button class="recommend-study" type="button" data-nav="special">推荐学习</button>
             </div>
           </section>
 
@@ -383,9 +402,11 @@
                         <div class="paper-name-row">
                           <div class="paper-name">UNIT 1 Section A 同步练习卷</div>
                           <span class="req-anchor-inline req-marker-slot" data-req-anchor="section.papers.flow" aria-hidden="true"></span>
-                          <span class="paper-status todo req-anchor-inline" data-req-anchor="section.filter.paper">未练习</span>
+                          <span class="req-anchor-inline" data-req-anchor="section.papers.status">
+                            <span class="paper-status todo req-anchor-inline" data-req-anchor="section.filter.paper">未练习</span>
+                          </span>
                         </div>
-                        <div class="paper-meta"><span>共 20 题</span><span>预计 25 分钟</span></div>
+                        <div class="paper-meta"><span>共 20 题</span><span class="req-anchor-inline" data-req-anchor="section.papers.duration">预计 25 分钟</span></div>
                       </div>
                       <span class="paper-action todo req-anchor-inline" data-req-anchor="section.papers.action">去练习 ›</span>
                     </div>
@@ -567,7 +588,7 @@
                           <span class="req-anchor-inline req-marker-slot" data-req-anchor="chapter.papers.flow" aria-hidden="true"></span>
                           <span class="paper-status done req-anchor-inline" data-req-anchor="chapter.papers.status">已练习</span>
                         </div>
-                        <div class="paper-meta req-anchor-inline" data-req-anchor="chapter.papers.meta"><span>共 24 题</span><span>得分 78</span></div>
+                        <div class="paper-meta req-anchor-inline" data-req-anchor="chapter.papers.meta"><span>共 24 题</span><span class="req-anchor-inline" data-req-anchor="chapter.papers.duration">得分 78</span></div>
                       </div>
                       <span class="paper-action done req-anchor-inline" data-req-anchor="chapter.papers.action">查看详情 ›</span>
                     </div>
@@ -778,7 +799,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
             返回
           </button>
-          <div class="header-title">精选卷-英语</div>
+          <div class="header-title" id="papers-header-title">精选卷-英语</div>
           <div class="header-action">
             <button type="button" aria-label="筛选" data-open-filter>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16l-6 7v5l-4 2v-7L4 5z"/></svg>
@@ -786,9 +807,28 @@
           </div>
         </header>
 
-        <main class="content papers-content">
-          <div class="section-title">UNIT 1 Teenage life Section A</div>
+        <div class="chapter-tabs-shell theme-sync" id="papers-tabs-shell" hidden>
+          <div class="student-edge" aria-hidden="true">
+            <svg class="edge-wave" viewBox="0 0 600 28" preserveAspectRatio="none">
+              <path class="wave-fill" d="M0,18 C40,8 80,26 120,16 C160,6 200,24 240,14 C280,4 320,22 360,12 C400,2 440,20 480,12 C520,4 560,18 600,10 L600,0 L0,0 Z"></path>
+            </svg>
+            <div class="edge-stickers">
+              <span class="sticker sk-1"></span>
+              <span class="sticker sk-2"></span>
+              <span class="sticker sk-3"></span>
+            </div>
+            <span class="edge-chip"></span>
+          </div>
+          <nav class="tabs" data-scope="papers-chapter">
+            <button class="tab active req-anchor-inline" data-papers-type="sync" type="button" data-req-anchor="papers.chapter.topic">专题课</button>
+            <button class="tab" data-papers-type="extend" type="button">拓展课</button>
+          </nav>
+        </div>
 
+        <main class="content papers-content">
+          <div class="section-title" id="papers-section-title">UNIT 1 Teenage life Section A</div>
+
+          <div id="papers-section-layout">
           <div class="featured-grid">
             <!-- 未测试 -->
             <article class="exam-card" data-exam-status="todo">
@@ -804,13 +844,11 @@
               </div>
               <div class="exam-body">
                 <div class="exam-name">Teenage life Section A 同步练习卷</div>
-                <div class="exam-info">
+                <div class="exam-meta">
                   <span>答题数量: 25</span>
                   <span>满分: 100</span>
-                </div>
-                <div class="exam-result">
-                  <span class="result-label">测试结果</span>
-                  <span class="result-score empty">--</span>
+                  <span>预计用时: 60分钟</span>
+                  <span>测试结果: <em class="result-score empty">--</em></span>
                 </div>
                 <div class="exam-actions">
                   <button type="button" class="exam-btn ghost">查看试卷</button>
@@ -834,16 +872,15 @@
               </div>
               <div class="exam-body">
                 <div class="exam-name">Teenage life Section A 词汇巩固卷</div>
-                <div class="exam-info">
+                <div class="exam-meta">
                   <span>答题数量: 25</span>
                   <span>满分: 100</span>
-                </div>
-                <div class="exam-result">
-                  <span class="result-label">测试结果</span>
-                  <span class="result-score">87分</span>
+                  <span>预计用时: 45分钟</span>
+                  <span>测试结果: <em class="result-score">87分</em></span>
                 </div>
                 <div class="exam-actions">
-                  <button type="button" class="exam-btn primary wide">查看题目解析</button>
+                  <button type="button" class="exam-btn ghost">答题详情</button>
+                  <button type="button" class="exam-btn primary">测试报告</button>
                 </div>
               </div>
             </article>
@@ -862,13 +899,11 @@
               </div>
               <div class="exam-body">
                 <div class="exam-name">Section A 语法专项检测</div>
-                <div class="exam-info">
+                <div class="exam-meta">
                   <span>答题数量: 20</span>
                   <span>满分: 100</span>
-                </div>
-                <div class="exam-result">
-                  <span class="result-label">测试结果</span>
-                  <span class="result-score empty">--</span>
+                  <span>预计用时: 40分钟</span>
+                  <span>测试结果: <em class="result-score empty">--</em></span>
                 </div>
                 <div class="exam-actions">
                   <button type="button" class="exam-btn ghost">查看试卷</button>
@@ -892,16 +927,15 @@
               </div>
               <div class="exam-body">
                 <div class="exam-name">Teenage life Section A 综合测评</div>
-                <div class="exam-info">
+                <div class="exam-meta">
                   <span>答题数量: 30</span>
                   <span>满分: 100</span>
-                </div>
-                <div class="exam-result">
-                  <span class="result-label">测试结果</span>
-                  <span class="result-score">62分</span>
+                  <span>预计用时: 60分钟</span>
+                  <span>测试结果: <em class="result-score">62分</em></span>
                 </div>
                 <div class="exam-actions">
-                  <button type="button" class="exam-btn primary wide">查看题目解析</button>
+                  <button type="button" class="exam-btn ghost">答题详情</button>
+                  <button type="button" class="exam-btn primary">测试报告</button>
                 </div>
               </div>
             </article>
@@ -920,13 +954,11 @@
               </div>
               <div class="exam-body">
                 <div class="exam-name">Section A 阅读理解精练</div>
-                <div class="exam-info">
+                <div class="exam-meta">
                   <span>答题数量: 15</span>
                   <span>满分: 100</span>
-                </div>
-                <div class="exam-result">
-                  <span class="result-label">测试结果</span>
-                  <span class="result-score empty">--</span>
+                  <span>预计用时: 30分钟</span>
+                  <span>测试结果: <em class="result-score empty">--</em></span>
                 </div>
                 <div class="exam-actions">
                   <button type="button" class="exam-btn ghost">查看试卷</button>
@@ -949,13 +981,11 @@
               </div>
               <div class="exam-body">
                 <div class="exam-name">Teenage life 写作专项练习</div>
-                <div class="exam-info">
+                <div class="exam-meta">
                   <span>答题数量: 8</span>
                   <span>满分: 100</span>
-                </div>
-                <div class="exam-result">
-                  <span class="result-label">测试结果</span>
-                  <span class="result-score empty">--</span>
+                  <span>预计用时: 25分钟</span>
+                  <span>测试结果: <em class="result-score empty">--</em></span>
                 </div>
                 <div class="exam-actions">
                   <button type="button" class="exam-btn ghost">查看试卷</button>
@@ -963,6 +993,148 @@
                 </div>
               </div>
             </article>
+          </div>
+          </div>
+
+          <div id="papers-chapter-layout" hidden>
+            <div class="papers-type-panel active" data-papers-panel="sync">
+              <div class="featured-grid">
+                <article class="exam-card is-done" data-exam-status="done">
+                  <div class="exam-thumb">
+                    <span class="exam-tag">已测试</span>
+                    <div class="exam-thumb-inner">
+                      <div class="exam-sheet">
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line short"></span>
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line mid"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="exam-body">
+                    <div class="exam-name">专题课 · 词汇与语法综合卷</div>
+                    <div class="exam-meta">
+                      <span>答题数量: 25</span>
+                      <span>满分: 100</span>
+                      <span>预计用时: 45分钟</span>
+                      <span>测试结果: <em class="result-score">87分</em></span>
+                    </div>
+                    <div class="exam-actions">
+                      <button type="button" class="exam-btn ghost">答题详情</button>
+                      <button type="button" class="exam-btn primary">测试报告</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="exam-card" data-exam-status="todo">
+                  <div class="exam-thumb">
+                    <div class="exam-thumb-inner">
+                      <div class="exam-sheet">
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line short"></span>
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line mid"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="exam-body">
+                    <div class="exam-name">专题课 · 阅读策略训练卷</div>
+                    <div class="exam-meta">
+                      <span>答题数量: 20</span>
+                      <span>满分: 100</span>
+                      <span>预计用时: 40分钟</span>
+                      <span>测试结果: <em class="result-score empty">--</em></span>
+                    </div>
+                    <div class="exam-actions">
+                      <button type="button" class="exam-btn ghost">查看试卷</button>
+                      <button type="button" class="exam-btn primary">去测试</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="exam-card" data-exam-status="doing">
+                  <div class="exam-thumb">
+                    <div class="exam-thumb-inner">
+                      <div class="exam-sheet">
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line short"></span>
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line mid"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="exam-body">
+                    <div class="exam-name">专题课 · 单元综合测评</div>
+                    <div class="exam-meta">
+                      <span>答题数量: 30</span>
+                      <span>满分: 100</span>
+                      <span>预计用时: 60分钟</span>
+                      <span>测试结果: <em class="result-score empty">--</em></span>
+                    </div>
+                    <div class="exam-actions">
+                      <button type="button" class="exam-btn ghost">查看试卷</button>
+                      <button type="button" class="exam-btn primary">继续测试</button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="papers-type-panel" data-papers-panel="extend">
+              <div class="featured-grid">
+                <article class="exam-card" data-exam-status="todo">
+                  <div class="exam-thumb">
+                    <div class="exam-thumb-inner">
+                      <div class="exam-sheet">
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line short"></span>
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line mid"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="exam-body">
+                    <div class="exam-name">拓展课 · 文化阅读拓展卷</div>
+                    <div class="exam-meta">
+                      <span>答题数量: 15</span>
+                      <span>满分: 100</span>
+                      <span>预计用时: 30分钟</span>
+                      <span>测试结果: <em class="result-score empty">--</em></span>
+                    </div>
+                    <div class="exam-actions">
+                      <button type="button" class="exam-btn ghost">查看试卷</button>
+                      <button type="button" class="exam-btn primary">去测试</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="exam-card" data-exam-status="selfcheck">
+                  <div class="exam-thumb">
+                    <div class="exam-thumb-inner">
+                      <div class="exam-sheet">
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line short"></span>
+                        <span class="sheet-line"></span>
+                        <span class="sheet-line mid"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="exam-body">
+                    <div class="exam-name">拓展课 · 口语与写作进阶卷</div>
+                    <div class="exam-meta">
+                      <span>答题数量: 8</span>
+                      <span>满分: 100</span>
+                      <span>预计用时: 25分钟</span>
+                      <span>测试结果: <em class="result-score empty">--</em></span>
+                    </div>
+                    <div class="exam-actions">
+                      <button type="button" class="exam-btn ghost">查看试卷</button>
+                      <button type="button" class="exam-btn primary">去自批</button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
           </div>
 
           <p class="papers-footer-tip">更多试卷正在更新中，敬请期待~</p>
@@ -1047,26 +1219,32 @@
   </div><!-- /.prd-reader-shell -->
 
   <!-- 必须放在 shell 外：避免落入 grid 第二行后被 body overflow:hidden 裁掉 -->
-  <button type="button" id="prd-markers-toggle" class="prd-markers-toggle" aria-pressed="false" title="隐藏/显示需求角标">
-    角标
-  </button>
+  <div id="prd-markers-toggle-group" class="prd-markers-toggle-group">
+    <button type="button" id="prd-markers-toggle-v082" class="prd-markers-toggle" data-req-version="V0.8.2" aria-pressed="false" title="隐藏/显示 V0.8.2 需求角标">
+      V0.8.2隐藏角标
+    </button>
+    <button type="button" id="prd-markers-toggle-v084" class="prd-markers-toggle" data-req-version="V0.8.4" aria-pressed="true" title="显示 V0.8.4 需求角标">
+      V0.8.4显示角标
+    </button>
+  </div>
   <button type="button" id="prd-panel-toggle" class="prd-panel-toggle" aria-pressed="false" title="打开/关闭 PRD 面板">
     PRD
   </button>
 
-  <script src="js/prd/prd-annotation-config.js?v=20260911a"></script>
-  <script src="js/requirements/section-course.registry.js?v=20260811h"></script>
-  <script src="js/requirements/chapter-course.registry.js?v=20260819a"></script>
-  <script src="js/requirements/kp-lecture-concept.registry.js?v=20260819b"></script>
-  <script src="js/requirements/kp-lecture-exam.registry.js?v=20260901c"></script>
-  <script src="js/requirements/index.js?v=20260810j"></script>
-  <script src="js/prd/requirement-utils.js?v=20260911a"></script>
+  <script src="js/prd/prd-annotation-config.js?v=20260923a"></script>
+  <script src="js/requirements/section-course.registry.js?v=20260923a"></script>
+  <script src="js/requirements/chapter-course.registry.js?v=20260923a"></script>
+  <script src="js/requirements/featured-papers.registry.js?v=20260923a"></script>
+  <script src="js/requirements/kp-lecture-concept.registry.js?v=20260918a"></script>
+  <script src="js/requirements/kp-lecture-exam.registry.js?v=20260918b"></script>
+  <script src="js/requirements/index.js?v=20260923a"></script>
+  <script src="js/prd/requirement-utils.js?v=20260923b"></script>
   <script src="js/prd/requirement-highlight.js?v=20260810a"></script>
-  <script src="js/prd/requirement-writeback.js?v=20260911a"></script>
-  <script src="js/prd/requirement-floating-card.js?v=20260911a"></script>
-  <script src="js/prd/requirement-marker.js?v=20260911a"></script>
-  <script src="js/prd/requirement-panel.js?v=20260911a"></script>
+  <script src="js/prd/requirement-writeback.js?v=20260923e"></script>
+  <script src="js/prd/requirement-floating-card.js?v=20260923d"></script>
+  <script src="js/prd/requirement-marker.js?v=20260923a"></script>
+  <script src="js/prd/requirement-panel.js?v=20260923d"></script>
   <script src="js/prd/requirement-reader-shell.js?v=20260810b"></script>
-  <script src="js/app.js?v=20260901o"></script>
+  <script src="js/app.js?v=20260923c"></script>
 </body>
 </html>

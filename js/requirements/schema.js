@@ -34,6 +34,7 @@
  * @property {string} module
  * @property {string} pageName
  * @property {string} route
+ * @property {string} [version] 迭代版本，如 V0.8.2 / V0.8.4；缺省继承注册表或 V0.8.2
  * @property {string} anchorId
  * @property {AnchorStatus} anchorStatus
  * @property {ActivationStep[]} activate
@@ -51,6 +52,7 @@
  * @property {string} pageName
  * @property {string} route
  * @property {string} module
+ * @property {string} [version] 本注册表存量需求的默认迭代版本
  * @property {string} description
  * @property {string} sourceDecisionFile
  * @property {string[]} relatedFiles

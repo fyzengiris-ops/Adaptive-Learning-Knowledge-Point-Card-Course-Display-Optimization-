@@ -17,7 +17,7 @@
       '<div class="req-float-head-main">' +
       '<div class="req-float-id"></div>' +
       '<div class="req-float-title" data-edit-field="title" title="双击编辑标题"></div>' +
-      '<div class="req-float-hint">双击标题或正文可编辑，失焦后写回注册表</div>' +
+      '<div class="req-float-hint">双击正文可编辑并显示删除，点 × 删除本条</div>' +
       "</div>" +
       '<button type="button" class="req-float-close" aria-label="关闭">×</button>' +
       "</div>" +
@@ -143,6 +143,11 @@
             '" title="双击编辑">' +
             formatItemHtml(entry.item) +
             "</span>" +
+            '<button type="button" class="req-edit-delete" data-edit-delete data-edit-section="' +
+            sectionIdx +
+            '" data-edit-item="' +
+            entry.itemIdx +
+            '" title="删除本条" aria-label="删除本条">×</button>' +
             "</li>"
           );
         })

@@ -96,7 +96,11 @@
             entry.itemIdx +
             '" title="双击编辑">' +
             formatItemHtml(entry.item) +
-            "</span></li>"
+            '</span><button type="button" class="req-edit-delete" data-edit-delete data-edit-section="' +
+            sectionIdx +
+            '" data-edit-item="' +
+            entry.itemIdx +
+            '" title="删除本条" aria-label="删除本条">×</button></li>'
           );
         })
         .join("");
@@ -131,11 +135,31 @@
     return html;
   }
 
+  function visibleRequirements(registry) {
+    var reqs = (registry && registry.requirements) || [];
+    if (global.RequirementUtils && global.RequirementUtils.filterRequirementsByVersion) {
+      return global.RequirementUtils.filterRequirementsByVersion(reqs, registry);
+    }
+    return reqs;
+  }
+
   function renderList(registry) {
     ensureDom();
     if (!listEl || !registry) return;
     currentRegistryId = registry.registryId;
-    var reqs = registry.requirements || [];
+    var reqs = visibleRequirements(registry);
+    if (!reqs.length) {
+      var version =
+        (global.RequirementUtils &&
+          global.RequirementUtils.getSelectedVersion &&
+          global.RequirementUtils.getSelectedVersion()) ||
+        "V0.8.2";
+      listEl.innerHTML =
+        '<p class="prd-detail-empty">当前版本 ' +
+        escapeHtml(version) +
+        " 暂无需求</p>";
+      return;
+    }
     listEl.innerHTML = reqs
       .map(function (req, idx) {
         return (
@@ -179,7 +203,7 @@
       '<div class="prd-detail-meta">来源：' +
       escapeHtml(sourceLabel(requirement.sourceType)) +
       (requirement.anchorId ? " · 锚点：" + escapeHtml(requirement.anchorId) : "") +
-      " · 双击正文可编辑写回</div></div>" +
+      " · 双击正文可编辑并显示删除</div></div>" +
       '<div class="prd-detail-body">' +
       buildDetailHtml(requirement) +
       "</div>";
@@ -391,6 +415,29 @@
     }
   }
 
+  function refreshVisibleRequirements() {
+    if (!currentRegistryId) {
+      showRegistry(null);
+      return;
+    }
+    var registry = getRegistryById(currentRegistryId);
+    if (!registry) return;
+    var reqs = visibleRequirements(registry);
+    var stillVisible = reqs.some(function (req) {
+      return req.id === selectedId;
+    });
+    if (!stillVisible) {
+      selectedId = null;
+      if (global.RequirementFloatingCard) global.RequirementFloatingCard.hide();
+    }
+    renderList(registry);
+    renderDetail(
+      stillVisible && global.RequirementUtils
+        ? global.RequirementUtils.getRequirementById(selectedId)
+        : null
+    );
+  }
+
   function init() {
     ensureDom();
     fillPageSelect();
@@ -399,6 +446,9 @@
     window.addEventListener("hashchange", function () {
       setTimeout(syncToRoute, 50);
     });
+    if (global.RequirementUtils && global.RequirementUtils.onAnnotationLayerChange) {
+      global.RequirementUtils.onAnnotationLayerChange(refreshVisibleRequirements);
+    }
   }
 
   global.RequirementPanel = {
@@ -407,6 +457,7 @@
     activateRequirement: activateRequirement,
     setSelected: setSelected,
     syncToRoute: syncToRoute,
+    refreshVisibleRequirements: refreshVisibleRequirements,
     getSelectedId: function () {
       return selectedId;
     },

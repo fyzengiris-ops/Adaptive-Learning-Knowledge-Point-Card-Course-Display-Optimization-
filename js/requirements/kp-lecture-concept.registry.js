@@ -8,6 +8,7 @@
     pageName: "知识点精讲·核心概念页",
     route: "#kp-lecture",
     module: "专项学习·知识点精讲",
+    version: "V0.8.2",
     description:
       "知识点精讲卡片第 1 页（核心概念）：知识点名称、学业要求/考察频率、页签与引导、要点与配图、公式定理、底部分页切换；含壳层演示开关、视频 Tab 等。返回/页脚笔记/去测试本期不挂角标。考点清单页不在本期。",
     sourceDecisionFile: "docs/prd-workflow/decisions/kp-lecture-concept.decision.md",
@@ -177,13 +178,13 @@
           {
             title: "异常情况处理",
             items: [
-              "【8.11需求评审后补充】核心概念模块，什么信息都没有的情况（即既无要点，也无公式定理的时候），展示缺省图和提示文案。",
+              "【8.11需求评审后补充】核心概念模块，什么信息都没有的情况（即既无要点，也无公式定理的时候），展示缺省图和提示文案「更新中~」。",
             ],
           },
         ],
         acceptance: [
           "核心概念页可见固定文案「核心概念」。",
-          "既无要点也无公式定理时，展示缺省图与提示文案。",
+          "既无要点也无公式定理时，展示缺省图与提示文案「更新中~」。",
         ],
         source: {
           decisionFile: "docs/prd-workflow/decisions/kp-lecture-concept.decision.md",

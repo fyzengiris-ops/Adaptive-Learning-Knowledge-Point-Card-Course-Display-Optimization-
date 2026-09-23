@@ -41,6 +41,7 @@
 | `pageName` | 页面名称 | 是 | 页面、组件或流程的人类可读名称 | Skill3、Skill4、Skill5 |
 | `route` | 页面路由/视图标识 | 是 | hash 或视图标识；例如 `#chapter`，或 `view:view-kp-lecture` | Skill3、Skill4、Skill5 |
 | `module` | 所属业务模块 | 是 | 用于右侧 PRD 面板和 Markdown PRD 分组 | Skill3、Skill4、Skill5 |
+| `version` | 默认迭代版本 | 否 | 本注册表存量需求的默认版本，缺省 `V0.8.2`。同一对象可在后续版本另写一条需求 | Skill3、Skill4 |
 | `description` | 注册表说明 | 是 | 简述本注册表覆盖的页面范围和业务边界 | Skill4、Skill5 |
 | `sourceDecisionFile` | 来源决策文件 | 是 | 追溯来自哪个 `.decision.md` | Skill2、Skill5 |
 | `relatedFiles` | 相关代码文件 | 是 | 标识与页面逻辑相关的代码文件 | Skill2、Skill3、Skill5 |
@@ -79,6 +80,7 @@
 | `module` | 所属模块 | 是 | 用于分组展示 | Skill3、Skill4、Skill5 |
 | `pageName` | 页面名称 | 是 | 所属页面/流程名称 | Skill3、Skill4、Skill5 |
 | `route` | 页面路由/视图标识 | 是 | 页面跳转或视图定位依据 | Skill3、Skill4、Skill5 |
+| `version` | 迭代版本 | 否 | `V0.8.2` / `V0.8.4` 等。同一 `anchorId` 可在不同版本各写一条，互不覆盖 | Skill3、Skill4 |
 | `anchorId` | 页面锚点编号 | 是 | 对应 `data-req-anchor` | Skill3、Skill4 |
 | `anchorStatus` | 锚点状态 | 是 | `implemented` / `planned` | Skill3、Skill4 |
 | `activate` | 激活路径 | 是 | 点击右侧需求时打开正确页面状态 | Skill4 |

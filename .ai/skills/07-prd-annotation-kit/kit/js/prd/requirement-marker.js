@@ -13,7 +13,23 @@
   /** @type {Record<string, number>} */
   var numberMap = {};
 
-  function storageKey(registryId) {
+  function getActiveVersion() {
+    if (global.RequirementUtils && global.RequirementUtils.getSelectedVersion) {
+      return global.RequirementUtils.getSelectedVersion();
+    }
+    return "V0.8.2";
+  }
+
+  function storageKey(registryId, version) {
+    return (
+      "req-marker-numbers:" +
+      (registryId || "default") +
+      ":" +
+      (version || getActiveVersion())
+    );
+  }
+
+  function legacyUnversionedNumberKey(registryId) {
     return "req-marker-numbers:" + (registryId || "default");
   }
 
@@ -46,6 +62,16 @@
         var parsed = JSON.parse(raw);
         if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
           return parsed;
+        }
+      }
+      // V0.8.2 兼容未带版本号的旧序号存储
+      if (getActiveVersion() === "V0.8.2") {
+        var unversioned = localStorage.getItem(legacyUnversionedNumberKey(registryId));
+        if (unversioned) {
+          var oldMap = JSON.parse(unversioned);
+          if (oldMap && typeof oldMap === "object" && !Array.isArray(oldMap)) {
+            return oldMap;
+          }
         }
       }
       // 兼容旧版「顺序数组」存储
@@ -251,6 +277,7 @@
     btn.setAttribute("data-req-anchor-ref", req.anchorId);
     btn.setAttribute("data-req-display-no", String(displayNo));
     btn.setAttribute("data-req-title", req.title || req.id);
+    btn.setAttribute("data-req-version", getActiveVersion());
     btn.setAttribute("aria-label", "查看需求 " + displayNo + "：" + (req.title || req.id));
     btn.title = req.id + " · " + (req.title || "") + "（单击查看，双击改序号）";
 
@@ -282,6 +309,17 @@
     return btn;
   }
 
+  function getVisibleRequirements(registry) {
+    var reqs = (registry && registry.requirements) || [];
+    if (global.RequirementUtils && global.RequirementUtils.isMarkersVisible) {
+      if (!global.RequirementUtils.isMarkersVisible()) return [];
+    }
+    if (global.RequirementUtils && global.RequirementUtils.filterRequirementsByVersion) {
+      return global.RequirementUtils.filterRequirementsByVersion(reqs, registry);
+    }
+    return reqs;
+  }
+
   function mountRegistryMarkers(registry) {
     if (!registry || !Array.isArray(registry.requirements)) return;
 
@@ -289,7 +327,7 @@
     currentRegistryId = registry.registryId;
 
     var mountedReqs = [];
-    registry.requirements.forEach(function (req) {
+    getVisibleRequirements(registry).forEach(function (req) {
       var host = document.querySelector('[data-req-anchor="' + req.anchorId + '"]');
       if (!host) return;
       mountedReqs.push(req);
@@ -339,63 +377,117 @@
     initMarkersVisibilityToggle();
   }
 
-  var MARKERS_VISIBLE_KEY = "req-markers-visible";
-  var markersVisible = true;
-  var markersToggleEl = null;
+  var toggleButtons = [];
 
-  function loadMarkersVisible() {
-    try {
-      var raw = localStorage.getItem(MARKERS_VISIBLE_KEY);
-      if (raw === "0" || raw === "false") return false;
-      if (raw === "1" || raw === "true") return true;
-    } catch (e) {
-      /* ignore */
-    }
-    return true;
-  }
-
-  function saveMarkersVisible(visible) {
-    try {
-      localStorage.setItem(MARKERS_VISIBLE_KEY, visible ? "1" : "0");
-    } catch (e) {
-      /* ignore */
-    }
+  function getLayerState() {
+    var utils = global.RequirementUtils || {};
+    return {
+      version:
+        (utils.getSelectedVersion && utils.getSelectedVersion()) || "V0.8.2",
+      visible: utils.isMarkersVisible ? !!utils.isMarkersVisible() : true,
+    };
   }
 
   function applyMarkersVisibility() {
-    document.body.classList.toggle("req-markers-hidden", !markersVisible);
-    if (markersToggleEl) {
-      markersToggleEl.setAttribute("aria-pressed", markersVisible ? "false" : "true");
-      markersToggleEl.textContent = markersVisible ? "隐藏角标" : "显示角标";
-      markersToggleEl.title = markersVisible ? "隐藏页面蓝色需求角标" : "显示页面蓝色需求角标";
-    }
-    if (!markersVisible && global.RequirementFloatingCard) {
+    var state = getLayerState();
+    document.body.classList.toggle("req-markers-hidden", !state.visible);
+    toggleButtons.forEach(function (btn) {
+      var version = btn.getAttribute("data-req-version") || "V0.8.2";
+      var isOn = state.visible && state.version === version;
+      btn.setAttribute("aria-pressed", isOn ? "false" : "true");
+      btn.textContent = isOn ? version + "隐藏角标" : version + "显示角标";
+      btn.title = isOn
+        ? "隐藏 " + version + " 需求角标"
+        : "显示 " + version + " 需求角标（会隐藏其他版本）";
+    });
+    if (!state.visible && global.RequirementFloatingCard) {
       global.RequirementFloatingCard.hide();
     }
   }
 
-  function setMarkersVisible(next) {
-    markersVisible = !!next;
-    saveMarkersVisible(markersVisible);
+  function setAnnotationLayer(version, visible) {
+    if (global.RequirementUtils && global.RequirementUtils.setAnnotationLayer) {
+      global.RequirementUtils.setAnnotationLayer(version, visible);
+      return;
+    }
     applyMarkersVisibility();
+    remountCurrent();
+  }
+
+  function setMarkersVisible(next) {
+    var state = getLayerState();
+    setAnnotationLayer(state.version, !!next);
   }
 
   function toggleMarkersVisible() {
-    setMarkersVisible(!markersVisible);
+    var state = getLayerState();
+    setMarkersVisible(!state.visible);
+  }
+
+  function handleVersionToggleClick(version) {
+    var state = getLayerState();
+    if (state.visible && state.version === version) {
+      setAnnotationLayer(version, false);
+      return;
+    }
+    setAnnotationLayer(version, true);
+  }
+
+  function collectToggleButtons() {
+    var found = [];
+    var group = document.getElementById("prd-markers-toggle-group");
+    if (group) {
+      group.querySelectorAll("[data-req-version]").forEach(function (btn) {
+        found.push(btn);
+      });
+    }
+    var legacy = document.getElementById("prd-markers-toggle");
+    if (legacy && found.indexOf(legacy) < 0) {
+      if (!legacy.getAttribute("data-req-version")) {
+        legacy.setAttribute("data-req-version", "V0.8.2");
+      }
+      found.push(legacy);
+    }
+    return found;
   }
 
   function initMarkersVisibilityToggle() {
-    markersToggleEl = document.getElementById("prd-markers-toggle");
-    if (!markersToggleEl) return;
-    if (markersToggleEl.parentElement !== document.body) {
-      document.body.appendChild(markersToggleEl);
+    var group = document.getElementById("prd-markers-toggle-group");
+    if (group && group.parentElement !== document.body) {
+      document.body.appendChild(group);
     }
-    markersVisible = loadMarkersVisible();
+    toggleButtons = collectToggleButtons();
+    if (!toggleButtons.length) return;
     applyMarkersVisibility();
-    markersToggleEl.addEventListener("click", function (e) {
-      e.preventDefault();
-      toggleMarkersVisible();
+    toggleButtons.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        handleVersionToggleClick(btn.getAttribute("data-req-version") || "V0.8.2");
+      });
     });
+    if (global.RequirementUtils && global.RequirementUtils.onAnnotationLayerChange) {
+      global.RequirementUtils.onAnnotationLayerChange(function () {
+        applyMarkersVisibility();
+        remountCurrent();
+        if (global.RequirementFloatingCard) {
+          var currentId =
+            global.RequirementFloatingCard.getCurrentRequirementId &&
+            global.RequirementFloatingCard.getCurrentRequirementId();
+          var currentReq =
+            currentId &&
+            global.RequirementUtils.getRequirementById &&
+            global.RequirementUtils.getRequirementById(currentId);
+          var state = getLayerState();
+          var currentVersion =
+            currentReq && global.RequirementUtils.getItemVersion
+              ? global.RequirementUtils.getItemVersion(currentReq)
+              : "";
+          if (!state.visible || currentVersion !== state.version) {
+            global.RequirementFloatingCard.hide();
+          }
+        }
+      });
+    }
   }
 
   if (document.readyState === "loading") {
@@ -409,8 +501,13 @@
     clear: clearMarkers,
     setMarkersVisible: setMarkersVisible,
     toggleMarkersVisible: toggleMarkersVisible,
+    setAnnotationLayer: setAnnotationLayer,
     isMarkersVisible: function () {
-      return markersVisible;
+      return getLayerState().visible;
+    },
+    getVisibleVersion: function () {
+      var state = getLayerState();
+      return state.visible ? state.version : null;
     },
     resetOrder: function () {
       var hash = (location.hash || "").replace(/^#/, "");
@@ -418,6 +515,9 @@
       if (!registry) return;
       try {
         localStorage.removeItem(storageKey(registry.registryId));
+        if (getActiveVersion() === "V0.8.2") {
+          localStorage.removeItem(legacyUnversionedNumberKey(registry.registryId));
+        }
         localStorage.removeItem(legacyOrderKey(registry.registryId));
       } catch (e) {
         /* ignore */

@@ -8,6 +8,7 @@
     routeRegistries: {
       section: "section-course",
       chapter: "chapter-course",
+      papers: "featured-papers",
       "kp-lecture": "kp-lecture-concept",
     },
     resolveRegistryForHash: function (hash, getById) {

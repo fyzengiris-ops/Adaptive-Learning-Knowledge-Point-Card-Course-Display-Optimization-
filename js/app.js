@@ -25,6 +25,54 @@
     return "home";
   }
 
+  let papersType = "sync";
+
+  function switchPapersType(key) {
+    if (key !== "extend") key = "sync";
+    papersType = key;
+
+    const tabBar = document.querySelector('.tabs[data-scope="papers-chapter"]');
+    if (tabBar) {
+      tabBar.querySelectorAll(".tab").forEach((tab) => {
+        tab.classList.toggle("active", tab.getAttribute("data-papers-type") === key);
+      });
+    }
+
+    document.querySelectorAll("[data-papers-panel]").forEach((panel) => {
+      panel.classList.toggle("active", panel.getAttribute("data-papers-panel") === key);
+    });
+
+    const tabsShell = document.getElementById("papers-tabs-shell");
+    if (tabsShell) {
+      tabsShell.classList.remove("theme-sync", "theme-topic", "theme-extend");
+      tabsShell.classList.add(key === "extend" ? "theme-extend" : "theme-sync");
+    }
+
+    const papersMain = document.querySelector("#view-papers .papers-content");
+    if (papersMain) papersMain.scrollTop = 0;
+  }
+
+  function syncPapersView() {
+    const isChapter = homeScope === "chapter";
+    const titleEl = document.getElementById("papers-header-title");
+    const subtitleEl = document.getElementById("papers-section-title");
+    const sectionLayout = document.getElementById("papers-section-layout");
+    const chapterLayout = document.getElementById("papers-chapter-layout");
+    const tabsShell = document.getElementById("papers-tabs-shell");
+    const chapterLabel = homeScopeName && homeScopeName.textContent
+      ? homeScopeName.textContent.trim()
+      : "";
+
+    if (titleEl) {
+      titleEl.textContent = isChapter && chapterLabel ? chapterLabel : "精选卷-英语";
+    }
+    if (subtitleEl) subtitleEl.hidden = isChapter;
+    if (sectionLayout) sectionLayout.hidden = isChapter;
+    if (chapterLayout) chapterLayout.hidden = !isChapter;
+    if (tabsShell) tabsShell.hidden = !isChapter;
+    if (isChapter) switchPapersType(papersType);
+  }
+
   function showView(name) {
     const key = normalizeHash(name);
     Object.entries(views).forEach(([id, el]) => {
@@ -34,6 +82,9 @@
     const nextHash = "#" + key;
     if (location.hash !== nextHash) {
       location.hash = nextHash;
+    }
+    if (key === "papers") {
+      syncPapersView();
     }
     if (key === "kp-lecture") {
       // 默认落在知识点精讲 Tab；卡片模式由演示开关控制
@@ -122,11 +173,143 @@
     document.addEventListener("click", (e) => {
       if (!scopePicker.contains(e.target)) {
         scopePicker.classList.remove("open");
-        scopeMenu.hidden = true;
-        homeScopeTitle.setAttribute("aria-expanded", "false");
+        if (scopeMenu) scopeMenu.hidden = true;
+        if (homeScopeTitle) homeScopeTitle.setAttribute("aria-expanded", "false");
       }
     });
   }
+
+  function initHomeKnowledgeMap() {
+    const stage = document.getElementById("home-map-stage");
+    if (!stage) return;
+    const popup = document.getElementById("home-node-popup");
+    const nodes = Array.from(stage.querySelectorAll(".node"));
+    const filterBox = document.getElementById("home-mastery-filter");
+    const filterTrigger = document.getElementById("home-mastery-trigger");
+    const filterMenu = document.getElementById("home-mastery-menu");
+    const filterLabel = document.getElementById("home-mastery-label");
+    const traceToggle = document.getElementById("home-trace-toggle");
+    const nameEl = popup ? popup.querySelector(".name") : null;
+    const masteryEl = popup ? popup.querySelector(".mastery") : null;
+    const traceBtn = popup ? popup.querySelector("[data-home-trace]") : null;
+    let masteryFilter = "all";
+    let showTraceable = false;
+
+    function nodeVisible(node) {
+      const mastery = node.getAttribute("data-mastery") || "";
+      if (masteryFilter !== "all" && mastery !== masteryFilter) return false;
+      return true;
+    }
+
+    function applyFilters() {
+      nodes.forEach((node) => {
+        node.classList.toggle("is-filtered-out", !nodeVisible(node));
+      });
+      const selected = stage.querySelector(".node.is-selected");
+      const selectedOk =
+        selected &&
+        nodeVisible(selected) &&
+        (!showTraceable || selected.getAttribute("data-has-trace") === "1");
+      if (!selectedOk) {
+        const next = nodes.find((node) => {
+          if (!nodeVisible(node)) return false;
+          if (showTraceable && node.getAttribute("data-has-trace") !== "1") return false;
+          return true;
+        });
+        if (next) selectNode(next);
+        else if (popup) popup.hidden = true;
+      }
+    }
+
+    function placePopup(node) {
+      if (!popup) return;
+      popup.hidden = false;
+      const stageRect = stage.getBoundingClientRect();
+      const nodeRect = node.getBoundingClientRect();
+      const popupW = popup.offsetWidth || 180;
+      const popupH = popup.offsetHeight || 110;
+      let left = nodeRect.right - stageRect.left + 10;
+      let top = nodeRect.top - stageRect.top - 8;
+      if (left + popupW > stage.clientWidth - 8) {
+        left = nodeRect.left - stageRect.left - popupW - 10;
+      }
+      if (top + popupH > stage.clientHeight - 8) {
+        top = Math.max(8, stage.clientHeight - popupH - 8);
+      }
+      if (left < 8) left = 8;
+      if (top < 8) top = 8;
+      popup.style.left = left + "px";
+      popup.style.top = top + "px";
+    }
+
+    function selectNode(node) {
+      nodes.forEach((item) => item.classList.toggle("is-selected", item === node));
+      if (!popup || !node) return;
+      const text = (node.textContent || "").trim();
+      const masteryText = node.getAttribute("data-mastery-text") || "";
+      const hasTrace = node.getAttribute("data-has-trace") === "1";
+      if (nameEl) nameEl.textContent = text;
+      if (masteryEl) {
+        masteryEl.textContent =
+          masteryText === "未练习" ? "掌握度：未练习" : "掌握度：" + masteryText;
+      }
+      if (traceBtn) traceBtn.hidden = !hasTrace;
+      placePopup(node);
+    }
+
+    nodes.forEach((node) => {
+      node.addEventListener("click", (e) => {
+        e.stopPropagation();
+        selectNode(node);
+      });
+    });
+
+    if (filterTrigger && filterBox && filterMenu) {
+      filterTrigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = filterBox.classList.toggle("open");
+        filterMenu.hidden = !open;
+        filterTrigger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      filterMenu.querySelectorAll("[data-mastery]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          masteryFilter = btn.getAttribute("data-mastery") || "all";
+          filterMenu.querySelectorAll("[data-mastery]").forEach((item) => {
+            item.classList.toggle("active", item === btn);
+          });
+          if (filterLabel) filterLabel.textContent = (btn.textContent || "").trim();
+          filterBox.classList.remove("open");
+          filterMenu.hidden = true;
+          filterTrigger.setAttribute("aria-expanded", "false");
+          applyFilters();
+        });
+      });
+    }
+
+    if (traceToggle) {
+      traceToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showTraceable = !showTraceable;
+        traceToggle.setAttribute("aria-pressed", showTraceable ? "true" : "false");
+        stage.classList.toggle("show-traceable", showTraceable);
+        applyFilters();
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if (filterBox && !filterBox.contains(e.target)) {
+        filterBox.classList.remove("open");
+        if (filterMenu) filterMenu.hidden = true;
+        if (filterTrigger) filterTrigger.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    const initial = stage.querySelector(".node.is-selected") || nodes[0];
+    if (initial) selectNode(initial);
+  }
+
+  initHomeKnowledgeMap();
 
   // 事件委托导航
   document.addEventListener("click", (e) => {
@@ -161,6 +344,10 @@
       tab.addEventListener("click", () => {
         const scope = tabBar.getAttribute("data-scope");
         const chapterType = tab.getAttribute("data-chapter-type");
+        if (scope === "papers-chapter") {
+          switchPapersType(tab.getAttribute("data-papers-type"));
+          return;
+        }
         if (scope === "chapter" && chapterType && typeof switchChapterType === "function") {
           // 先确保课程面板可见，再切课型
           tabBar.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
@@ -1570,6 +1757,24 @@
     setTab: function (tab) {
       if (tab === "lecture-text" || tab === "lecture-video") {
         window.PrdPrototypeBridge.setLectureTab(tab);
+        return;
+      }
+      var papersView = document.getElementById("view-papers");
+      if (
+        papersView &&
+        papersView.classList.contains("active") &&
+        (tab === "sync" || tab === "extend")
+      ) {
+        var chapterRow = document.querySelector(".catalog-chapter");
+        if (chapterRow) {
+          setHomeScope(
+            "chapter",
+            chapterRow.getAttribute("data-scope-label"),
+            chapterRow
+          );
+        }
+        switchPapersType(tab);
+        syncPapersView();
         return;
       }
       if (typeof switchChapterType === "function") switchChapterType(tab);

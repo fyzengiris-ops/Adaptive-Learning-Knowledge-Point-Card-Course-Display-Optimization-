@@ -83,6 +83,9 @@
     var registryId = findRegistryId(requirement.id);
     if (!registryId) throw new Error("找不到需求所属注册表");
 
+    var prevTitle = requirement.title;
+    var prevSections = cloneSections(requirement.logicSections);
+
     if (patch.title != null) requirement.title = String(patch.title);
     if (patch.logicSections) {
       requirement.logicSections = cloneSections(patch.logicSections);
@@ -100,6 +103,8 @@
       showToast("已写回注册表", "ok");
       return true;
     } catch (err) {
+      requirement.title = prevTitle;
+      requirement.logicSections = prevSections;
       var hint =
         String(err && err.message).indexOf("Failed to fetch") >= 0 ||
         String(err && err.message).indexOf("404") >= 0
@@ -110,11 +115,19 @@
     }
   }
 
+  function readEditableText(el) {
+    var text = el.innerText != null ? el.innerText : el.textContent || "";
+    text = String(text).replace(/\r\n/g, "\n").replace(/\u00a0/g, " ");
+    if (/\n\n$/.test(text)) return text;
+    return text.replace(/\n$/, "");
+  }
+
   function finishEdit(el) {
     if (!el || el.getAttribute("contenteditable") !== "true") return null;
+    var text = readEditableText(el);
     el.removeAttribute("contenteditable");
     el.classList.remove("is-editing");
-    return String(el.textContent || "").replace(/\u00a0/g, " ").trim();
+    return text;
   }
 
   function startEdit(el, rawText) {
@@ -172,6 +185,20 @@
       startEdit(target, raw);
     });
 
+    async function persistSections(req, sections) {
+      await saveRequirementPatch(req, { logicSections: sections });
+      if (options.onSaved) options.onSaved(req);
+    }
+
+    async function removeItem(req, sectionIndex, itemIndex) {
+      var sections = cloneSections(req.logicSections);
+      if (!sections[sectionIndex] || !sections[sectionIndex].items) return;
+      if (itemIndex < 0 || itemIndex >= sections[sectionIndex].items.length) return;
+      sections[sectionIndex].items.splice(itemIndex, 1);
+      if (!sections[sectionIndex].items.length) sections.splice(sectionIndex, 1);
+      await persistSections(req, sections);
+    }
+
     async function commit(target) {
       var req = options.getRequirement && options.getRequirement();
       if (!req) {
@@ -181,6 +208,7 @@
       var field = target.getAttribute("data-edit-field");
       var next = finishEdit(target);
       if (next == null) return;
+      if (field !== "item") next = String(next || "").trim();
       var patch = {};
       if (field === "title") {
         if (next === (req.title || "")) return;
@@ -191,10 +219,18 @@
         if (!sections[sIndex]) return;
         if (field === "sectionTitle") {
           if (next === sections[sIndex].title) return;
+          if (!next) {
+            if (options.onSaved) options.onSaved(req);
+            return;
+          }
           sections[sIndex].title = next;
         } else if (field === "item") {
           var iIndex = Number(target.getAttribute("data-edit-item"));
           if (sections[sIndex].items[iIndex] === next) return;
+          if (!String(next).trim()) {
+            await removeItem(req, sIndex, iIndex);
+            return;
+          }
           sections[sIndex].items[iIndex] = next;
         }
         patch.logicSections = sections;
@@ -203,9 +239,24 @@
       if (options.onSaved) options.onSaved(req);
     }
 
+    root.addEventListener("pointerdown", function (e) {
+      var del = e.target.closest("[data-edit-delete]");
+      if (!del || !root.contains(del)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var req = options.getRequirement && options.getRequirement();
+      if (!req) return;
+      removeItem(
+        req,
+        Number(del.getAttribute("data-edit-section")),
+        Number(del.getAttribute("data-edit-item"))
+      );
+    });
+
     root.addEventListener("keydown", function (e) {
       var target = e.target.closest("[data-edit-field]");
       if (!target || target.getAttribute("contenteditable") !== "true") return;
+      e.stopPropagation();
       if (e.key === "Escape") {
         e.preventDefault();
         var req = options.getRequirement && options.getRequirement();
@@ -214,6 +265,26 @@
       } else if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         commit(target);
+      } else if (
+        (e.key === "Backspace" || e.key === "Delete") &&
+        target.getAttribute("data-edit-field") === "item"
+      ) {
+        var text = String(
+          target.innerText != null ? target.innerText : target.textContent || ""
+        )
+          .replace(/\u00a0/g, " ")
+          .trim();
+        if (!text) {
+          e.preventDefault();
+          var current = options.getRequirement && options.getRequirement();
+          if (!current) return;
+          finishEdit(target);
+          removeItem(
+            current,
+            Number(target.getAttribute("data-edit-section")),
+            Number(target.getAttribute("data-edit-item"))
+          );
+        }
       }
     });
 

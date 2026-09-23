@@ -49,7 +49,10 @@
   </div>
 </aside>
 
-<button type="button" id="prd-markers-toggle" class="prd-markers-toggle">角标</button>
+<div id="prd-markers-toggle-group" class="prd-markers-toggle-group">
+  <button type="button" class="prd-markers-toggle" data-req-version="V0.8.2">V0.8.2隐藏角标</button>
+  <button type="button" class="prd-markers-toggle" data-req-version="V0.8.4">V0.8.4显示角标</button>
+</div>
 <button type="button" id="prd-panel-toggle" class="prd-panel-toggle">PRD</button>
 ```
 

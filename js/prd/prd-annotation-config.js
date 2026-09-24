@@ -9,6 +9,7 @@
       section: "section-course",
       chapter: "chapter-course",
       papers: "featured-papers",
+      practice: "practice-result",
       "kp-lecture": "kp-lecture-concept",
     },
     resolveRegistryForHash: function (hash, getById) {

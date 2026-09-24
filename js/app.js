@@ -5,6 +5,7 @@
     chapter: document.getElementById("view-chapter"),
     papers: document.getElementById("view-papers"),
     special: document.getElementById("view-special"),
+    practice: document.getElementById("view-practice"),
     "kp-lecture": document.getElementById("view-kp-lecture"),
   };
 
@@ -18,6 +19,7 @@
       value === "chapter" ||
       value === "papers" ||
       value === "special" ||
+      value === "practice" ||
       value === "kp-lecture"
     ) {
       return value;
@@ -83,6 +85,9 @@
     if (location.hash !== nextHash) {
       location.hash = nextHash;
     }
+    if (key !== "practice") {
+      closePracticeResult();
+    }
     if (key === "papers") {
       syncPapersView();
     }
@@ -106,6 +111,43 @@
 
   function closeModal() {
     if (modal) modal.classList.remove("show");
+  }
+
+  const practiceResultModal = document.getElementById("practice-result-modal");
+  const practiceResultTip = document.getElementById("practice-result-tip");
+  const practiceResultTipBtn = document.querySelector("[data-toggle-practice-tip]");
+
+  function setPracticeResultTip(open) {
+    if (practiceResultTip) practiceResultTip.hidden = !open;
+    if (practiceResultTipBtn) {
+      practiceResultTipBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+  }
+
+  function openPracticeResult() {
+    if (!practiceResultModal) return;
+    setPracticeResultTip(false);
+    practiceResultModal.hidden = false;
+    if (window.RequirementMarker && typeof window.RequirementMarker.remount === "function") {
+      window.RequirementMarker.remount();
+    }
+  }
+
+  function closePracticeResult() {
+    if (!practiceResultModal) return;
+    setPracticeResultTip(false);
+    practiceResultModal.hidden = true;
+  }
+
+  function setPracticeResultMode(mode) {
+    const next = mode === "trace" ? "trace" : "single";
+    if (practiceResultModal) {
+      practiceResultModal.setAttribute("data-result-mode", next);
+    }
+    document.querySelectorAll("[data-practice-result-mode]").forEach((btn) => {
+      btn.classList.toggle("active", btn.getAttribute("data-practice-result-mode") === next);
+    });
+    setPracticeResultTip(false);
   }
 
   // Hash routing
@@ -335,6 +377,47 @@
       if (e.target === modal) closeModal();
     });
   }
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-toggle-practice-tip]")) {
+      e.preventDefault();
+      e.stopPropagation();
+      const open = practiceResultTip && practiceResultTip.hidden;
+      setPracticeResultTip(!!open);
+      return;
+    }
+    if (!e.target.closest(".practice-result-tip-wrap")) {
+      setPracticeResultTip(false);
+    }
+    if (e.target.closest("[data-open-practice-result]")) {
+      e.preventDefault();
+      openPracticeResult();
+      return;
+    }
+    if (e.target.closest("[data-close-practice-result]")) {
+      e.preventDefault();
+      closePracticeResult();
+      return;
+    }
+    const modeBtn = e.target.closest("[data-practice-result-mode]");
+    if (modeBtn) {
+      e.preventDefault();
+      setPracticeResultMode(modeBtn.getAttribute("data-practice-result-mode"));
+      return;
+    }
+    const resultAction = e.target.closest("[data-practice-result]");
+    if (resultAction) {
+      e.preventDefault();
+      const action = resultAction.getAttribute("data-practice-result");
+      closePracticeResult();
+      if (action === "other") showView("home");
+      if (action === "target") showView("special");
+      return;
+    }
+    if (e.target === practiceResultModal) {
+      closePracticeResult();
+    }
+  });
 
   // Course center tabs (section + chapter)
   // chapter：顶部课型 Tab 由下方 switchChapterType 统一处理
@@ -1744,6 +1827,9 @@
   window.PrdPrototypeBridge = {
     openFilter: openFilter,
     closeFilter: closeFilter,
+    openDialog: function (dialog) {
+      if (dialog === "practice-result") openPracticeResult();
+    },
     switchChapterType: function (key) {
       if (typeof switchChapterType === "function") switchChapterType(key);
     },

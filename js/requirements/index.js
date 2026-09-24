@@ -14,6 +14,9 @@
   if (global.featuredPapersRegistry) {
     registries.push(global.featuredPapersRegistry);
   }
+  if (global.practiceResultRegistry) {
+    registries.push(global.practiceResultRegistry);
+  }
   if (global.kpLectureConceptRegistry) {
     registries.push(global.kpLectureConceptRegistry);
   }

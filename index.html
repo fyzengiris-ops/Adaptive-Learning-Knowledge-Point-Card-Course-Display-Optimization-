@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>自适应学习 · 课程中心原型</title>
-  <link rel="stylesheet" href="css/app.css?v=20260923c" />
+  <link rel="stylesheet" href="css/app.css?v=20260924f" />
   <link rel="stylesheet" href="css/prd.css?v=20260923d" />
   <link rel="stylesheet" href="css/prd-panel.css?v=20260923b" />
 </head>
@@ -695,7 +695,7 @@
               <div class="special-card-desc">精品微课、知识点精讲</div>
             </button>
 
-            <div class="special-card card-practice is-disabled" aria-disabled="true">
+            <button class="special-card card-practice" type="button" data-nav="practice">
               <div class="special-card-illust">
                 <svg viewBox="0 0 160 120" width="140" height="105" aria-hidden="true">
                   <ellipse cx="80" cy="100" rx="52" ry="10" fill="#ebe4ff" opacity=".7"/>
@@ -707,7 +707,7 @@
               </div>
               <div class="special-card-title">题目练习</div>
               <div class="special-card-desc">高效练习，AI讲解</div>
-            </div>
+            </button>
 
             <div class="special-card card-record is-disabled" aria-disabled="true">
               <div class="special-card-illust">
@@ -726,6 +726,71 @@
             </div>
           </div>
         </main>
+      </div>
+    </div>
+
+    <!-- ========== 题目练习（V0.8.4：截图占位，后续再还原交互） ========== -->
+    <div class="view" id="view-practice">
+      <div class="app practice-shot-app">
+        <div class="practice-demo-bar" role="group" aria-label="练习结果样式演示">
+          <span class="practice-demo-label">演示</span>
+          <button type="button" class="practice-demo-btn active" data-practice-result-mode="single">单知识点</button>
+          <button type="button" class="practice-demo-btn" data-practice-result-mode="trace">溯源知识点</button>
+        </div>
+        <div class="practice-shot-frame">
+          <img class="practice-shot" src="assets/practice-review.png" alt="题目练习" />
+          <button class="practice-shot-hit practice-shot-back" type="button" data-nav="special" aria-label="返回"></button>
+          <button class="practice-shot-hit practice-shot-result" type="button" data-open-practice-result aria-label="查看练习结果"></button>
+        </div>
+        <div class="practice-result-mask" id="practice-result-modal" data-result-mode="single" hidden>
+          <div class="practice-result-dialog" role="dialog" aria-modal="true" aria-labelledby="practice-result-title">
+            <div class="practice-result-title">
+              <div class="practice-result-ribbon" id="practice-result-title">练习结果</div>
+              <span class="practice-result-tip-wrap req-anchor-inline" data-req-anchor="practice.result.mastery.tip">
+                <button class="practice-result-tip-icon" type="button" data-toggle-practice-tip aria-expanded="false" aria-label="掌握度说明">i</button>
+                <span class="practice-result-tip-bubble" id="practice-result-tip" hidden>当前掌握度等级已纳入作业系统中同知识点近期完成批改的练习结果，并非仅依据本次提交题目计算。</span>
+              </span>
+            </div>
+            <button class="practice-result-close" type="button" data-close-practice-result aria-label="关闭">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+            <div class="practice-result-body">
+              <div class="practice-result-pane is-single">
+                <div class="practice-result-name">二次函数核心要素</div>
+                <div class="practice-result-mastery">
+                  <span class="practice-result-label">掌握度</span>
+                  <span class="practice-result-grade">精通</span>
+                </div>
+              </div>
+              <div class="practice-result-pane is-trace">
+                <div class="practice-result-compare">
+                  <div class="practice-result-col">
+                    <div class="practice-result-name">函数基本概念与配方法</div>
+                    <span class="practice-result-grade">精通</span>
+                    <span class="practice-result-label">掌握度</span>
+                    <span class="practice-result-chip">溯源知识点</span>
+                  </div>
+                  <div class="practice-result-arrow" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="practice-result-col">
+                    <div class="practice-result-name">二次函数核心要素</div>
+                    <span class="practice-result-grade is-basic">初步掌握</span>
+                    <span class="practice-result-label">掌握度</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="practice-result-actions is-single">
+              <button type="button" data-practice-result="stay">继续学习当前知识点</button>
+              <button type="button" class="is-primary" data-practice-result="other">学习其他知识点</button>
+            </div>
+            <div class="practice-result-actions is-trace">
+              <button type="button" data-practice-result="stay">继续学习当前溯源知识点</button>
+              <button type="button" class="is-primary" data-practice-result="target">开始学习目标知识点</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1231,13 +1296,14 @@
     PRD
   </button>
 
-  <script src="js/prd/prd-annotation-config.js?v=20260923a"></script>
+  <script src="js/prd/prd-annotation-config.js?v=20260924a"></script>
   <script src="js/requirements/section-course.registry.js?v=20260923a"></script>
   <script src="js/requirements/chapter-course.registry.js?v=20260923a"></script>
   <script src="js/requirements/featured-papers.registry.js?v=20260923a"></script>
+  <script src="js/requirements/practice-result.registry.js?v=20260924a"></script>
   <script src="js/requirements/kp-lecture-concept.registry.js?v=20260918a"></script>
   <script src="js/requirements/kp-lecture-exam.registry.js?v=20260918b"></script>
-  <script src="js/requirements/index.js?v=20260923a"></script>
+  <script src="js/requirements/index.js?v=20260924a"></script>
   <script src="js/prd/requirement-utils.js?v=20260923b"></script>
   <script src="js/prd/requirement-highlight.js?v=20260810a"></script>
   <script src="js/prd/requirement-writeback.js?v=20260923e"></script>
@@ -1245,6 +1311,6 @@
   <script src="js/prd/requirement-marker.js?v=20260923a"></script>
   <script src="js/prd/requirement-panel.js?v=20260923d"></script>
   <script src="js/prd/requirement-reader-shell.js?v=20260810b"></script>
-  <script src="js/app.js?v=20260923c"></script>
+  <script src="js/app.js?v=20260924e"></script>
 </body>
 </html>
